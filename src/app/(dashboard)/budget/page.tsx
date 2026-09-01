@@ -71,13 +71,13 @@ export default function BudgetPage() {
       try {
         const [budgetRes, expensesRes, incomeRes] = await Promise.all([
           apiClient.get<{ data: { profile: unknown; summary: BudgetSummary | null } }>('/api/budget'),
-          apiClient.get<{ data: ExpenseListItem[] }>('/api/budget/expenses?limit=100'),
+          apiClient.get<{ data: { data: ExpenseListItem[] } }>('/api/budget/expenses?limit=100'),
           apiClient.get<{ data: Income[] }>('/api/budget/income'),
         ]);
 
         setSummary(budgetRes.data?.summary ?? null);
         setBudgetProfile((budgetRes.data?.profile as BudgetProfile) ?? null);
-        setExpenses(Array.isArray(expensesRes.data) ? expensesRes.data : []);
+        setExpenses(Array.isArray(expensesRes.data?.data) ? expensesRes.data.data : []);
         setIncome(Array.isArray(incomeRes.data) ? incomeRes.data : []);
       } catch {
         setError('Failed to load budget data');

@@ -37,8 +37,8 @@ export default function ExpensesPage() {
 
   async function fetchExpenses() {
     try {
-      const res = await apiClient.get<{ data: Expense[] }>('/api/budget/expenses?limit=100');
-      setExpenses(Array.isArray(res.data) ? res.data : []);
+      const res = await apiClient.get<{ data: { data: Expense[] } }>('/api/budget/expenses?limit=100');
+      setExpenses(Array.isArray(res.data?.data) ? res.data.data : []);
       setError(null);
     } catch {
       setError('Failed to load expenses');

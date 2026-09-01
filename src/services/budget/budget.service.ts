@@ -80,10 +80,41 @@ export class BudgetService {
       ? { OR: [{ isDefault: true }, { userId }] }
       : { isDefault: true };
 
-    const categories = await prisma.expenseCategory.findMany({
+    let categories = await prisma.expenseCategory.findMany({
       where,
       orderBy: { name: 'asc' },
     });
+
+    // If no categories exist and we have a userId, seed default categories
+    if (categories.length === 0 && userId) {
+      const defaultCategories = [
+        { name: 'Food', icon: '🍔' },
+        { name: 'Transport', icon: '🚗' },
+        { name: 'Shopping', icon: '🛍️' },
+        { name: 'Entertainment', icon: '🎬' },
+        { name: 'Bills', icon: '📄' },
+        { name: 'Healthcare', icon: '🏥' },
+        { name: 'Education', icon: '📚' },
+        { name: 'Rent', icon: '🏠' },
+        { name: 'Utilities', icon: '💡' },
+        { name: 'Other', icon: '📦' },
+      ];
+
+      await prisma.expenseCategory.createMany({
+        data: defaultCategories.map((cat) => ({
+          name: cat.name,
+          icon: cat.icon,
+          isDefault: true,
+          userId: null,
+        })),
+      });
+
+      categories = await prisma.expenseCategory.findMany({
+        where: { isDefault: true },
+        orderBy: { name: 'asc' },
+      });
+    }
+
     return categories as ExpenseCategory[];
   }
 
