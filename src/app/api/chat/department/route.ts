@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { requireAuth } from '@/lib/auth-middleware';
 import { checkRateLimit } from '@/lib/rate-limit';
 import { streamAgentResponse } from '@/services/ai/specialized-agents';
-import { getAIProvider } from '@/services/ai';
+import { getAIProvider, getFallbackProvider } from '@/services/ai';
 import prisma from '@/lib/prisma';
 
 const DEPARTMENT_AGENTS: Record<string, string> = {
@@ -1061,7 +1061,10 @@ export async function POST(request: NextRequest) {
             }
           } catch (innerErr) {
             console.error('[chat/department] Primary stream failed:', innerErr);
-            const provider = getAIProvider();
+            // Use fallback provider (Gemini) instead of primary (Groq) which just failed
+            const fallbackProvider = getFallbackProvider();
+            const primaryProvider = getAIProvider();
+            const provider = fallbackProvider || primaryProvider;
             const fallbackPrompt = (DEPARTMENT_FALLBACK[department] || '') +
               (systemMessage ? `\n\n[UNIVERSITY-SPECIFIC CONTEXT — USE THIS FOR ALL ANSWERS]:\n${systemMessage}\n\nIMPORTANT: The above university context is the PRIMARY information source. For data NOT in the context (fees, scholarships, admission details, entry tests, merit), use your TRAINING KNOWLEDGE confidently. Do NOT say "check the website" — give a real answer directly.` : '') +
               extraData;
