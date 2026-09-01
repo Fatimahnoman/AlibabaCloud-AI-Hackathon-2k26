@@ -59,3 +59,5 @@ prisma/dev.db.backup
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+.vercel

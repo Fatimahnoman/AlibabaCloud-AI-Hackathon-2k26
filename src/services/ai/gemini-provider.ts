@@ -107,17 +107,57 @@ export class GeminiProvider extends BaseAIProvider {
 
   /**
    * Converts OpenAI-style messages to Gemini format.
+   * Gemini doesn't have a system role, so system messages are prepended
+   * to the first user message to preserve critical context.
    */
   private convertToGeminiFormat(messages: AIMessage[]): any[] {
-    return messages.map(msg => {
+    // Collect all system content to prepend to the first user message
+    const systemParts: string[] = [];
+    const nonSystemMessages: AIMessage[] = [];
+
+    for (const msg of messages) {
       if (msg.role === 'system') {
-        // Gemini doesn't have system role, prepend to first user message
-        return null;
+        systemParts.push(msg.content);
+      } else {
+        nonSystemMessages.push(msg);
       }
+    }
+
+    const systemPrefix = systemParts.join('\n\n');
+
+    const converted = nonSystemMessages.map((msg, index) => {
+      const role = msg.role === 'assistant' ? 'model' : 'user';
+      let text = msg.content;
+
+      // Prepend system content to the first user message
+      if (role === 'user' && systemPrefix && index === this.findFirstUserIndex(nonSystemMessages)) {
+        text = systemPrefix + '\n\n' + text;
+      }
+
       return {
-        role: msg.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: msg.content }],
+        role,
+        parts: [{ text }],
       };
-    }).filter(Boolean);
+    });
+
+    // If no user messages exist but we have system content, add it as a user message
+    if (converted.length === 0 && systemPrefix) {
+      converted.push({
+        role: 'user',
+        parts: [{ text: systemPrefix }],
+      });
+    }
+
+    return converted;
+  }
+
+  /**
+   * Finds the index of the first user message in the array.
+   */
+  private findFirstUserIndex(messages: AIMessage[]): number {
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].role === 'user') return i;
+    }
+    return 0;
   }
 }
