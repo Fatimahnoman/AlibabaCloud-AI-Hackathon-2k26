@@ -1,0 +1,2001 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Models
+// ============================================================
+
+// 1. User
+model User {
+  id                String             @id @default(uuid())
+  email             String             @unique
+  passwordHash      String             @map("password_hash")
+  emailVerified     DateTime?          @map("email_verified")
+  name              String
+  country           String?
+  preferredLanguage String  @default("auto") @map("preferred_language")
+  role              String           @default("user")
+  avatarUrl         String?            @map("avatar_url")
+  isActive          Boolean            @default(true) @map("is_active")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  deletedAt         DateTime?          @map("deleted_at")
+
+  profile                Profile?
+  conversations          Conversation[]
+  conversationMessages   ConversationMessage[]
+  documents              Document[]
+  fraudReports           FraudReport[]
+  urlScans               UrlScan[]
+  budgetProfile          BudgetProfile?
+  learningProfile        LearningProfile?
+  studyPlans             StudyPlan[]
+  teacherProfile         TeacherProfile?
+  studentProfile         StudentProfile?
+  auditLogs              AuditLog[]
+  expenseCategories      ExpenseCategory[]
+  passwordResetTokens    PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
+  refreshTokens          RefreshToken[]
+  aiUsageLogs            AIUsageLog[]
+  memories               UserMemory[]
+  settings               UserSettings?
+  savedCourses           SavedCourse[]
+  savedUniversities      SavedUniversity[]
+  savedScholarships      SavedScholarship[]
+  applicationChecklists  ApplicationChecklist[]
+  userReports            UserReport[]
+  documentAnalysisResults DocumentAnalysisResult[]
+  applicationWorkspaces  ApplicationWorkspace[]
+  savingsGoals           SavingsGoal[]
+  studySessions          StudySession[]
+  practiceQuizzes        PracticeQuiz[]
+  performanceMetrics     PerformanceMetric[]
+  revisionPlans          RevisionPlan[]
+  studyTopics            StudyTopic[]
+  dailySchedules         DailySchedule[]
+  teacherLessonPlans     TeacherLessonPlan[]
+  teacherAssessments     TeacherAssessment[]
+  teacherHomework        TeacherHomework[]
+  teacherRubrics         TeacherRubric[]
+  classrooms             Classroom[]
+  classroomEnrollments   ClassroomEnrollment[]
+  classroomResources     ClassroomResource[]
+  deadlines              Deadline[]
+  notifications          Notification[]
+  notificationPreference NotificationPreference?
+  educationCostPlans     EducationCostPlan[]
+  dataChangeLogs         DataChangeLog[]
+  sources                Source[]
+
+  @@index([email])
+  @@index([country])
+  @@index([role])
+  @@index([isActive])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+// 2. Profile
+model Profile {
+  id              String    @id @default(uuid())
+  userId          String    @unique @map("user_id")
+  bio             String?
+  dateOfBirth     DateTime? @map("date_of_birth")
+  phone           String?
+  educationLevel  String?   @map("education_level")
+  occupation      String?
+  timezone        String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("profiles")
+}
+
+// 3. Conversation
+model Conversation {
+  id            String             @id @default(uuid())
+  userId        String             @map("user_id")
+  title         String?
+  status        String @default("active")
+  isArchived    Boolean            @default(false) @map("is_archived")
+  createdAt     DateTime           @default(now()) @map("created_at")
+  updatedAt     DateTime           @updatedAt @map("updated_at")
+  lastMessageAt DateTime?          @map("last_message_at")
+  deletedAt     DateTime?          @map("deleted_at")
+
+  user       User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages   ConversationMessage[]
+  summaries  ConversationSummary[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([isArchived])
+  @@index([lastMessageAt])
+  @@index([deletedAt])
+  @@map("conversations")
+}
+
+// 4. ConversationMessage
+model ConversationMessage {
+  id              String        @id @default(uuid())
+  conversationId  String        @map("conversation_id")
+  userId          String        @map("user_id")
+  role            String
+  content         String
+  messageType     String   @default("text") @map("message_type")
+  metadata        String?
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([userId])
+  @@index([role])
+  @@index([messageType])
+  @@index([createdAt])
+  @@map("conversation_messages")
+}
+
+// 5. ConversationSummary
+model ConversationSummary {
+  id               String   @id @default(uuid())
+  conversationId   String   @map("conversation_id")
+  summaryText      String   @map("summary_text")
+  importantFacts   String?  @map("important_facts")
+  tokenCount       Int      @map("token_count")
+  messageRangeStart Int     @map("message_range_start")
+  messageRangeEnd   Int     @map("message_range_end")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("conversation_summaries")
+}
+
+// 6. University
+model University {
+  id                 String             @id @default(uuid())
+  name               String
+  country            String
+  city               String?
+  website            String?
+  logoUrl            String?            @map("logo_url")
+  description        String?
+  ranking            Int?
+  foundedYear        Int?               @map("founded_year")
+  type               String     @default("university")
+  sector             String?    @default("public")
+  sourceUrl          String?            @map("source_url")
+  sourceName         String?            @map("source_name")
+  verificationStatus String @default("pending") @map("verification_status")
+  lastVerifiedAt     DateTime?          @map("last_verified_at")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  // AI Knowledge Fields — real university data for chatbot
+  closingMerit       String?            @map("closing_merit")        // e.g. "BS CS: 92%, BS EE: 88%"
+  entryTestDetails   String?            @map("entry_test_details")   // e.g. "NET: 80 MCQs (Math 40, Physics 20, English 20), 3 hours"
+  isOpenMerit        Boolean?           @map("is_open_merit")        // open merit admissions?
+  supplyPolicy       String?            @map("supply_policy")        // what to do if paper supply
+  feeRange           String?            @map("fee_range")            // e.g. "PKR 150,000-300,000/semester"
+  admissionProcess   String?            @map("admission_process")    // how to apply step by step
+  scholarshipsOffered String?           @map("scholarships_offered") // uni-specific scholarships
+
+  courses              Course[]
+  departments          Department[]
+  admissionRequirements AdmissionRequirement[]
+  savedBy              SavedUniversity[]
+  rankings             UniversityRanking[]
+  campuses             Campus[]
+
+  @@index([country])
+  @@index([city])
+  @@index([type])
+  @@index([sector])
+  @@index([verificationStatus])
+  @@index([ranking])
+  @@map("universities")
+}
+
+// 6b. Campus (main campus + sub campuses)
+model Campus {
+  id              String   @id @default(uuid())
+  universityId    String   @map("university_id")
+  name            String
+  city            String?
+  address         String?
+  isMain          Boolean  @default(false) @map("is_main")
+  phone           String?
+  email           String?
+  website         String?
+  description     String?
+  facilities      String?  // JSON array of facilities
+  programs        String?  // JSON array of programs offered at this campus
+  admissionContact String? @map("admission_contact")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@index([universityId])
+  @@index([city])
+  @@index([isMain])
+  @@map("campuses")
+}
+
+// 7. Course
+model Course {
+  id            String   @id @default(uuid())
+  universityId  String   @map("university_id")
+  name          String
+  degree        String
+  department    String?
+  duration      String?
+  language      String?
+  tuitionFee    Decimal? @map("tuition_fee")
+  currency      String? 
+  description   String?
+  sourceUrl     String?  @map("source_url")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  university           University           @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  admissionRequirements AdmissionRequirement[]
+  savedBy              SavedCourse[]
+
+  verificationStatus String  @default("unverified") @map("verification_status")
+  lastVerifiedAt     DateTime? @map("last_verified_at")
+
+  @@index([universityId])
+  @@index([degree])
+  @@index([department])
+  @@index([language])
+  @@map("courses")
+}
+
+// 8. Scholarship
+model Scholarship {
+  id                   String             @id @default(uuid())
+  name                 String
+  provider             String
+  country              String?
+  category             String?            @default("international") // local (Pakistan) or international
+  amount               Decimal?
+  currency             String?
+  amountFrequency      String?            @default("monthly") // monthly, annual, one_time, total
+  deadline             DateTime?
+  description          String?
+  eligibilityCriteria  String?            @map("eligibility_criteria")
+  applicationProcess   String?            @map("application_process")
+  documentsRequired    String?            @map("documents_required")
+  contactInfo          String?            @map("contact_info")
+  sourceUrl            String?            @map("source_url")
+  sourceName           String?            @map("source_name")
+  verificationStatus   String @default("pending") @map("verification_status")
+  lastVerifiedAt       DateTime?          @map("last_verified_at")
+  createdAt            DateTime           @default(now()) @map("created_at")
+  updatedAt            DateTime           @updatedAt @map("updated_at")
+
+  requirements ScholarshipRequirement[]
+  savedBy      SavedScholarship[]
+}
+
+// 9. ScholarshipRequirement
+model ScholarshipRequirement {
+  id               String   @id @default(uuid())
+  scholarshipId    String   @map("scholarship_id")
+  requirementType  String   @map("requirement_type")
+  requirementValue String   @map("requirement_value")
+  isRequired       Boolean  @default(true) @map("is_required")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  scholarship Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+
+  @@index([scholarshipId])
+  @@index([requirementType])
+  @@map("scholarship_requirements")
+}
+
+// 10. Country
+model Country {
+  id              String   @id @default(uuid())
+  name            String   @unique
+  code            String   @unique
+  continent       String?
+  visaRequired    Boolean  @default(false) @map("visa_required")
+  costOfLiving    Decimal? @map("cost_of_living")
+  safetyIndex     Decimal? @map("safety_index")
+  educationSystem String?  @map("education_system")
+  sourceUrl       String?  @map("source_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  admissionRequirements AdmissionRequirement[]
+  visaInformation       VisaInformation[]
+
+  @@index([code])
+  @@index([continent])
+  @@map("countries")
+}
+
+// 11. AdmissionRequirement
+model AdmissionRequirement {
+  id               String   @id @default(uuid())
+  universityId     String   @map("university_id")
+  courseId          String?  @map("course_id")
+  countryId        String   @map("country_id")
+  requirementType  String   @map("requirement_type")
+  requirementValue String   @map("requirement_value")
+  deadline         DateTime?
+  notes            String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  course     Course?    @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  country    Country    @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([universityId])
+  @@index([courseId])
+  @@index([countryId])
+  @@index([requirementType])
+  @@map("admission_requirements")
+}
+
+// 12. VisaInformation
+model VisaInformation {
+  id              String   @id @default(uuid())
+  countryId       String   @map("country_id")
+  visaType        String   @map("visa_type")
+  requirements    String?
+  processingTime  String?  @map("processing_time")
+  fee             Decimal?
+  sourceUrl       String?  @map("source_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  verificationStatus String  @default("unverified") @map("verification_status")
+  lastVerifiedAt     DateTime? @map("last_verified_at")
+
+  country Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([visaType])
+  @@map("visa_information")
+}
+
+// 13. Document
+model Document {
+  id           String         @id @default(uuid())
+  userId       String         @map("user_id")
+  fileName     String         @map("file_name")
+  originalName String         @map("original_name")
+  mimeType     String         @map("mime_type")
+  fileSize     Int            @map("file_size")
+  filePath     String         @map("file_path")
+  status       String @default("processing")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  deletedAt    DateTime?      @map("deleted_at")
+
+  user  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scans DocumentScan[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([mimeType])
+  @@index([deletedAt])
+  @@map("documents")
+}
+
+// 14. DocumentScan
+model DocumentScan {
+  id           String   @id @default(uuid())
+  documentId   String   @map("document_id")
+  extractedText String? @map("extracted_text")
+  scanResult   String?    @map("scan_result")
+  riskScore    Decimal? @map("risk_score")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+  @@map("document_scans")
+}
+
+// 15. FraudReport
+model FraudReport {
+  id            String            @id @default(uuid())
+  userId        String            @map("user_id")
+  inputType     String    @map("input_type")
+  inputContent  String?           @map("input_content")
+  inputFilePath String?           @map("input_file_path")
+  riskScore     Decimal?          @map("risk_score")
+  riskLevel     String         @default("low") @map("risk_level")
+  analysis      String?
+  evidenceJson  String?          @map("evidence_json")
+  recommendation String?
+  status        String @default("pending")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  indicators   FraudIndicator[]
+  evidenceList FraudEvidence[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([riskLevel])
+  @@index([inputType])
+  @@index([createdAt])
+  @@map("fraud_reports")
+}
+
+// 16. FraudIndicator
+model FraudIndicator {
+  id              String        @id @default(uuid())
+  fraudReportId   String        @map("fraud_report_id")
+  indicatorType   String        @map("indicator_type")
+  indicatorValue  String        @map("indicator_value")
+  confidence      Decimal      
+  severity        String
+  description     String?
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  fraudReport FraudReport @relation(fields: [fraudReportId], references: [id], onDelete: Cascade)
+
+  @@index([fraudReportId])
+  @@index([indicatorType])
+  @@index([severity])
+  @@map("fraud_indicators")
+}
+
+// 17. UrlScan
+model UrlScan {
+  id              String         @id @default(uuid())
+  userId          String         @map("user_id")
+  url             String
+  domain          String?
+  isHttps         Boolean        @default(false) @map("is_https")
+  hasRedirect     Boolean        @default(false) @map("has_redirect")
+  redirectUrl     String?        @map("redirect_url")
+  reputationScore Decimal?       @map("reputation_score")
+  riskLevel       String?
+  analysis        String?
+  status          String  @default("pending")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  indicators UrlIndicator[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([domain])
+  @@index([riskLevel])
+  @@index([createdAt])
+  @@map("url_scans")
+}
+
+// 18. CyberAuthority
+model CyberAuthority {
+  id               String    @id @default(uuid())
+  name             String
+  country          String
+  type             String
+  category         String?
+  website          String?
+  phone            String?
+  email            String?
+  address          String?
+  reportingUrl     String?   @map("reporting_url")
+  description      String?
+  verificationStatus String @default("unverified") @map("verification_status")
+  lastVerifiedAt   DateTime? @map("last_verified_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  complaintProcedures ComplaintProcedure[]
+
+  @@index([country])
+  @@index([type])
+  @@index([category])
+  @@map("cyber_authorities")
+}
+
+// 19. ComplaintProcedure
+model ComplaintProcedure {
+  id                String   @id @default(uuid())
+  authorityId       String   @map("authority_id")
+  country           String
+  category          String
+  procedureSteps    String   @map("procedure_steps")
+  requiredDocuments String?    @map("required_documents")
+  estimatedTime     String?  @map("estimated_time")
+  cost              Decimal?
+  sourceUrl         String?  @map("source_url")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  verificationStatus String  @default("unverified") @map("verification_status")
+  lastVerifiedAt     DateTime? @map("last_verified_at")
+
+  authority CyberAuthority @relation(fields: [authorityId], references: [id], onDelete: Cascade)
+
+  @@index([authorityId])
+  @@index([country])
+  @@index([category])
+  @@map("complaint_procedures")
+}
+
+// 20. BudgetProfile
+model BudgetProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique @map("user_id")
+  monthlyIncome Decimal? @map("monthly_income")
+  currency    String   @default("USD")
+  savingsGoal Decimal? @map("savings_goal")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  incomeRecords  IncomeRecord[]
+  expenseRecords ExpenseRecord[]
+  budgets        Budget[]
+
+  @@index([userId])
+  @@map("budget_profiles")
+}
+
+// 21. IncomeRecord
+model IncomeRecord {
+  id              String           @id @default(uuid())
+  budgetProfileId String           @map("budget_profile_id")
+  source          String
+  amount          Decimal         
+  frequency       String  @default("monthly")
+  isVerified      Boolean          @default(false) @map("is_verified")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  budgetProfile BudgetProfile @relation(fields: [budgetProfileId], references: [id], onDelete: Cascade)
+
+  @@index([budgetProfileId])
+  @@index([frequency])
+  @@map("income_records")
+}
+
+// 22. ExpenseCategory
+model ExpenseCategory {
+  id        String   @id @default(uuid())
+  name      String
+  icon      String?
+  color     String? 
+  isDefault Boolean  @default(false) @map("is_default")
+  userId    String?  @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expenseRecords ExpenseRecord[]
+  budgets        Budget[]
+
+  @@index([userId])
+  @@index([isDefault])
+  @@map("expense_categories")
+}
+
+// 23. ExpenseRecord
+model ExpenseRecord {
+  id               String          @id @default(uuid())
+  budgetProfileId  String          @map("budget_profile_id")
+  categoryId       String          @map("category_id")
+  amount           Decimal        
+  description      String?
+  date             DateTime
+  isRecurring      Boolean         @default(false) @map("is_recurring")
+  recurringFrequency String?       @map("recurring_frequency")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+
+  budgetProfile BudgetProfile   @relation(fields: [budgetProfileId], references: [id], onDelete: Cascade)
+  category      ExpenseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([budgetProfileId])
+  @@index([categoryId])
+  @@index([date])
+  @@map("expense_records")
+}
+
+// 24. Budget
+model Budget {
+  id              String       @id @default(uuid())
+  budgetProfileId String       @map("budget_profile_id")
+  categoryId      String       @map("category_id")
+  amount          Decimal     
+  period          String @default("monthly")
+  spent           Decimal      @default(0)
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+
+  budgetProfile BudgetProfile   @relation(fields: [budgetProfileId], references: [id], onDelete: Cascade)
+  category      ExpenseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([budgetProfileId])
+  @@index([categoryId])
+  @@index([period])
+  @@unique([budgetProfileId, categoryId, period])
+  @@map("budgets")
+}
+
+// 25. LearningProfile
+model LearningProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique @map("user_id")
+  educationLevel  String?  @map("education_level")
+  subjects        String?
+  weakSubjects    String?    @map("weak_subjects")
+  learningStyle   String?  @map("learning_style")
+  studyHoursPerDay Int?    @map("study_hours_per_day")
+  targetExam      String?  @map("target_exam")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  studyPlans    StudyPlan[]
+  studentProfiles StudentProfile[]
+
+  @@index([userId])
+  @@map("learning_profiles")
+}
+
+// 26. StudyPlan
+model StudyPlan {
+  id               String         @id @default(uuid())
+  userId           String         @map("user_id")
+  learningProfileId String        @map("learning_profile_id")
+  title            String
+  description      String?
+  startDate        DateTime       @map("start_date")
+  endDate          DateTime       @map("end_date")
+  status           String @default("active")
+  schedule         String?
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  learningProfile LearningProfile @relation(fields: [learningProfileId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([learningProfileId])
+  @@index([status])
+  @@index([startDate])
+  @@index([endDate])
+  @@map("study_plans")
+}
+
+// 27. TeacherProfile
+model TeacherProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique @map("user_id")
+  subjects      String?
+  qualifications String?
+  experience    String?
+  hourlyRate    Decimal? @map("hourly_rate")
+  currency      String? 
+  rating        Decimal?
+  totalStudents Int      @default(0) @map("total_students")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("teacher_profiles")
+}
+
+// 28. StudentProfile
+model StudentProfile {
+  id               String   @id @default(uuid())
+  userId           String   @unique @map("user_id")
+  learningProfileId String? @map("learning_profile_id")
+  grade            String?
+  school           String?
+  weakSubjects     String?    @map("weak_subjects")
+  goals            String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  learningProfile LearningProfile? @relation(fields: [learningProfileId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([learningProfileId])
+  @@map("student_profiles")
+}
+
+// 29. Source
+model Source {
+  id                 String             @id @default(uuid())
+  entityType         String             @map("entity_type")
+  entityId           String             @map("entity_id")
+  sourceUrl          String             @map("source_url")
+  sourceName         String?            @map("source_name")
+  sourceType         String             @map("source_type")
+  verificationStatus String             @default("pending") @map("verification_status")
+  lastVerifiedAt     DateTime?          @map("last_verified_at")
+  nextCheckAt        DateTime?          @map("next_check_at")
+  contentHash        String?            @map("content_hash")
+  confidenceScore    Float              @default(0) @map("confidence_score")
+  checkCount         Int                @default(0) @map("check_count")
+  failureCount       Int                @default(0) @map("failure_count")
+  notes              String?
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+  userId             String?            @map("user_id")
+
+  snapshots  SourceSnapshot[]
+  verificationLogs VerificationLog[]
+  user       User?             @relation(fields: [userId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([sourceType])
+  @@index([verificationStatus])
+  @@index([nextCheckAt])
+  @@map("sources")
+}
+
+// 29a. VerificationLog
+model VerificationLog {
+  id            String   @id @default(uuid())
+  sourceId      String   @map("source_id")
+  entityType    String   @map("entity_type")
+  entityId      String   @map("entity_id")
+  previousStatus String? @map("previous_status")
+  newStatus     String   @map("new_status")
+  method        String
+  result        String?
+  httpStatus    Int?     @map("http_status")
+  contentChanged Boolean @default(false) @map("content_changed")
+  details       String?
+  checkedBy     String?  @map("checked_by")
+  durationMs    Int?     @map("duration_ms")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  source Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([sourceId])
+  @@index([entityType, entityId])
+  @@index([newStatus])
+  @@index([createdAt])
+  @@map("verification_logs")
+}
+
+// 29b. SourceSnapshot
+model SourceSnapshot {
+  id          String   @id @default(uuid())
+  sourceId    String   @map("source_id")
+  contentHash String   @map("content_hash")
+  httpStatus  Int?     @map("http_status")
+  contentPreview String? @map("content_preview")
+  headers     String?
+  capturedAt  DateTime @default(now()) @map("captured_at")
+
+  source Source @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([sourceId])
+  @@index([capturedAt])
+  @@map("source_snapshots")
+}
+
+// 30. AuditLog
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?  @map("user_id")
+  action    String
+  entityType String  @map("entity_type")
+  entityId  String   @map("entity_id")
+  details   String?
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model DataChangeLog {
+  id         String   @id @default(uuid())
+  userId     String?  @map("user_id")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String   @map("entity_id")
+  entityName String?  @map("entity_name")
+  oldValue   String?  @map("old_value")
+  newValue   String?  @map("new_value")
+  reason     String?
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("data_change_logs")
+}
+
+// 31. PasswordResetToken
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}
+
+// 32. EmailVerificationToken
+model EmailVerificationToken {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("email_verification_tokens")
+}
+
+// 33. RefreshToken
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+// 34. AIUsageLog
+model AIUsageLog {
+  id             String   @id @default(uuid())
+  userId         String?  @map("user_id")
+  conversationId String?  @map("conversation_id")
+  provider       String
+  model          String
+  intent         String?
+  detectedLanguage String? @map("detected_language")
+  promptTokens   Int      @default(0) @map("prompt_tokens")
+  completionTokens Int    @default(0) @map("completion_tokens")
+  totalTokens    Int      @default(0) @map("total_tokens")
+  durationMs     Int      @default(0) @map("duration_ms")
+  status         String   @default("success")
+  errorMessage   String?  @map("error_message")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([conversationId])
+  @@index([provider])
+  @@index([createdAt])
+  @@map("ai_usage_logs")
+}
+
+// 35. UserMemory
+model UserMemory {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  key       String
+  value     String
+  source    String?  @default("auto")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, key])
+  @@index([userId])
+  @@index([key])
+  @@map("user_memories")
+}
+
+// 36. UserSettings
+model UserSettings {
+  id                       String   @id @default(uuid())
+  userId                   String   @unique @map("user_id")
+  language                 String   @default("auto")
+  chatHistory              Boolean  @default(true) @map("chat_history")
+  memoryEnabled            Boolean  @default(true) @map("memory_enabled")
+  autoRead                 Boolean  @default(false) @map("auto_read")
+  voiceTranscriptionStorage Boolean @default(false) @map("voice_transcription_storage")
+  easyMode                 Boolean  @default(false) @map("easy_mode")
+  theme                    String   @default("light")
+  messageFontSize          String   @default("normal") @map("message_font_size")
+  createdAt                DateTime @default(now()) @map("created_at")
+  updatedAt                DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("user_settings")
+}
+
+// 37. SavedCourse
+model SavedCourse {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  courseId   String   @map("course_id")
+  notes     String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@map("saved_courses")
+}
+
+// 38. SavedUniversity
+model SavedUniversity {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  universityId String   @map("university_id")
+  notes        String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, universityId])
+  @@index([userId])
+  @@map("saved_universities")
+}
+
+// 39. SavedScholarship
+model SavedScholarship {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  scholarshipId String   @map("scholarship_id")
+  notes         String?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scholarship Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scholarshipId])
+  @@index([userId])
+  @@map("saved_scholarships")
+}
+
+// 40. ApplicationChecklist
+model ApplicationChecklist {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  title         String
+  universityId  String?  @map("university_id")
+  scholarshipId String?  @map("scholarship_id")
+  status        String   @default("in_progress")
+  items         String   @default("[]")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("application_checklists")
+}
+
+// 41. UniversityRanking
+model UniversityRanking {
+  id              String   @id @default(uuid())
+  universityId    String   @map("university_id")
+  provider        String
+  year            Int
+  category        String?
+  position        Int
+  sourceUrl       String?  @map("source_url")
+  verificationStatus String  @default("unverified") @map("verification_status")
+  lastVerifiedAt  DateTime? @map("last_verified_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@unique([universityId, provider, year, category])
+  @@index([universityId])
+  @@index([provider])
+  @@index([year])
+  @@map("university_rankings")
+}
+
+// 42. CareerPath
+model CareerPath {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  field          String
+  description    String?
+  skills         String?
+  entryRoles     String?  @map("entry_roles")
+  furtherStudy   String?  @map("further_study")
+  certifications String?
+  sourceUrl      String?  @map("source_url")
+  verificationStatus String @default("pending") @map("verification_status")
+  lastVerifiedAt DateTime? @map("last_verified_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@index([field])
+  @@index([slug])
+  @@map("career_paths")
+}
+
+// 43. FraudRule
+model FraudRule {
+  id          String   @id @default(uuid())
+  name        String
+  ruleType    String   @map("rule_type")
+  pattern     String
+  severity    String
+  score       Int
+  enabled     Boolean  @default(true)
+  description String?
+  category    String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([ruleType])
+  @@index([enabled])
+  @@index([severity])
+  @@map("fraud_rules")
+}
+
+// 44. FraudEvidence
+model FraudEvidence {
+  id            String   @id @default(uuid())
+  fraudReportId String   @map("fraud_report_id")
+  evidenceType  String   @map("evidence_type")
+  description   String
+  severity      String
+  source        String
+  confidence    Decimal
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  fraudReport FraudReport @relation(fields: [fraudReportId], references: [id], onDelete: Cascade)
+
+  @@index([fraudReportId])
+  @@index([evidenceType])
+  @@map("fraud_evidence")
+}
+
+// 45. UrlIndicator
+model UrlIndicator {
+  id          String   @id @default(uuid())
+  urlScanId   String   @map("url_scan_id")
+  indicator   String
+  severity    String
+  description String
+  evidence    String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  urlScan UrlScan @relation(fields: [urlScanId], references: [id], onDelete: Cascade)
+
+  @@index([urlScanId])
+  @@index([severity])
+  @@map("url_indicators")
+}
+
+model DocumentAnalysisResult {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  documentType    String   @map("document_type")
+  fileName        String   @map("file_name")
+  originalContent String   @map("original_content")
+  language        String?
+  wordCount       Int      @default(0) @map("word_count")
+  overallScore    Int      @default(0) @map("overall_score")
+  structureScore  Int      @default(0) @map("structure_score")
+  clarityScore    Int      @default(0) @map("clarity_score")
+  grammarScore    Int      @default(0) @map("grammar_score")
+  relevanceScore  Int      @default(0) @map("relevance_score")
+  analysisJson    String   @default("{}") @map("analysis_json")
+  suggestionsJson String   @default("[]") @map("suggestions_json")
+  integrityJson   String   @default("{}") @map("integrity_json")
+  aiModel         String?  @map("ai_model")
+  processingTime  Int      @default(0) @map("processing_time_ms")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([documentType])
+  @@index([createdAt])
+  @@map("document_analysis_results")
+}
+
+// 46. UserReport (feedback on scan accuracy)
+model UserReport {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  fraudReportId String?  @map("fraud_report_id")
+  urlScanId     String?  @map("url_scan_id")
+  feedback      String
+  comment       String?
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([feedback])
+  @@map("user_reports")
+}
+
+model ApplicationWorkspace {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  entityType      String   @map("entity_type")
+  entityId        String?  @map("entity_id")
+  title           String
+  programName     String?  @map("program_name")
+  institutionName String?  @map("institution_name")
+  country         String?
+  deadline        DateTime?
+  status          String   @default("researching")
+  priority        String   @default("medium")
+  notes           String?
+  officialUrl     String?  @map("official_url")
+  documentsJson   String   @default("[]") @map("documents_json")
+  requirementsJson String  @default("[]") @map("requirements_json")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  checklistItems ApplicationChecklistItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([deadline])
+  @@index([entityType, entityId])
+  @@map("application_workspaces")
+}
+
+model ApplicationChecklistItem {
+  id          String   @id @default(uuid())
+  workspaceId String   @map("workspace_id")
+  label       String
+  isCompleted Boolean  @default(false) @map("is_completed")
+  dueDate     DateTime? @map("due_date")
+  category    String?
+  notes       String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  workspace ApplicationWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([isCompleted])
+  @@map("application_checklist_items")
+}
+
+model SavingsGoal {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  title            String
+  targetAmount     Decimal  @map("target_amount")
+  currentAmount    Decimal  @default(0) @map("current_amount")
+  deadline         DateTime?
+  status           String   @default("active")
+  monthlyContribution Decimal? @map("monthly_contribution")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("savings_goals")
+}
+
+model StudySession {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  subject     String
+  topic       String?
+  durationMin Int      @map("duration_min")
+  startTime   DateTime @map("start_time")
+  endTime     DateTime? @map("end_time")
+  notes       String?
+  rating      Int?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subject])
+  @@index([startTime])
+  @@map("study_sessions")
+}
+
+model StudyTopic {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  subject       String
+  topic         String
+  masteryLevel  Int      @default(0) @map("mastery_level")
+  priority      String   @default("medium")
+  lastStudiedAt DateTime? @map("last_studied_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subject, topic])
+  @@index([userId])
+  @@index([subject])
+  @@map("study_topics")
+}
+
+model DailySchedule {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  planId      String?  @map("plan_id")
+  date        DateTime
+  subject     String
+  startTime   String   @map("start_time")
+  endTime     String   @map("end_time")
+  activity    String
+  isCompleted Boolean  @default(false) @map("is_completed")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([date])
+  @@index([planId])
+  @@map("daily_schedules")
+}
+
+model PracticeQuiz {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  subject     String
+  topic       String
+  title       String
+  totalMarks  Int      @map("total_marks")
+  scoredMarks Int      @map("scored_marks")
+  percentage  Float    @default(0)
+  timeTakenMin Int?     @map("time_taken_min")
+  questionsJson String @default("[]") @map("questions_json")
+  notes       String?
+  studiedAt   DateTime @default(now()) @map("studied_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subject])
+  @@index([topic])
+  @@index([studiedAt])
+  @@map("practice_quizzes")
+}
+
+model PerformanceMetric {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  subject     String
+  topic       String?
+  metricType  String   @map("metric_type")
+  value       Float
+  metadataJson String @default("{}") @map("metadata_json")
+  recordedAt  DateTime @default(now()) @map("recorded_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subject])
+  @@index([metricType])
+  @@index([recordedAt])
+  @@map("performance_metrics")
+}
+
+model RevisionPlan {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  subject     String
+  topic       String
+  masteryAtCreation Int @map("mastery_at_creation")
+  revisionCount Int    @default(0) @map("revision_count")
+  nextRevision DateTime? @map("next_revision")
+  status      String   @default("pending")
+  notes       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subject, topic])
+  @@index([userId])
+  @@index([status])
+  @@index([nextRevision])
+  @@map("revision_plans")
+}
+
+model TeacherLessonPlan {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  subject     String
+  topic       String
+  grade       String
+  durationMin Int      @map("duration_min")
+  content     String
+  objectives  String?
+  materials   String?
+  assessment  String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subject])
+  @@index([grade])
+  @@map("teacher_lesson_plans")
+}
+
+model TeacherAssessment {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  subject       String
+  topic         String
+  difficulty    String
+  questionCount Int      @map("question_count")
+  content       String
+  answerKey     String?  @map("answer_key")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subject])
+  @@map("teacher_assessments")
+}
+
+model TeacherHomework {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  subject     String
+  topic       String
+  grade       String
+  title       String
+  description String
+  dueDays     Int      @default(7) @map("due_days")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([subject])
+  @@map("teacher_homework")
+}
+
+model TeacherRubric {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  title       String
+  subject     String
+  assessmentType String @map("assessment_type")
+  criteria    String
+  totalPoints Int      @default(100) @map("total_points")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("teacher_rubrics")
+}
+
+model Classroom {
+  id          String   @id @default(uuid())
+  teacherId   String   @map("teacher_id")
+  name        String
+  subject     String
+  grade       String?
+  description String?
+  inviteCode  String   @unique @map("invite_code")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user        User @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  enrollments ClassroomEnrollment[]
+  resources   ClassroomResource[]
+
+  @@index([teacherId])
+  @@index([inviteCode])
+  @@map("classrooms")
+}
+
+model ClassroomEnrollment {
+  id          String   @id @default(uuid())
+  classroomId String   @map("classroom_id")
+  studentId   String   @map("student_id")
+  status      String   @default("active")
+  joinedAt    DateTime @default(now()) @map("joined_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  classroom Classroom @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  student   User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classroomId, studentId])
+  @@index([classroomId])
+  @@index([studentId])
+  @@index([status])
+  @@map("classroom_enrollments")
+}
+
+model ClassroomResource {
+  id          String   @id @default(uuid())
+  classroomId String   @map("classroom_id")
+  title       String
+  description String?
+  resourceType String  @map("resource_type")
+  url         String?
+  contentJson String?   @map("content_json")
+  uploadedBy  String   @map("uploaded_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  classroom Classroom @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  uploader  User      @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
+
+  @@index([classroomId])
+  @@index([resourceType])
+  @@map("classroom_resources")
+}
+
+// ============================================
+// PHASE 15: NOTIFICATION & DEADLINE ENGINE
+// ============================================
+
+model Deadline {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  title           String
+  description     String?
+  deadlineDate    DateTime @map("deadline_date")
+  deadlineType    String   @map("deadline_type")
+  sourceType      String?  @map("source_type")
+  sourceId        String?  @map("source_id")
+  isVerified      Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt  DateTime? @map("last_verified_at")
+  status          String   @default("upcoming")
+  reminderDaysBefore Int @default(7) @map("reminder_days_before")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notifications Notification[]
+
+  @@index([userId])
+  @@index([deadlineDate])
+  @@index([deadlineType])
+  @@index([status])
+  @@index([isVerified])
+  @@map("deadlines")
+}
+
+model Notification {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  deadlineId       String?  @map("deadline_id")
+  title            String
+  message          String
+  notificationType String   @map("notification_type")
+  priority         String   @default("normal")
+  isRead           Boolean  @default(false) @map("is_read")
+  readAt           DateTime? @map("read_at")
+  metadataJson     String?  @map("metadata_json")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deadline Deadline? @relation(fields: [deadlineId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([notificationType])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model NotificationPreference {
+  id                     String   @id @default(uuid())
+  userId                 String   @unique @map("user_id")
+  emailEnabled           Boolean  @default(false) @map("email_enabled")
+  inAppEnabled           Boolean  @default(true) @map("in_app_enabled")
+  scholarshipAlerts      Boolean  @default(true) @map("scholarship_alerts")
+  universityAlerts       Boolean  @default(true) @map("university_alerts")
+  applicationAlerts      Boolean  @default(true) @map("application_alerts")
+  studyAlerts            Boolean  @default(true) @map("study_alerts")
+  budgetAlerts           Boolean  @default(true) @map("budget_alerts")
+  reminderDaysBefore     Int      @default(7) @map("reminder_days_before")
+  createdAt              DateTime @default(now()) @map("created_at")
+  updatedAt              DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_preferences")
+}
+
+// ============================================
+// PHASE 16: MULTI-COUNTRY EDUCATION INTELLIGENCE
+// ============================================
+
+model CountryProfile {
+  id                    String   @id @default(uuid())
+  name                  String
+  code                  String   @unique
+  region                String?
+  capital               String?
+  currency              String
+  language              String
+  educationSystem       String?  @map("education_system")
+  timezone              String?
+  costOfLivingIndex     Float?   @map("cost_of_living_index")
+  qualityOfLifeIndex    Float?   @map("quality_of_life_index")
+  safetyIndex           Float?   @map("safety_index")
+  popularForStudents    Boolean  @default(false) @map("popular_for_students")
+  profileImageUrl       String?  @map("profile_image_url")
+  overview              String?
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  authorities       CountryEducationAuthority[]
+  visaSources       CountryVisaSource[]
+  reportingBodies   CountryReportingAuthority[]
+  costInfo          CountryCostInfo[]
+  scholarships      CountryScholarship[]
+  admissionReqs     CountryAdmissionRequirement[]
+
+  @@index([code])
+  @@index([region])
+  @@index([popularForStudents])
+  @@map("country_profiles")
+}
+
+model CountryEducationAuthority {
+  id             String   @id @default(uuid())
+  countryId      String   @map("country_id")
+  name           String
+  acronym        String?
+  type           String
+  description    String?
+  websiteUrl     String?  @map("website_url")
+  isVerified     Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt DateTime? @map("last_verified_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  country CountryProfile @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([type])
+  @@map("country_education_authorities")
+}
+
+model CountryVisaSource {
+  id             String   @id @default(uuid())
+  countryId      String   @map("country_id")
+  sourceName     String   @map("source_name")
+  sourceUrl      String?  @map("source_url")
+  visaType       String   @map("visa_type")
+  description    String?
+  processingTime String?  @map("processing_time")
+  requirements   String?
+  isVerified     Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt DateTime? @map("last_verified_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  country CountryProfile @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([visaType])
+  @@map("country_visa_sources")
+}
+
+model CountryReportingAuthority {
+  id             String   @id @default(uuid())
+  countryId      String   @map("country_id")
+  name           String
+  type           String
+  description    String?
+  websiteUrl     String?  @map("website_url")
+  contactEmail   String?  @map("contact_email")
+  contactPhone   String?  @map("contact_phone")
+  isVerified     Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt DateTime? @map("last_verified_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  country CountryProfile @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([type])
+  @@map("country_reporting_authorities")
+}
+
+model CountryCostInfo {
+  id                String   @id @default(uuid())
+  countryId         String   @map("country_id")
+  category          String
+  subcategory       String?
+  averageCost       Decimal  @map("average_cost")
+  currency          String
+  period            String?
+  sourceName        String?  @map("source_name")
+  sourceUrl         String?  @map("source_url")
+  isVerified        Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt    DateTime? @map("last_verified_at")
+  year              Int?
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  country CountryProfile @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([category])
+  @@map("country_cost_info")
+}
+
+model CountryScholarship {
+  id               String   @id @default(uuid())
+  countryId        String   @map("country_id")
+  name             String
+  provider         String
+  type             String
+  amount           String?
+  currency         String?
+  coverage         String?
+  eligibility      String?
+  deadline         DateTime?
+  applicationUrl   String?  @map("application_url")
+  description      String?
+  isVerified       Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt   DateTime? @map("last_verified_at")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  country CountryProfile @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([type])
+  @@index([deadline])
+  @@map("country_scholarships")
+}
+
+model CountryAdmissionRequirement {
+  id              String   @id @default(uuid())
+  countryId       String   @map("country_id")
+  level           String
+  requirementType String   @map("requirement_type")
+  description     String
+  details         String?
+  isVerified      Boolean  @default(false) @map("is_verified")
+  lastVerifiedAt  DateTime? @map("last_verified_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  country CountryProfile @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([level])
+  @@index([requirementType])
+  @@map("country_admission_requirements")
+}
+
+// ============================================
+// PHASE 17: FINANCIAL EDUCATION INTELLIGENCE
+// ============================================
+
+model EducationCostPlan {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  title           String
+  countryId       String?  @map("country_id")
+  targetCountry   String?  @map("target_country")
+  targetUniversity String? @map("target_university")
+  studyLevel      String?  @map("study_level")
+  studyField      String?  @map("study_field")
+  startDate       DateTime? @map("start_date")
+  status          String   @default("draft")
+  notes           String?
+  currency        String   @default("USD")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items EducationCostItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@map("education_cost_plans")
+}
+
+model EducationCostItem {
+  id               String   @id @default(uuid())
+  planId           String   @map("plan_id")
+  category         String
+  label            String
+  description      String?
+  amount           Decimal
+  currency         String
+  verificationStatus String @map("verification_status")
+  sourceType       String?  @map("source_type")
+  sourceUrl        String?  @map("source_url")
+  isRequired       Boolean  @default(true) @map("is_required")
+  quantity         Int      @default(1)
+  notes            String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  plan EducationCostPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@index([category])
+  @@index([verificationStatus])
+  @@map("education_cost_items")
+}
+
+// ==================== Government Schemes for Pakistani Students ====================
+
+model GovernmentScheme {
+  id                    String             @id @default(uuid())
+  name                  String
+  provider              String
+  category              String
+  description           String?
+  eligibilityCriteria   String?            @map("eligibility_criteria")
+  applicationProcess    String?            @map("application_process")
+  deadline              DateTime?
+  amount                Decimal?
+  currency              String?
+  website               String?
+  province              String?
+  targetAudience        String?            @map("target_audience")
+  status                String             @default("active")
+  sourceUrl             String?            @map("source_url")
+  sourceName            String?            @map("source_name")
+  verificationStatus    String             @default("pending") @map("verification_status")
+  lastVerifiedAt        DateTime?          @map("last_verified_at")
+  createdAt             DateTime           @default(now()) @map("created_at")
+  updatedAt             DateTime           @updatedAt @map("updated_at")
+
+  requirements SchemeRequirement[]
+  documents    SchemeDocument[]
+
+  @@index([category])
+  @@index([province])
+  @@index([status])
+  @@index([verificationStatus])
+  @@map("government_schemes")
+}
+
+model SchemeRequirement {
+  id               String   @id @default(uuid())
+  schemeId         String   @map("scheme_id")
+  requirementType  String   @map("requirement_type")
+  requirementValue String   @map("requirement_value")
+  isRequired       Boolean  @default(true) @map("is_required")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  scheme GovernmentScheme @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+
+  @@index([schemeId])
+  @@map("scheme_requirements")
+}
+
+model SchemeDocument {
+  id           String   @id @default(uuid())
+  schemeId     String   @map("scheme_id")
+  documentName String   @map("document_name")
+  description  String?
+  isRequired   Boolean  @default(true) @map("is_required")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  scheme GovernmentScheme @relation(fields: [schemeId], references: [id], onDelete: Cascade)
+
+  @@index([schemeId])
+  @@map("scheme_documents")
+}
+
+// ==================== Free Course Institutions ====================
+
+model FreeInstitution {
+  id                    String             @id @default(uuid())
+  name                  String
+  type                  String
+  description           String?
+  website               String?
+  location              String?
+  province              String?
+  contactEmail          String?            @map("contact_email")
+  contactPhone          String?            @map("contact_phone")
+  eligibilityCriteria   String?            @map("eligibility_criteria")
+  applicationProcess    String?            @map("application_process")
+  status                String             @default("active")
+  sourceUrl             String?            @map("source_url")
+  sourceName            String?            @map("source_name")
+  verificationStatus    String             @default("pending") @map("verification_status")
+  lastVerifiedAt        DateTime?          @map("last_verified_at")
+  createdAt             DateTime           @default(now()) @map("created_at")
+  updatedAt             DateTime           @updatedAt @map("updated_at")
+
+  courses    InstitutionCourse[]
+  entryTests InstitutionEntryTest[]
+  documents  InstitutionDocument[]
+
+  @@index([type])
+  @@index([province])
+  @@index([verificationStatus])
+  @@map("free_institutions")
+}
+
+model InstitutionCourse {
+  id            String   @id @default(uuid())
+  institutionId String   @map("institution_id")
+  name          String
+  duration      String?
+  description   String?
+  fee           String?
+  certification String?
+  batchStart    String?  @map("batch_start")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  institution FreeInstitution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@index([institutionId])
+  @@map("institution_courses")
+}
+
+model InstitutionEntryTest {
+  id                String   @id @default(uuid())
+  institutionId     String   @map("institution_id")
+  testName          String   @map("test_name")
+  type              String?
+  totalMarks        Int?     @map("total_marks")
+  passingMarks      Int?     @map("passing_marks")
+  passingPercentage String?  @map("passing_percentage")
+  syllabus          String?
+  preparationTips   String?  @map("preparation_tips")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  institution FreeInstitution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@index([institutionId])
+  @@map("institution_entry_tests")
+}
+
+model InstitutionDocument {
+  id           String   @id @default(uuid())
+  institutionId String  @map("institution_id")
+  documentName String   @map("document_name")
+  description  String?
+  isRequired   Boolean  @default(true) @map("is_required")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  institution FreeInstitution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@index([institutionId])
+  @@map("institution_documents")
+}
+
+// ===== INTERNSHIP / FELLOWSHIP / HOUSE JOB SYSTEM =====
+model Internship {
+  id                  String   @id @default(uuid())
+  title               String
+  organization        String
+  country             String
+  city                String?
+  type                String   // internship, fellowship, house_job, clerkship, observership
+  field               String   // medicine, engineering, CS, business, law, research, etc.
+  paidType            String   // paid, unpaid, stipend, conditional
+  stipendAmount       String?  // e.g. "PKR 30,000/month", "USD 5,000/month"
+  duration            String   // e.g. "3 months", "6 months", "1 year"
+  mode                String   @default("onsite") // onsite, remote, hybrid
+  eligibility         String   // who can apply
+  requirements        String   // documents, qualifications needed
+  documentsRequired   String?  // specific list of documents to submit
+  benefits            String   // what the intern gains
+  applicationUrl      String?  @map("application_url")
+  deadline            DateTime?
+  description         String?
+  isVerified          Boolean  @default(false) @map("is_verified")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@index([country])
+  @@index([type])
+  @@index([field])
+  @@index([paidType])
+  @@map("internships")
+}
+
+// ===== CM PROGRAMS (All Provinces) =====
+model CMProgram {
+  id              String   @id @default(uuid())
+  name            String
+  province        String   // Punjab, Sindh, KPK, Balochistan, Islamabad
+  category        String   // scholarship, laptop, internship, health, housing, skill, financial_aid
+  description     String
+  eligibility     String
+  benefits        String
+  howToApply      String   @map("how_to_apply")
+  deadline        DateTime?
+  officialUrl     String?  @map("official_url")
+  targetAudience  String   @map("target_audience")  // students, youth, women, farmers, etc.
+  status          String   @default("active")  // active, upcoming, closed
+  isVerified      Boolean  @default(false) @map("is_verified")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@index([province])
+  @@index([category])
+  @@index([status])
+  @@map("cm_programs")
+}
+
+// ===== DEPARTMENTS =====
+model Department {
+  id              String   @id @default(uuid())
+  universityId    String   @map("university_id")
+  name            String
+  head            String?
+  description     String?
+  totalCourses    Int      @default(0) @map("total_courses")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@unique([universityId, name])
+  @@index([universityId])
+  @@map("departments")
+}

@@ -1,0 +1,787 @@
+export interface PhoneAnalysis {
+  number: string;
+  normalized: string;
+  isValid: boolean;
+  country: string;
+  countryCode: string;
+  countryEmoji: string;
+  network: {
+    name: string;
+    mcc: string;
+    mnc: string;
+    type: 'mobile' | 'landline' | 'voip' | 'premium' | 'unknown';
+  };
+  region: {
+    province: string;
+    city: string;
+    areaCode: string;
+  };
+  riskScore: number;
+  riskLevel: 'safe' | 'low' | 'medium' | 'high' | 'critical';
+  indicators: Array<{
+    type: 'info' | 'warning' | 'danger';
+    label: string;
+    value: string;
+  }>;
+  spamReports: {
+    reported: boolean;
+    reportCount: number;
+    categories: string[];
+  };
+  socialPresence: {
+    possible: boolean;
+    platforms: string[];
+  };
+  recommendation: string;
+  complaintPath?: {
+    authority: string;
+    helpline: string;
+    website: string;
+  };
+  liveData?: {
+    source: string;
+    lineType: string;
+    carrier: string;
+    location: string;
+    isWhatsApp: boolean;
+    isVoIP: boolean;
+    isRegistered: boolean;
+    isRoaming: boolean;
+  };
+  analysisConfidence?: {
+    level: 'high' | 'medium' | 'low';
+    percentage: number;
+    factors: string[];
+  };
+  detailedAnalysis?: {
+    numberValidity: string;
+    networkReliability: string;
+    locationInfo: string;
+    riskAssessment: string;
+    recommendation: string;
+  };
+}
+
+interface CountryConfig {
+  name: string;
+  code: string;
+  emoji: string;
+  dialFormat: RegExp;
+  dialLength: number;
+  networks: Record<string, { name: string; type: 'mobile' | 'landline' | 'voip' | 'premium' | 'unknown'; prefixes: string[] }>;
+  premiumPrefixes: string[];
+  scamPrefixes: string[];
+  regions?: Record<string, string>;
+  complaintAuthority?: string;
+  complaintHelpline?: string;
+  complaintWebsite?: string;
+}
+
+const COUNTRIES: Record<string, CountryConfig> = {
+  PK: {
+    name: 'Pakistan',
+    code: '+92',
+    emoji: '🇵🇰',
+    dialFormat: /^(0[3-9]\d{8,9}|0\d{9,10})$/,
+    dialLength: 11,
+    networks: {
+      jazz: {
+        name: 'Jazz (Mobilink)',
+        type: 'mobile',
+        prefixes: [
+          '0300', '0301', '0302', '0303', '0304', '0305', '0306', '0307', '0308', '0309',
+        ],
+      },
+      warid_jazz: {
+        name: 'Warid (Jazz)',
+        type: 'mobile',
+        prefixes: ['0320', '0321', '0322', '0323', '0324', '0325', '0326', '0327', '0328', '0329'],
+      },
+      zong: {
+        name: 'Zong',
+        type: 'mobile',
+        prefixes: ['0310', '0311', '0312', '0313', '0314', '0315', '0316', '0317', '0318', '0319', '0370'],
+      },
+      ufone: {
+        name: 'Ufone',
+        type: 'mobile',
+        prefixes: ['0330', '0331', '0332', '0333', '0334', '0335', '0336', '0337', '0338', '0339'],
+      },
+      telenor: {
+        name: 'Telenor',
+        type: 'mobile',
+        prefixes: ['0340', '0341', '0342', '0343', '0344', '0345', '0346', '0347', '0348', '0349'],
+      },
+      scom: {
+        name: 'SCOM (AJK/GB)',
+        type: 'mobile',
+        prefixes: ['0355'],
+      },
+      ptcl_landline: {
+        name: 'PTCL (Landline)',
+        type: 'landline',
+        prefixes: ['021', '042', '041', '044', '051', '061', '081', '045', '046', '047', '043', '048', '049', '053', '054', '055', '056', '057', '058', '059', '062', '063', '064', '065', '066', '067', '068', '069', '071', '072', '082', '083', '084', '085', '086', '087', '088', '089', '091', '092', '093', '094', '095', '096', '097', '099'],
+      },
+      transworld_landline: {
+        name: 'Transworld (Landline)',
+        type: 'landline',
+        prefixes: ['0213', '0214', '0215', '0216', '0217', '0218', '0219'],
+      },
+      nayatel_landline: {
+        name: 'Nayatel (Landline)',
+        type: 'landline',
+        prefixes: ['0511', '0512', '0513', '0514', '0515', '0516', '0517', '0518', '0519'],
+      },
+    },
+    premiumPrefixes: ['0900'],
+    scamPrefixes: ['09001', '09002', '09003', '09004', '09005'],
+    regions: {
+      '021': 'Karachi, Sindh',
+      '042': 'Lahore, Punjab',
+      '041': 'Faisalabad, Punjab',
+      '044': 'Gujranwala, Punjab',
+      '051': 'Islamabad/Rawalpindi, Federal/Punjab',
+      '061': 'Multan, Punjab',
+      '081': 'Quetta, Balochistan',
+      '045': 'Sialkot, Punjab',
+      '046': 'Sargodha, Punjab',
+      '047': 'Gujrat, Punjab',
+      '043': 'Jhang, Punjab',
+      '048': 'Sahiwal, Punjab',
+      '049': 'Rawalpindi, Punjab',
+      '053': 'Bahawalpur, Punjab',
+      '054': 'Dera Ghazi Khan, Punjab',
+      '055': 'Mianwali, Punjab',
+      '056': 'Bhakkar, Punjab',
+      '057': 'Khushab, Punjab',
+      '058': 'Attock, Punjab',
+      '059': 'Jhelum, Punjab',
+      '062': 'Kasur, Punjab',
+      '063': 'Sheikhupura, Punjab',
+      '064': 'Nankana Sahib, Punjab',
+      '065': 'Okara, Punjab',
+      '066': 'Vehari, Punjab',
+      '067': 'Khanewal, Punjab',
+      '068': 'Lodhran, Punjab',
+      '069': 'Pakpattan, Punjab',
+      '071': 'Sukkur, Sindh',
+      '072': 'Hyderabad, Sindh',
+      '082': 'Larkana, Sindh',
+      '083': 'Nawabshah, Sindh',
+      '084': 'Mirpur Khas, Sindh',
+      '085': 'Thatta, Sindh',
+      '086': 'Badin, Sindh',
+      '087': 'Dadu, Sindh',
+      '088': 'Jacobabad, Sindh',
+      '089': 'Shikarpur, Sindh',
+      '091': 'Peshawar, Khyber Pakhtunkhwa',
+      '092': 'Mardan, Khyber Pakhtunkhwa',
+      '093': 'Swat, Khyber Pakhtunkhwa',
+      '094': 'Abbottabad, Khyber Pakhtunkhwa',
+      '095': 'Dera Ismail Khan, Khyber Pakhtunkhwa',
+      '096': 'Kohat, Khyber Pakhtunkhwa',
+      '097': 'Bannu, Khyber Pakhtunkhwa',
+      '099': 'Gilgit/Baltistan',
+    },
+    complaintAuthority: 'NCCIA (National Cyber Crime Investigation Agency)',
+    complaintHelpline: '1991',
+    complaintWebsite: 'https://nccia.gov.pk',
+  },
+  IN: {
+    name: 'India',
+    code: '+91',
+    emoji: '🇮🇳',
+    dialFormat: /^[6-9]\d{9}$/,
+    dialLength: 10,
+    networks: {
+      jio: { name: 'Reliance Jio', type: 'mobile', prefixes: ['6', '7', '8', '9'] },
+      airtel: { name: 'Airtel', type: 'mobile', prefixes: ['6', '7', '8', '9'] },
+      vi: { name: 'Vi (Vodafone Idea)', type: 'mobile', prefixes: ['6', '7', '8', '9'] },
+      bsnl: { name: 'BSNL', type: 'mobile', prefixes: ['6', '7', '8', '9'] },
+    },
+    premiumPrefixes: [],
+    scamPrefixes: [],
+    regions: {},
+    complaintAuthority: 'TRAI (Telecom Regulatory Authority of India)',
+    complaintHelpline: '198',
+    complaintWebsite: 'https://www.trai.gov.in',
+  },
+  US: {
+    name: 'United States',
+    code: '+1',
+    emoji: '🇺🇸',
+    dialFormat: /^[2-9]\d{9}$/,
+    dialLength: 10,
+    networks: {
+      att: { name: 'AT&T', type: 'mobile', prefixes: [] },
+      verizon: { name: 'Verizon', type: 'mobile', prefixes: [] },
+      tmobile: { name: 'T-Mobile', type: 'mobile', prefixes: [] },
+    },
+    premiumPrefixes: ['900'],
+    scamPrefixes: ['900'],
+    complaintAuthority: 'FTC (Federal Trade Commission)',
+    complaintHelpline: '1-877-382-4357',
+    complaintWebsite: 'https://www.ftc.gov',
+  },
+  GB: {
+    name: 'United Kingdom',
+    code: '+44',
+    emoji: '🇬🇧',
+    dialFormat: /^7\d{9}$/,
+    dialLength: 10,
+    networks: {
+      ee: { name: 'EE', type: 'mobile', prefixes: ['7'] },
+      three: { name: 'Three', type: 'mobile', prefixes: ['7'] },
+      vodafone: { name: 'Vodafone UK', type: 'mobile', prefixes: ['7'] },
+      o2: { name: 'O2', type: 'mobile', prefixes: ['7'] },
+    },
+    premiumPrefixes: ['900'],
+    scamPrefixes: ['900'],
+    complaintAuthority: 'Action Fraud',
+    complaintHelpline: '0300 123 2040',
+    complaintWebsite: 'https://www.actionfraud.police.uk',
+  },
+  AE: {
+    name: 'United Arab Emirates',
+    code: '+971',
+    emoji: '🇦🇪',
+    dialFormat: /^5[0-9]\d{7}$/,
+    dialLength: 9,
+    networks: {
+      etisalat: { name: 'Etisalat', type: 'mobile', prefixes: ['50', '51', '52', '55', '56'] },
+      du: { name: 'du', type: 'mobile', prefixes: ['54', '55', '56', '58'] },
+    },
+    premiumPrefixes: ['900'],
+    scamPrefixes: ['900'],
+    complaintAuthority: 'TDRA (Telecommunications & Digital Government Regulatory Authority)',
+    complaintHelpline: '800 11111',
+    complaintWebsite: 'https://tdra.gov.ae',
+  },
+  SA: {
+    name: 'Saudi Arabia',
+    code: '+966',
+    emoji: '🇸🇦',
+    dialFormat: /^5\d{8}$/,
+    dialLength: 9,
+    networks: {
+      stc: { name: 'STC', type: 'mobile', prefixes: ['50', '51', '53', '55'] },
+      mobily: { name: 'Mobily', type: 'mobile', prefixes: ['54', '56'] },
+      zain: { name: 'Zain KSA', type: 'mobile', prefixes: ['57', '58', '59'] },
+    },
+    premiumPrefixes: ['9200'],
+    scamPrefixes: ['9200'],
+    complaintAuthority: 'CITC (Communications, Space & Technology Commission)',
+    complaintHelpline: '1910',
+    complaintWebsite: 'https://www.citc.gov.sa',
+  },
+  CN: {
+    name: 'China',
+    code: '+86',
+    emoji: '🇨🇳',
+    dialFormat: /^1[3-9]\d{9}$/,
+    dialLength: 11,
+    networks: {
+      cmcc: { name: 'China Mobile', type: 'mobile', prefixes: ['134', '135', '136', '137', '138', '139', '147', '148', '150', '151', '152', '157', '158', '159', '165', '172', '178', '182', '183', '184', '187', '188', '195', '197', '198'] },
+      cucc: { name: 'China Unicom', type: 'mobile', prefixes: ['130', '131', '132', '145', '146', '155', '156', '166', '167', '171', '175', '176', '185', '186', '196'] },
+      ctcc: { name: 'China Telecom', type: 'mobile', prefixes: ['133', '149', '153', '173', '174', '177', '180', '181', '189', '190', '191', '193', '199'] },
+    },
+    premiumPrefixes: ['168', '160'],
+    scamPrefixes: ['168', '160'],
+    complaintAuthority: 'MIIT (Ministry of Industry and Information Technology)',
+    complaintHelpline: '12321',
+    complaintWebsite: 'https://www.miit.gov.cn',
+  },
+  TR: {
+    name: 'Turkey',
+    code: '+90',
+    emoji: '🇹🇷',
+    dialFormat: /^5\d{9}$/,
+    dialLength: 10,
+    networks: {
+      turkcell: { name: 'Turkcell', type: 'mobile', prefixes: ['530', '531', '532', '533', '534', '535', '536', '537', '538', '539'] },
+      vodafone_tr: { name: 'Vodafone Turkey', type: 'mobile', prefixes: ['540', '541', '542', '543', '544', '545', '546'] },
+      turk_telekom: { name: 'Türk Telekom', type: 'mobile', prefixes: ['550', '551', '552', '553', '554', '555', '556'] },
+    },
+    premiumPrefixes: ['900'],
+    scamPrefixes: ['900'],
+    complaintAuthority: 'BTK (Information and Communication Technologies Authority)',
+    complaintHelpline: '120',
+    complaintWebsite: 'https://www.btk.gov.tr',
+  },
+  DE: {
+    name: 'Germany',
+    code: '+49',
+    emoji: '🇩🇪',
+    dialFormat: /^1[5-7]\d{8,9}$/,
+    dialLength: 10,
+    networks: {
+      telekom: { name: 'Deutsche Telekom', type: 'mobile', prefixes: ['151', '160', '161', '162', '170', '171', '172', '173', '174', '175'] },
+      vodafone_de: { name: 'Vodafone Germany', type: 'mobile', prefixes: ['152', '163', '172', '173'] },
+      o2_de: { name: 'O2 Germany', type: 'mobile', prefixes: ['155', '156', '157', '159', '166', '167', '176', '177', '178', '179'] },
+    },
+    premiumPrefixes: ['0900'],
+    scamPrefixes: ['0900'],
+    complaintAuthority: 'BNetzA (Federal Network Agency)',
+    complaintHelpline: '0800 1234567',
+    complaintWebsite: 'https://www.bnetza.de',
+  },
+  FR: {
+    name: 'France',
+    code: '+33',
+    emoji: '🇫🇷',
+    dialFormat: /^[6-7]\d{8}$/,
+    dialLength: 9,
+    networks: {
+      orange: { name: 'Orange', type: 'mobile', prefixes: ['6', '7'] },
+      sfr: { name: 'SFR', type: 'mobile', prefixes: ['6', '7'] },
+      bouygues: { name: 'Bouygues Telecom', type: 'mobile', prefixes: ['6', '7'] },
+      free: { name: 'Free Mobile', type: 'mobile', prefixes: ['6', '7'] },
+    },
+    premiumPrefixes: ['0900'],
+    scamPrefixes: ['0900'],
+    complaintAuthority: 'ARCEP',
+    complaintHelpline: '3939',
+    complaintWebsite: 'https://www.arcep.fr',
+  },
+  JP: {
+    name: 'Japan',
+    code: '+81',
+    emoji: '🇯🇵',
+    dialFormat: /^[7-9]0\d{8}$/,
+    dialLength: 10,
+    networks: {
+      ntt_docomo: { name: 'NTT Docomo', type: 'mobile', prefixes: ['70', '80', '90'] },
+      au: { name: 'au (KDDI)', type: 'mobile', prefixes: ['70', '80', '90'] },
+      softbank: { name: 'SoftBank', type: 'mobile', prefixes: ['70', '80', '90'] },
+    },
+    premiumPrefixes: ['0900', '1239'],
+    scamPrefixes: ['0900', '1239'],
+    complaintAuthority: 'NPAT (National Police Agency)',
+    complaintHelpline: '#9110',
+    complaintWebsite: 'https://www.npa.go.jp',
+  },
+};
+
+const KNOWN_SPAM_REPORTS: Record<string, { count: number; categories: string[] }> = {
+  // Demo/sample spam numbers for testing — in production, integrate with a real spam database
+  // such as Truecaller API, SpamCalls, or community-maintained spam lists
+  '03001234567': { count: 45, categories: ['SMS Phishing', 'Fake Prize'] },
+  '03211234567': { count: 32, categories: ['Call Fraud', 'Bank Scam'] },
+  '03451234567': { count: 28, categories: ['SMS Phishing', 'Account Verify'] },
+  '03011234567': { count: 15, categories: ['Job Scam'] },
+  '03331234567': { count: 22, categories: ['Romance Scam', 'Social Media'] },
+  '03101234567': { count: 18, categories: ['Lottery Scam'] },
+  '03701234567': { count: 12, categories: ['Crypto Scam'] },
+  '03501234567': { count: 8, categories: ['Fake E-commerce'] },
+  '09001234567': { count: 65, categories: ['Premium Rate Fraud', 'Subscription Trap'] },
+  '09002345678': { count: 48, categories: ['Premium Rate Fraud'] },
+  '+18001234567': { count: 55, categories: ['IRS Scam', 'Government Impersonation'] },
+  '+447911123456': { count: 38, categories: ['HMRC Scam', 'Tax Fraud'] },
+  '+917012345678': { count: 42, categories: ['KYC Scam', 'Bank Fraud'] },
+};
+
+function detectCountry(normalized: string): { country: CountryConfig | null; localNumber: string } {
+  if (normalized.startsWith('+')) {
+    for (const [, config] of Object.entries(COUNTRIES)) {
+      const codeDigits = config.code.replace('+', '');
+      if (normalized.startsWith('+' + codeDigits)) {
+        return { country: config, localNumber: normalized.slice(codeDigits.length + 1) };
+      }
+    }
+  }
+
+  if (/^0[3-9]\d{8,9}$/.test(normalized)) {
+    return { country: COUNTRIES['PK'], localNumber: normalized };
+  }
+
+  return { country: null, localNumber: normalized };
+}
+
+function normalizeNumber(input: string): string {
+  let cleaned = input.replace(/[\s\-\(\)\.]/g, '');
+
+  if (cleaned.startsWith('00')) {
+    cleaned = '+' + cleaned.slice(2);
+  }
+
+  if (!cleaned.startsWith('+') && cleaned.length >= 10) {
+    if (cleaned.startsWith('0')) {
+      cleaned = cleaned;
+    } else {
+      cleaned = '+' + cleaned;
+    }
+  }
+
+  return cleaned;
+}
+
+function detectNetwork(country: CountryConfig, localNumber: string): PhoneAnalysis['network'] {
+  const prefix3 = localNumber.slice(0, 3);
+  const prefix2 = localNumber.slice(0, 2);
+  const prefix1 = localNumber.slice(0, 1);
+
+  // Real MCC codes by country
+  const MCC_MAP: Record<string, string> = {
+    PK: '410', IN: '404', US: '310', GB: '234', AE: '424',
+    SA: '420', CN: '460', TR: '286', DE: '262', FR: '208', JP: '440',
+  };
+  const mcc = MCC_MAP[Object.entries(COUNTRIES).find(([, c]) => c === country)?.[0] || ''] || '000';
+
+  for (const [, network] of Object.entries(country.networks)) {
+    if (network.prefixes.some((p) => localNumber.startsWith(p))) {
+      return {
+        name: network.name,
+        mcc,
+        mnc: prefix3 || prefix2,
+        type: network.type,
+      };
+    }
+  }
+
+  for (const prefix of country.premiumPrefixes) {
+    if (localNumber.startsWith(prefix) || localNumber.includes(prefix)) {
+      return { name: 'Premium Rate', mcc, mnc: prefix, type: 'premium' };
+    }
+  }
+
+  return { name: 'Unknown', mcc, mnc: prefix3 || prefix2 || prefix1, type: 'unknown' };
+}
+
+function detectRegion(country: CountryConfig, localNumber: string): PhoneAnalysis['region'] {
+  // Check if it's a landline number (starts with 0 but not 03)
+  const isLandline = localNumber.startsWith('0') && !localNumber.startsWith('03');
+  
+  // MOBILE NUMBERS: Always nationwide (not geographically bound)
+  if (!isLandline) {
+    // For mobile numbers, we can't determine a specific city
+    // They are nationwide and can be used anywhere in the country
+    if (country.name === 'Pakistan') {
+      return { 
+        province: 'Pakistan', 
+        city: 'Nationwide (Mobile Number)', 
+        areaCode: localNumber.slice(0, 4) 
+      };
+    }
+    return { 
+      province: country.name, 
+      city: 'Nationwide (Mobile Number)', 
+      areaCode: localNumber.slice(0, 4) 
+    };
+  }
+  
+  // LANDLINE NUMBERS: Geographically bound to specific region
+  if (!country.regions || Object.keys(country.regions).length === 0) {
+    return { province: country.name, city: 'Landline Region', areaCode: localNumber.slice(0, 4) };
+  }
+
+  // Try to match landline area code to region
+  const prefix3 = localNumber.slice(0, 3);
+  const prefix2 = localNumber.slice(0, 2);
+  const prefix1 = localNumber.slice(0, 1);
+
+  const city = country.regions[prefix3] || country.regions[prefix2] || country.regions[prefix1] || 'Landline Region';
+
+  return {
+    province: country.name,
+    city,
+    areaCode: prefix3 || prefix2 || prefix1,
+  };
+}
+
+function analyzeScamPatterns(country: CountryConfig, localNumber: string): Array<{ type: 'warning' | 'danger'; label: string; value: string }> {
+  const indicators: Array<{ type: 'warning' | 'danger'; label: string; value: string }> = [];
+
+  for (const prefix of country.scamPrefixes) {
+    if (localNumber.startsWith(prefix)) {
+      indicators.push({
+        type: 'danger',
+        label: 'Known Scam Pattern',
+        value: `Number matches ${prefix} prefix — common in fraud campaigns`,
+      });
+    }
+  }
+
+  for (const prefix of country.premiumPrefixes) {
+    if (localNumber.startsWith(prefix)) {
+      indicators.push({
+        type: 'danger',
+        label: 'Premium Rate Number',
+        value: `This is a premium rate number — charges apply per call/SMS`,
+      });
+    }
+  }
+
+  return indicators;
+}
+
+function checkSpamReports(normalized: string): PhoneAnalysis['spamReports'] {
+  const report = KNOWN_SPAM_REPORTS[normalized];
+
+  if (report) {
+    return { reported: true, reportCount: report.count, categories: report.categories };
+  }
+
+  return { reported: false, reportCount: 0, categories: [] };
+}
+
+function calculateRiskScore(
+  isValid: boolean,
+  networkType: string,
+  scamPatterns: Array<{ type: string }>,
+  spamReports: PhoneAnalysis['spamReports'],
+  country: CountryConfig | null,
+): { score: number; level: PhoneAnalysis['riskLevel'] } {
+  let score = 0;
+
+  if (!isValid) score += 50;
+  if (networkType === 'unknown') score += 10;
+  if (!country) score += 20;
+
+  for (const pattern of scamPatterns) {
+    if (pattern.type === 'danger') score += 30;
+    else score += 15;
+  }
+
+  if (spamReports.reported) {
+    score += Math.min(spamReports.reportCount * 2, 40);
+  }
+
+  score = Math.min(score, 100);
+
+  let level: PhoneAnalysis['riskLevel'] = 'safe';
+  if (score >= 80) level = 'critical';
+  else if (score >= 60) level = 'high';
+  else if (score >= 40) level = 'medium';
+  else if (score >= 20) level = 'low';
+
+  return { score, level };
+}
+
+export function analyzePhoneNumber(input: string, liveData?: import('./phone-lookup').LivePhoneData | null): PhoneAnalysis {
+  const normalized = normalizeNumber(input);
+  const { country, localNumber } = detectCountry(normalized);
+
+  if (!country) {
+    const { score, level } = calculateRiskScore(false, 'unknown', [], { reported: false, reportCount: 0, categories: [] }, null);
+    return {
+      number: input,
+      normalized,
+      isValid: false,
+      country: 'Unknown',
+      countryCode: 'Unknown',
+      countryEmoji: '🌍',
+      network: { name: 'Unknown', mcc: '000', mnc: '000', type: 'unknown' },
+      region: { province: 'Unknown', city: 'Unknown', areaCode: '' },
+      riskScore: score,
+      riskLevel: level,
+      indicators: [
+        { type: 'danger', label: 'Country', value: 'Unable to identify country from number' },
+        { type: 'warning', label: 'Format', value: 'Number format not recognized' },
+      ],
+      spamReports: { reported: false, reportCount: 0, categories: [] },
+      socialPresence: { possible: false, platforms: [] },
+      recommendation: 'UNRECOGNIZED: Unable to identify this number. Verify the sender through other means before engaging.',
+    };
+  }
+
+  const isValid = country.dialFormat.test(localNumber);
+  const network = detectNetwork(country, localNumber);
+  const region = detectRegion(country, localNumber);
+  const scamPatterns = analyzeScamPatterns(country, localNumber);
+  const spamReports = checkSpamReports(normalized);
+
+  let finalNetwork = network;
+  let finalRegion = region;
+  let finalValid = isValid;
+  let extraIndicators: PhoneAnalysis['indicators'] = [];
+
+  if (liveData) {
+    if (liveData.carrier && liveData.carrier !== 'Unknown') {
+      finalNetwork = { ...finalNetwork, name: liveData.carrier };
+    }
+    if (liveData.lineType) {
+      const lt = liveData.lineType.toLowerCase();
+      if (lt === 'mobile') finalNetwork = { ...finalNetwork, type: 'mobile' };
+      else if (lt === 'landline') finalNetwork = { ...finalNetwork, type: 'landline' };
+      else if (lt === 'voip' || lt === 'virtual') finalNetwork = { ...finalNetwork, type: 'voip' };
+    }
+    if (liveData.location && liveData.location !== 'Unknown') {
+      finalRegion = { ...finalRegion, city: liveData.location };
+    }
+    if (liveData.isValid !== undefined && !input.startsWith('0')) {
+      finalValid = liveData.isValid;
+    }
+    if (liveData.isVoIP) {
+      extraIndicators.push({ type: 'warning', label: 'VoIP Detected', value: 'This number uses Voice over IP — commonly used in scams' });
+    }
+    if (liveData.isRoaming) {
+      extraIndicators.push({ type: 'warning', label: 'Roaming', value: 'Number is currently roaming — location may be different from registration' });
+    }
+    extraIndicators.push({ type: 'info', label: 'Data Source', value: `Live data from ${liveData.source}` });
+  }
+
+  const { score: riskScore, level: riskLevel } = calculateRiskScore(finalValid, finalNetwork.type, scamPatterns, spamReports, country);
+
+  const indicators: PhoneAnalysis['indicators'] = [
+    { type: 'info', label: 'Country', value: `${country.emoji} ${country.name} (${country.code})` },
+    { type: 'info', label: 'Network', value: finalNetwork.name + (liveData ? ' (verified)' : ' (prefix-based)') },
+    { type: 'info', label: 'Type', value: finalNetwork.type },
+    { type: 'info', label: 'Region', value: finalRegion.city + (liveData?.location ? ' (live)' : '') },
+  ];
+
+  if (!finalValid) {
+    indicators.push({ type: 'danger', label: 'Format', value: `Invalid ${country.name} phone number format` });
+  }
+
+  if (finalNetwork.type === 'unknown') {
+    indicators.push({ type: 'warning', label: 'Network', value: 'Network not recognized' });
+  }
+
+  for (const pattern of scamPatterns) {
+    indicators.push({ type: pattern.type, label: pattern.label, value: pattern.value });
+  }
+
+  if (spamReports.reported) {
+    indicators.push({
+      type: 'danger',
+      label: 'Spam Reports',
+      value: `${spamReports.reportCount} reports — ${spamReports.categories.join(', ')}`,
+    });
+  }
+
+  indicators.push(...extraIndicators);
+
+  // Build verification platforms based on actual live data
+  const platforms: string[] = [];
+  if (liveData?.isWhatsApp) {
+    platforms.push('WhatsApp (verified active)');
+  }
+  if (liveData) {
+    platforms.push(`Carrier: ${liveData.carrier} (${liveData.source})`);
+  }
+  platforms.push('Google (search the number)');
+  platforms.push('Truecaller');
+
+  const socialPresence = {
+    possible: platforms.length > 0,
+    platforms,
+  };
+
+  let recommendation = '';
+  if (riskLevel === 'critical') {
+    recommendation = `HIGH RISK: This ${country.name} number has been flagged. Do NOT engage. Block and report to ${country.complaintAuthority}.`;
+  } else if (riskLevel === 'high') {
+    recommendation = `SUSPICIOUS: This ${country.name} number shows red flags. Verify the sender before responding.`;
+  } else if (riskLevel === 'medium') {
+    recommendation = `CAUTION: Some indicators suggest caution. Verify the sender identity before sharing personal information.`;
+  } else if (riskLevel === 'low') {
+    recommendation = 'LOW RISK: This number appears to be from a known network. Standard precautions apply.';
+  } else {
+    recommendation = `This ${country.name} number appears safe based on available data. Standard precautions apply — never share OTPs or PINs.`;
+  }
+
+  let complaintPath: PhoneAnalysis['complaintPath'] | undefined;
+  if ((riskLevel === 'high' || riskLevel === 'critical') && country.complaintAuthority) {
+    complaintPath = {
+      authority: country.complaintAuthority,
+      helpline: country.complaintHelpline || 'N/A',
+      website: country.complaintWebsite || '',
+    };
+  }
+
+  // Calculate analysis confidence
+  const confidenceFactors: string[] = [];
+  let confidenceScore = 0;
+
+  if (finalValid) {
+    confidenceScore += 25;
+    confidenceFactors.push('Valid number format');
+  }
+  if (liveData) {
+    confidenceScore += 30;
+    confidenceFactors.push('Live data verified');
+    if (liveData.carrier && liveData.carrier !== 'Unknown') {
+      confidenceScore += 20;
+      confidenceFactors.push('Carrier confirmed');
+    }
+    if (liveData.isRegistered) {
+      confidenceScore += 10;
+      confidenceFactors.push('Number is registered');
+    }
+  } else {
+    confidenceScore += 15;
+    confidenceFactors.push('Prefix-based detection only');
+  }
+  if (finalNetwork.name !== 'Unknown') {
+    confidenceScore += 15;
+    confidenceFactors.push('Network identified');
+  }
+  if (!spamReports.reported) {
+    confidenceScore += 10;
+    confidenceFactors.push('No spam reports');
+  }
+  if (scamPatterns.length === 0) {
+    confidenceScore += 10;
+    confidenceFactors.push('No scam patterns detected');
+  }
+
+  const confidenceLevel = confidenceScore >= 80 ? 'high' : confidenceScore >= 50 ? 'medium' : 'low';
+
+  // Detailed analysis
+  const isLandline = input.startsWith('0') && !input.startsWith('03');
+  const detailedAnalysis = {
+    numberValidity: finalValid
+      ? `✅ Number format is valid for ${country.name}`
+      : `❌ Number format is invalid for ${country.name}`,
+    networkReliability: liveData?.carrier && liveData.carrier !== 'Unknown'
+      ? `✅ Network confirmed via live lookup: ${liveData.carrier}`
+      : `⚠️ Network detected via prefix matching: ${finalNetwork.name} (may be ported)`,
+    locationInfo: isLandline
+      ? `✅ Landline registered in: ${finalRegion.city}`
+      : `ℹ️ Mobile number — registered nationwide (not tied to specific city)`,
+    riskAssessment: riskLevel === 'safe' || riskLevel === 'low'
+      ? `✅ Low risk score (${riskScore}/100) — appears safe`
+      : riskLevel === 'medium'
+      ? `⚠️ Medium risk score (${riskScore}/100) — exercise caution`
+      : `❌ High risk score (${riskScore}/100) — suspicious activity detected`,
+    recommendation: riskLevel === 'safe' || riskLevel === 'low'
+      ? 'This number appears safe. Standard precautions apply — never share OTPs or personal information.'
+      : riskLevel === 'medium'
+      ? 'Verify the sender identity before sharing any personal information.'
+      : 'Do NOT engage with this number. Block and report if suspicious.',
+  };
+
+  return {
+    number: input,
+    normalized,
+    isValid: finalValid,
+    country: country.name,
+    countryCode: country.code,
+    countryEmoji: country.emoji,
+    network: finalNetwork,
+    region: finalRegion,
+    riskScore,
+    riskLevel,
+    indicators,
+    spamReports,
+    socialPresence,
+    recommendation,
+    complaintPath,
+    analysisConfidence: {
+      level: confidenceLevel,
+      percentage: Math.min(confidenceScore, 100),
+      factors: confidenceFactors,
+    },
+    detailedAnalysis,
+    liveData: liveData ? {
+      source: liveData.source,
+      lineType: liveData.lineType,
+      carrier: liveData.carrier,
+      location: liveData.location,
+      isWhatsApp: liveData.isWhatsApp,
+      isVoIP: liveData.isVoIP,
+      isRegistered: liveData.isRegistered,
+      isRoaming: liveData.isRoaming,
+    } : undefined,
+  };
+}
