@@ -19,7 +19,7 @@ export class GeminiProvider extends BaseAIProvider {
 
   /** Models available on Gemini. */
   private static readonly AVAILABLE_MODELS = [
-    'gemini-2.0-flash',
+    'gemini-3.6-flash',
     'gemini-1.5-flash',
     'gemini-1.5-pro',
   ];
@@ -27,7 +27,7 @@ export class GeminiProvider extends BaseAIProvider {
   constructor(config: AIProviderConfig) {
     super(config);
     this.client = new GoogleGenerativeAI(config.apiKey);
-    this.defaultModel = config.defaultModel || 'gemini-2.0-flash';
+    this.defaultModel = config.defaultModel || 'gemini-3.6-flash';
   }
 
   async complete(request: AICompletionRequest): Promise<AICompletionResponse> {
