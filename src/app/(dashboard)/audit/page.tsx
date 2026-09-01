@@ -106,7 +106,7 @@ export default function AuditLogsPage() {
             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
               actionFilter === f.value
                 ? "bg-blue-700 text-white"
-                'bg-white/5 text-gray-400 hover:bg-white/10'
+                : "bg-white/5 text-gray-400 hover:bg-white/10"
             }`}
           >
             {f.label}

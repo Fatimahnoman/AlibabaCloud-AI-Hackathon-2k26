@@ -89,6 +89,21 @@ export default function BudgetPage() {
     fetchData();
   }, []);
 
+  const handleMessageComplete = useCallback((content: string) => {
+    const match = content.match(/```budget_plan\s*\n([\s\S]*?)```/);
+    if (match) {
+      try {
+        const plan = JSON.parse(match[1].trim()) as BudgetPlan;
+        if (plan.allocations && plan.allocations.length > 0) {
+          setBudgetPlan(plan);
+          setApplyResult(null);
+        }
+      } catch {
+        // invalid JSON, ignore
+      }
+    }
+  }, []);
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -126,21 +141,6 @@ export default function BudgetPage() {
       }, {});
 
   const maxCategoryAmount = Math.max(...Object.values(categoryBreakdown), 1);
-
-  const handleMessageComplete = useCallback((content: string) => {
-    const match = content.match(/```budget_plan\s*\n([\s\S]*?)```/);
-    if (match) {
-      try {
-        const plan = JSON.parse(match[1].trim()) as BudgetPlan;
-        if (plan.allocations && plan.allocations.length > 0) {
-          setBudgetPlan(plan);
-          setApplyResult(null);
-        }
-      } catch {
-        // invalid JSON, ignore
-      }
-    }
-  }, []);
 
   const handleApplyBudget = async () => {
     if (!budgetPlan) return;
