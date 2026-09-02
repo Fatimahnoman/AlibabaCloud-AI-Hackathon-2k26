@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       recurringFrequency,
     });
 
-    return successResponse(record);
+    return successResponse(record, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Internal server error';
     return errorResponse(message, 'EXPENSE_CREATE_FAILED', 500);

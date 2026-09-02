@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     const record = await budgetService.addIncome(profile.id, { source, amount, frequency });
-    return successResponse(record);
+    return successResponse(record, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Internal server error';
     return errorResponse(message, 'INCOME_CREATE_FAILED', 500);

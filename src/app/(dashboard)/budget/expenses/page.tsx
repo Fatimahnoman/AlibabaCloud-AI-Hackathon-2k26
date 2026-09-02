@@ -28,6 +28,7 @@ export default function ExpensesPage() {
   const [filterStart, setFilterStart] = useState('');
   const [filterEnd, setFilterEnd] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [currency, setCurrency] = useState('$');
 
   const [formCategory, setFormCategory] = useState('');
   const [formAmount, setFormAmount] = useState('');
@@ -35,10 +36,24 @@ export default function ExpensesPage() {
   const [formDate, setFormDate] = useState(new Date().toISOString().split('T')[0]);
   const [formIsRecurring, setFormIsRecurring] = useState(false);
 
+  const getCurrencySymbol = (cur: string) => {
+    if (cur === 'PKR') return 'Rs ';
+    if (cur === 'EUR') return '\u20ac';
+    if (cur === 'GBP') return '\u00a3';
+    if (cur === 'INR') return '\u20b9';
+    return '$';
+  };
+
   async function fetchExpenses() {
     try {
-      const res = await apiClient.get<{ data: { data: Expense[] } }>('/api/budget/expenses?limit=100');
-      setExpenses(Array.isArray(res.data?.data) ? res.data.data : []);
+      const [expRes, profileRes] = await Promise.all([
+        apiClient.get<{ data: { data: Expense[] } }>('/api/budget/expenses?limit=100'),
+        apiClient.get<{ data: { profile: { currency: string } | null } }>('/api/budget'),
+      ]);
+      setExpenses(Array.isArray(expRes.data?.data) ? expRes.data.data : []);
+      if (profileRes.data?.profile?.currency) {
+        setCurrency(getCurrencySymbol(profileRes.data.profile.currency));
+      }
       setError(null);
     } catch {
       setError('Failed to load expenses');
@@ -139,7 +154,7 @@ export default function ExpensesPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Amount ($)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Amount ({currency})</label>
               <input
                 type="number"
                 step="0.01"
@@ -219,7 +234,7 @@ export default function ExpensesPage() {
                   </td>
                   <td className="px-4 py-3 text-gray-100">{expense.description || '—'}</td>
                   <td className="px-4 py-3 text-gray-500">{new Date(expense.date).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-right font-semibold text-red-600">${expense.amount.toFixed(2)}</td>
+                  <td className="px-4 py-3 text-right font-semibold text-red-600">{currency}{expense.amount.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>

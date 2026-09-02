@@ -66,8 +66,8 @@ export default function BudgetPage() {
   const [isApplying, setIsApplying] = useState(false);
   const [applyResult, setApplyResult] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchData() {
+  const retryFetch = useCallback(async (attempts = 3, delay = 1500) => {
+    for (let i = 0; i < attempts; i++) {
       try {
         const [budgetRes, expensesRes, incomeRes] = await Promise.all([
           apiClient.get<{ data: { profile: unknown; summary: BudgetSummary | null } }>('/api/budget'),
@@ -79,15 +79,28 @@ export default function BudgetPage() {
         setBudgetProfile((budgetRes.data?.profile as BudgetProfile) ?? null);
         setExpenses(Array.isArray(expensesRes.data?.data) ? expensesRes.data.data : []);
         setIncome(Array.isArray(incomeRes.data) ? incomeRes.data : []);
+        setError(null);
+        return;
       } catch {
-        setError('Failed to load budget data');
+        if (i < attempts - 1) {
+          await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+      }
+    }
+    setError('Failed to load budget data');
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        await retryFetch();
       } finally {
         setIsLoading(false);
       }
     }
 
     fetchData();
-  }, []);
+  }, [retryFetch]);
 
   const handleMessageComplete = useCallback((content: string) => {
     const match = content.match(/```budget_plan\s*\n([\s\S]*?)```/);

@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return successResponse(category);
+    return successResponse(category, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Internal server error';
     return errorResponse(message, 'CATEGORY_CREATE_FAILED', 500);

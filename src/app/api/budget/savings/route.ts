@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       monthlyContribution,
     });
 
-    return successResponse(goal);
+    return successResponse(goal, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Internal server error';
     return errorResponse(message, 'SAVINGS_CREATE_FAILED', 500);

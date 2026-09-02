@@ -26,15 +26,30 @@ export default function IncomePage() {
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [currency, setCurrency] = useState('$');
 
   const [formSource, setFormSource] = useState('');
   const [formAmount, setFormAmount] = useState('');
   const [formFrequency, setFormFrequency] = useState('monthly');
 
+  const getCurrencySymbol = (cur: string) => {
+    if (cur === 'PKR') return 'Rs ';
+    if (cur === 'EUR') return '\u20ac';
+    if (cur === 'GBP') return '\u00a3';
+    if (cur === 'INR') return '\u20b9';
+    return '$';
+  };
+
   async function fetchIncome() {
     try {
-      const res = await apiClient.get<{ data: IncomeRecord[] }>('/api/budget/income');
-      setIncomes(Array.isArray(res.data) ? res.data : []);
+      const [incRes, profileRes] = await Promise.all([
+        apiClient.get<{ data: IncomeRecord[] }>('/api/budget/income'),
+        apiClient.get<{ data: { profile: { currency: string } | null } }>('/api/budget'),
+      ]);
+      setIncomes(Array.isArray(incRes.data) ? incRes.data : []);
+      if (profileRes.data?.profile?.currency) {
+        setCurrency(getCurrencySymbol(profileRes.data.profile.currency));
+      }
       setError(null);
     } catch {
       setError('Failed to load income data');
@@ -95,7 +110,7 @@ export default function IncomePage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Amount ($)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Amount ({currency})</label>
               <input
                 type="number"
                 step="0.01"
@@ -155,7 +170,7 @@ export default function IncomePage() {
                       {income.frequency}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right font-semibold text-green-600">${income.amount.toFixed(2)}</td>
+                  <td className="px-4 py-3 text-right font-semibold text-green-600">{currency}{income.amount.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>

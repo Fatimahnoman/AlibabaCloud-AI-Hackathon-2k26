@@ -20,16 +20,31 @@ export default function SavingsPage() {
   const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [currency, setCurrency] = useState('$');
 
   const [formTitle, setFormTitle] = useState('');
   const [formTarget, setFormTarget] = useState('');
   const [formMonthly, setFormMonthly] = useState('');
   const [formDeadline, setFormDeadline] = useState('');
 
+  const getCurrencySymbol = (cur: string) => {
+    if (cur === 'PKR') return 'Rs ';
+    if (cur === 'EUR') return '\u20ac';
+    if (cur === 'GBP') return '\u00a3';
+    if (cur === 'INR') return '\u20b9';
+    return '$';
+  };
+
   async function fetchGoals() {
     try {
-      const res = await apiClient.get<{ data: SavingsGoal[] }>('/api/budget/savings');
-      setGoals(Array.isArray(res.data) ? res.data : []);
+      const [goalRes, profileRes] = await Promise.all([
+        apiClient.get<{ data: SavingsGoal[] }>('/api/budget/savings'),
+        apiClient.get<{ data: { profile: { currency: string } | null } }>('/api/budget'),
+      ]);
+      setGoals(Array.isArray(goalRes.data) ? goalRes.data : []);
+      if (profileRes.data?.profile?.currency) {
+        setCurrency(getCurrencySymbol(profileRes.data.profile.currency));
+      }
       setError(null);
     } catch {
       setError('Failed to load savings goals');
@@ -92,7 +107,7 @@ export default function SavingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Target Amount ($)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Target Amount ({currency})</label>
               <input
                 type="number"
                 step="0.01"
@@ -105,7 +120,7 @@ export default function SavingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Monthly Contribution ($)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-1">Monthly Contribution ({currency})</label>
               <input
                 type="number"
                 step="0.01"
@@ -163,15 +178,15 @@ export default function SavingsPage() {
                 <div className="space-y-1 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-500">Saved</span>
-                    <span className="font-medium text-gray-100">${goal.currentAmount.toFixed(2)}</span>
+                    <span className="font-medium text-gray-100">{currency}{goal.currentAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Target</span>
-                    <span className="font-medium text-gray-100">${goal.targetAmount.toFixed(2)}</span>
+                    <span className="font-medium text-gray-100">{currency}{goal.targetAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Monthly</span>
-                    <span className="font-medium text-gray-100">${goal.monthlyContribution.toFixed(2)}</span>
+                    <span className="font-medium text-gray-100">{currency}{goal.monthlyContribution.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Deadline</span>

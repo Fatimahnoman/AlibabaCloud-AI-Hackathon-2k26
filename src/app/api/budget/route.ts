@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       savingsGoal,
     });
 
-    return successResponse(profile);
+    return successResponse(profile, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Internal server error';
     return errorResponse(message, 'BUDGET_CREATE_FAILED', 500);
