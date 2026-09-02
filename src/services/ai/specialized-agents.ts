@@ -643,14 +643,26 @@ export function getAllAgents(): AgentConfig[] {
 }
 
 export async function searchWeb(query: string): Promise<string> {
+  // Skip web search if API key is not configured
+  if (!process.env.BRAVE_SEARCH_API_KEY) {
+    return '';
+  }
+
   try {
+    // Add 5 second timeout to prevent hanging
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     const response = await fetch(`https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=5`, {
       headers: {
         'Accept': 'application/json',
         'Accept-Encoding': 'gzip',
-        'X-Subscription-Token': process.env.BRAVE_SEARCH_API_KEY || '',
+        'X-Subscription-Token': process.env.BRAVE_SEARCH_API_KEY,
       },
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       return '';
