@@ -591,22 +591,21 @@ async function fetchScholarshipData(): Promise<string> {
     const scholarships = await prisma.scholarship.findMany({
       include: { requirements: true },
       orderBy: { deadline: 'asc' },
+      take: 40, // Limit to prevent timeout on Vercel
     });
 
     if (scholarships.length === 0) return '';
 
     const now = new Date();
-    let data = '\n\n[COMPLETE SCHOLARSHIP DATABASE — Use this data to answer ALL scholarship questions]:\n\n';
+    let data = '\n\n[SCHOLARSHIP DATABASE — Use this data to answer scholarship questions]:\n\n';
 
     // Stats
     const local = scholarships.filter(s => s.category === 'local');
     const intl = scholarships.filter(s => s.category === 'international');
     const active = scholarships.filter(s => s.deadline && new Date(s.deadline) > now);
-    const passed = scholarships.filter(s => s.deadline && new Date(s.deadline) <= now);
-    data += `TOTAL SCHOLARSHIPS: ${scholarships.length} (${local.length} national/Pakistan, ${intl.length} international)\n`;
-    data += `ACTIVE (deadline not passed): ${active.length} | EXPIRED: ${passed.length}\n\n`;
+    data += `TOTAL: ${scholarships.length} (${local.length} national, ${intl.length} international) | ACTIVE: ${active.length}\n\n`;
 
-    // Group by country
+    // Group by country - compact format
     const byCountry: Record<string, typeof scholarships> = {};
     for (const s of scholarships) {
       const key = s.country || 'Unknown';
@@ -615,29 +614,16 @@ async function fetchScholarshipData(): Promise<string> {
     }
 
     for (const [country, schols] of Object.entries(byCountry).sort((a, b) => b[1].length - a[1].length)) {
-      data += `\n=== ${country.toUpperCase()} (${schols.length} scholarships) ===\n`;
+      data += `\n== ${country.toUpperCase()} (${schols.length}) ==\n`;
       for (const s of schols) {
-        const deadlineStr = s.deadline ? new Date(s.deadline).toISOString().split('T')[0] : 'Rolling/No deadline';
+        const deadlineStr = s.deadline ? new Date(s.deadline).toISOString().split('T')[0] : 'Rolling';
         const daysLeft = s.deadline ? Math.ceil((new Date(s.deadline).getTime() - now.getTime()) / 86400000) : null;
-        const statusStr = daysLeft === null ? 'Open' : daysLeft > 0 ? `${daysLeft}d left` : 'Deadline passed';
-        const amountStr = s.amount ? `${s.currency || 'PKR'} ${Number(s.amount).toLocaleString()}/${s.amountFrequency || 'month'}` : 'Amount varies';
+        const statusStr = daysLeft === null ? 'Open' : daysLeft > 0 ? `${daysLeft}d left` : 'Expired';
+        const amountStr = s.amount ? `${s.currency || 'PKR'} ${Number(s.amount).toLocaleString()}` : 'Varies';
 
-        data += `\n--- ${s.name} ---\n`;
-        data += `Provider: ${s.provider} | Country: ${s.country || 'N/A'} | Type: ${s.category || 'N/A'}\n`;
-        data += `Amount: ${amountStr} | Deadline: ${deadlineStr} (${statusStr})\n`;
-        if (s.eligibilityCriteria) data += `Eligibility: ${s.eligibilityCriteria}\n`;
-        if (s.applicationProcess) data += `How to Apply: ${s.applicationProcess}\n`;
-        if (s.documentsRequired) data += `Documents: ${s.documentsRequired}\n`;
-        if (s.contactInfo) data += `Contact: ${s.contactInfo}\n`;
-        if (s.sourceUrl) data += `Website: ${s.sourceUrl}\n`;
-        if (s.description) data += `Description: ${s.description}\n`;
-
-        if (s.requirements.length > 0) {
-          data += `Requirements:\n`;
-          for (const r of s.requirements) {
-            data += `  - [${r.isRequired ? 'REQUIRED' : 'OPTIONAL'}] ${r.requirementType}: ${r.requirementValue}\n`;
-          }
-        }
+        data += `• ${s.name} | ${amountStr} | ${deadlineStr} (${statusStr})`;
+        if (s.eligibilityCriteria) data += ` | ${s.eligibilityCriteria.substring(0, 100)}`;
+        data += '\n';
       }
     }
 
@@ -651,29 +637,23 @@ async function fetchInternshipData(): Promise<string> {
   try {
     const internships = await prisma.internship.findMany({
       orderBy: { createdAt: 'desc' },
+      take: 25, // Limit to prevent timeout on Vercel
     });
 
     if (internships.length === 0) return '';
 
     const now = new Date();
-    let data = '\n\n[COMPLETE INTERNSHIP DATABASE — Use this data to answer ALL internship questions]:\n\n';
+    let data = '\n\n[INTERNSHIP DATABASE — Use this data to answer internship questions]:\n\n';
 
     // Stats
-    const byType: Record<string, number> = {};
-    const byField: Record<string, number> = {};
     const byCountry: Record<string, number> = {};
     for (const i of internships) {
-      byType[i.type] = (byType[i.type] || 0) + 1;
-      byField[i.field] = (byField[i.field] || 0) + 1;
       byCountry[i.country] = (byCountry[i.country] || 0) + 1;
     }
 
-    data += `TOTAL OPPORTUNITIES: ${internships.length}\n`;
-    data += `BY TYPE: ${Object.entries(byType).map(([k, v]) => `${k}: ${v}`).join(', ')}\n`;
-    data += `BY FIELD: ${Object.entries(byField).map(([k, v]) => `${k}: ${v}`).join(', ')}\n`;
-    data += `BY COUNTRY: ${Object.entries(byCountry).map(([k, v]) => `${k}: ${v}`).join(', ')}\n\n`;
+    data += `TOTAL: ${internships.length} | BY COUNTRY: ${Object.entries(byCountry).map(([k, v]) => `${k}: ${v}`).join(', ')}\n\n`;
 
-    // Group by country
+    // Group by country - compact format
     const grouped: Record<string, typeof internships> = {};
     for (const i of internships) {
       if (!grouped[i.country]) grouped[i.country] = [];
@@ -681,23 +661,15 @@ async function fetchInternshipData(): Promise<string> {
     }
 
     for (const [country, items] of Object.entries(grouped).sort((a, b) => b[1].length - a[1].length)) {
-      data += `\n=== ${country.toUpperCase()} (${items.length} opportunities) ===\n`;
+      data += `\n== ${country.toUpperCase()} (${items.length}) ==\n`;
       for (const i of items) {
-        const deadlineStr = i.deadline ? new Date(i.deadline).toISOString().split('T')[0] : 'Rolling/No deadline';
+        const deadlineStr = i.deadline ? new Date(i.deadline).toISOString().split('T')[0] : 'Rolling';
         const daysLeft = i.deadline ? Math.ceil((new Date(i.deadline).getTime() - now.getTime()) / 86400000) : null;
-        const statusStr = daysLeft === null ? 'Open' : daysLeft > 0 ? `${daysLeft}d left` : 'Deadline passed';
+        const statusStr = daysLeft === null ? 'Open' : daysLeft > 0 ? `${daysLeft}d left` : 'Expired';
 
-        data += `\n--- ${i.title} ---\n`;
-        data += `Organization: ${i.organization} | Location: ${i.city ? i.city + ', ' : ''}${i.country}\n`;
-        data += `Type: ${i.type} | Field: ${i.field} | Mode: ${i.mode}\n`;
-        data += `Payment: ${i.paidType}${i.stipendAmount ? ` (${i.stipendAmount})` : ''} | Duration: ${i.duration}\n`;
-        data += `Deadline: ${deadlineStr} (${statusStr})\n`;
-        data += `Eligibility: ${i.eligibility}\n`;
-        data += `Requirements: ${i.requirements}\n`;
-        if (i.documentsRequired) data += `Documents: ${i.documentsRequired}\n`;
-        if (i.benefits) data += `Benefits: ${i.benefits}\n`;
-        if (i.description) data += `Description: ${i.description}\n`;
-        if (i.applicationUrl) data += `Apply: ${i.applicationUrl}\n`;
+        data += `• ${i.title} @ ${i.organization} | ${i.city || ''}${i.city ? ', ' : ''}${i.country}\n`;
+        data += `  ${i.type} | ${i.field} | ${i.paidType}${i.stipendAmount ? ` (${i.stipendAmount})` : ''} | ${i.duration} | ${deadlineStr} (${statusStr})\n`;
+        if (i.eligibility) data += `  Eligibility: ${i.eligibility.substring(0, 100)}\n`;
       }
     }
 
