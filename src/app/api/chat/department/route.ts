@@ -5,6 +5,9 @@ import { streamAgentResponse } from '@/services/ai/specialized-agents';
 import { getAIProvider, getFallbackProvider } from '@/services/ai';
 import prisma from '@/lib/prisma';
 
+// Extend timeout for AI streaming responses (Vercel Pro: 60s, Hobby: 10s)
+export const maxDuration = 60;
+
 const DEPARTMENT_AGENTS: Record<string, string> = {
   fraud: 'fraud',
   finance: 'finance',

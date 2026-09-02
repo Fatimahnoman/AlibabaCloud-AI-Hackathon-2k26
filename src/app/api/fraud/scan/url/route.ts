@@ -3,6 +3,9 @@ import { requireAuth } from '@/lib/auth-middleware';
 import { successResponse, errorResponse, validateRequest, fraudSchemas } from '@/lib/utils';
 import { fraudService } from '@/services/fraud/fraud.service';
 
+// Extend timeout for URL scanning
+export const maxDuration = 30;
+
 export async function POST(request: NextRequest) {
   try {
     const auth = requireAuth(request);

@@ -3,6 +3,9 @@ import { requireAuth } from '@/lib/auth-middleware';
 import { successResponse, errorResponse } from '@/lib/utils';
 import { documentIntelligenceService } from '@/services/document-intelligence/document-intelligence.service';
 
+// Extend timeout for document analysis
+export const maxDuration = 30;
+
 async function extractTextFromFile(file: File): Promise<string> {
   const ext = file.name.split('.').pop()?.toLowerCase();
 

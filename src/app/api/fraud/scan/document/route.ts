@@ -3,6 +3,9 @@ import { requireAuth } from '@/lib/auth-middleware';
 import { successResponse, errorResponse } from '@/lib/utils';
 import { fraudService } from '@/services/fraud/fraud.service';
 
+// Extend timeout for document scanning
+export const maxDuration = 30;
+
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = [
   'application/pdf',

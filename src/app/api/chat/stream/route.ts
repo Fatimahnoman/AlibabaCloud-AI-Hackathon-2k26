@@ -4,6 +4,9 @@ import { chatService } from '@/services/chat/chat.service';
 import { checkRateLimit } from '@/lib/rate-limit';
 import { validateRequest, chatSchemas } from '@/lib/utils';
 
+// Extend timeout for AI streaming responses
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
     const auth = requireAuth(request);

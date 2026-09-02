@@ -4,6 +4,9 @@ import { successResponse, errorResponse } from '@/lib/utils';
 import { analyzePhoneNumber } from '@/services/fraud/phone-analyzer';
 import { lookupPhoneRealtime } from '@/services/fraud/phone-lookup';
 
+// Extend timeout for phone scanning (realtime API calls)
+export const maxDuration = 30;
+
 export async function POST(request: NextRequest) {
   try {
     const auth = requireAuth(request);

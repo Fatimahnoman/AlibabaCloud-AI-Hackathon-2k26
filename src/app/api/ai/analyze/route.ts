@@ -3,6 +3,9 @@ import { requireAuth } from '@/lib/auth-middleware';
 import { successResponse, errorResponse } from '@/lib/utils';
 import { getAIProvider } from '@/services/ai';
 
+// Extend timeout for AI analysis
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
     const auth = requireAuth(request);
