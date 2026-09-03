@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { successResponse, validateRequest, authSchemas } from '@/lib/utils';
+import { NextRequest } from 'next/server';
+import { successResponse, errorResponse, validateRequest, authSchemas } from '@/lib/utils';
 import { authService } from '@/services/auth/auth.service';
 import { checkRateLimit, AUTH_RATE_LIMITS } from '@/lib/rate-limit';
 import { getClientInfo } from '@/lib/auth-middleware';
@@ -37,9 +37,6 @@ export async function POST(request: NextRequest) {
     console.error('[REGISTER] Error:', error instanceof Error ? error.stack : error);
     console.error('[REGISTER] Message:', message);
     console.error('[REGISTER] Has database URL:', !!process.env.DATABASE_URL);
-    return NextResponse.json(
-      { success: false, message, code: 'REGISTRATION_FAILED' },
-      { status: 400 }
-    );
+    return errorResponse(message, 'REGISTRATION_FAILED', 400);
   }
 }
