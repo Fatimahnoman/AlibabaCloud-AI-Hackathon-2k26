@@ -6,14 +6,16 @@ const protectedApiRoutes = ['/api/chat', '/api/ai', '/api/documents', '/api/frau
 
 const publicApiRoutes = ['/api/auth/login', '/api/auth/register', '/api/auth/forgot-password', '/api/auth/reset-password', '/api/auth/refresh', '/api/education', '/api/chat/department'];
 
-const ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map(s => s.trim());
+const ALLOWED_ORIGINS_RAW = process.env.CORS_ALLOWED_ORIGINS || '';
+const ALLOWED_ORIGINS = ALLOWED_ORIGINS_RAW ? ALLOWED_ORIGINS_RAW.split(',').map(s => s.trim()).filter(Boolean) : [];
 
 const MAX_REQUEST_BODY_SIZE = 1 * 1024 * 1024; // 1MB
 
-function isAllowedOrigin(origin: string | null): string | null {
-  if (!origin) return ALLOWED_ORIGINS[0] || 'http://localhost:3000';
+function getAllowedOrigin(origin: string | null): string | null {
+  if (!origin) return null; // same-origin / server-to-server — no CORS header needed
+  if (ALLOWED_ORIGINS.length === 0) return origin; // no restriction configured — allow all
   if (ALLOWED_ORIGINS.includes(origin)) return origin;
-  return null; // Block unknown origins
+  return null;
 }
 
 export function middleware(request: NextRequest) {
@@ -43,10 +45,10 @@ export function middleware(request: NextRequest) {
       }
     }
 
-    // CORS handling - block unknown origins
+    // CORS handling
     const origin = request.headers.get('origin');
-    const allowedOrigin = isAllowedOrigin(origin);
-    if (!allowedOrigin) {
+    const allowedOrigin = getAllowedOrigin(origin);
+    if (origin && !allowedOrigin) {
       if (request.method === 'OPTIONS') {
         return new NextResponse(null, { status: 403 });
       }
@@ -56,11 +58,13 @@ export function middleware(request: NextRequest) {
       );
     }
 
-    response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
-    response.headers.set('Access-Control-Allow-Credentials', 'true');
-    response.headers.set('Access-Control-Max-Age', '86400');
+    if (allowedOrigin) {
+      response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
+      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
+      response.headers.set('Access-Control-Allow-Credentials', 'true');
+      response.headers.set('Access-Control-Max-Age', '86400');
+    }
 
     if (request.method === 'OPTIONS') {
       return new NextResponse(null, { status: 200, headers: response.headers });
