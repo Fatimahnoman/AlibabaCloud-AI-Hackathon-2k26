@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
     }, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Registration failed';
+    console.error('[REGISTER] Error:', error);
     return errorResponse(message, 'REGISTRATION_FAILED', 400);
   }
 }
