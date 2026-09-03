@@ -61,6 +61,7 @@ export default function RegisterPage() {
       });
       router.push('/education');
     } catch (err) {
+      console.error('[REGISTER-FRONTEND]', err);
       setApiError(err instanceof Error ? err.message : 'Registration failed');
     } finally {
       setIsLoading(false);

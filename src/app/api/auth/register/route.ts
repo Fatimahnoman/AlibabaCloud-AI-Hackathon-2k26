@@ -34,7 +34,9 @@ export async function POST(request: NextRequest) {
     }, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Registration failed';
-    console.error('[REGISTER] Error:', error);
+    console.error('[REGISTER] Error:', error instanceof Error ? error.stack : error);
+    console.error('[REGISTER] Message:', message);
+    console.error('[REGISTER] Has database URL:', !!process.env.DATABASE_URL);
     return errorResponse(message, 'REGISTRATION_FAILED', 400);
   }
 }
