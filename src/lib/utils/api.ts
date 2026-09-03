@@ -13,6 +13,9 @@ function getErrorMessage(message: string, code: string): string {
       'PAYLOAD_TOO_LARGE': 'Request too large',
       'LOGIN_FAILED': 'Invalid credentials',
       'INTERNAL_ERROR': 'Server error',
+      'REGISTRATION_FAILED': 'Registration failed',
+      'ACCOUNT_LOCKED': 'Account temporarily locked',
+      'TOKEN_REFRESH_FAILED': 'Session expired',
     };
     return safeMessages[code] || 'An error occurred';
   }
