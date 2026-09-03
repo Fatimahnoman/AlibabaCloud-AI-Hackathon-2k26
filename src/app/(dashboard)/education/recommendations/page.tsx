@@ -111,7 +111,7 @@ const STRENGTH_COLORS: Record<string, string> = {
 };
 
 const DEG_COLORS: Record<string, string> = {
-  bachelor: 'bg-blue-500/10 text-blue-400',
+  bachelor: 'bg-emerald-500/10 text-emerald-400',
   master: 'bg-purple-500/10 text-purple-400',
   phd: 'bg-rose-500/10 text-rose-400',
   diploma: 'bg-yellow-500/10 text-yellow-400',
@@ -121,14 +121,14 @@ const DEG_COLORS: Record<string, string> = {
 
 function scoreColor(s: number) {
   if (s >= 80) return 'text-green-600';
-  if (s >= 60) return 'text-blue-600';
+  if (s >= 60) return 'text-emerald-600';
   if (s >= 40) return 'text-yellow-600';
   return 'text-gray-500';
 }
 
 function scoreBg(s: number) {
   if (s >= 80) return 'bg-green-500';
-  if (s >= 60) return 'bg-blue-500';
+  if (s >= 60) return 'bg-emerald-500';
   if (s >= 40) return 'bg-yellow-500';
   return 'bg-gray-400';
 }
@@ -250,7 +250,7 @@ export default function RecommendationsPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </Link>
@@ -348,7 +348,7 @@ export default function RecommendationsPage() {
                       <p className="text-sm text-gray-500 mt-1">{uni.city && `${uni.city}, `}{uni.country}{uni.sector && ` \u00b7 ${uni.sector}`}</p>
                       {uni.matchReasons.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-2">
-                          {uni.matchReasons.map((r, i) => (<span key={i} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">{r}</span>))}
+                          {uni.matchReasons.map((r, i) => (<span key={i} className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full">{r}</span>))}
                         </div>
                       )}
                       {uni.courses.length > 0 && (
@@ -384,7 +384,7 @@ export default function RecommendationsPage() {
                       <p className="text-sm text-gray-500 mt-1">{c.universityName} · {c.universityCountry}</p>
                       {c.matchReasons.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-2">
-                          {c.matchReasons.map((r, i) => (<span key={i} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">{typeof r === 'string' ? r : JSON.stringify(r)}</span>))}
+                          {c.matchReasons.map((r, i) => (<span key={i} className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full">{typeof r === 'string' ? r : JSON.stringify(r)}</span>))}
                         </div>
                       )}
                     </div>
@@ -412,7 +412,7 @@ export default function RecommendationsPage() {
                       {s.deadline && <p className="text-sm text-gray-500 mt-1">Deadline: {new Date(s.deadline).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>}
                       {s.matchReasons.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-2">
-                          {s.matchReasons.map((r, i) => (<span key={i} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">{r}</span>))}
+                          {s.matchReasons.map((r, i) => (<span key={i} className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full">{r}</span>))}
                         </div>
                       )}
                     </div>

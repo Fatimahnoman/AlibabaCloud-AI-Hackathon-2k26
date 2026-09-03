@@ -48,12 +48,12 @@ const categoryLabels: Record<string, string> = {
 };
 
 const categoryColors: Record<string, string> = {
-  scholarship: 'bg-blue-500/10 text-blue-400',
+  scholarship: 'bg-emerald-500/10 text-emerald-400',
   loan: 'bg-green-500/10 text-green-400',
   training: 'bg-purple-500/10 text-purple-400',
   stipend: 'bg-yellow-500/10 text-yellow-400',
   housing: 'bg-orange-500/10 text-orange-400',
-  digital: 'bg-cyan-500/10 text-cyan-400',
+  digital: 'bg-emerald-500/10 text-emerald-400',
   financial_aid: 'bg-pink-500/10 text-pink-400',
   sports: 'bg-red-500/10 text-red-400',
   health: 'bg-emerald-500/10 text-emerald-400',
@@ -104,7 +104,7 @@ export default function SchemesPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </Link>

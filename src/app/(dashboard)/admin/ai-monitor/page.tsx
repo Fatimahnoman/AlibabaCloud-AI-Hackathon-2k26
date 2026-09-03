@@ -71,8 +71,8 @@ function Panel({
       className={`rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-sm ${className}`}
     >
       <div className="mb-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">{title}</h2>
-        {subtitle ? <p className="mt-0.5 text-xs text-cyan-400">{subtitle}</p> : null}
+        <h2 className="text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">{title}</h2>
+        {subtitle ? <p className="mt-0.5 text-xs text-emerald-400">{subtitle}</p> : null}
       </div>
       {children}
     </section>
@@ -82,9 +82,9 @@ function Panel({
 function UsageTile({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-      <p className="text-xs font-medium uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">{label}</p>
+      <p className="text-xs font-medium uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">{label}</p>
       <p className="mt-1 text-3xl font-bold gradient-text tabular-nums">{value}</p>
-      {sub ? <p className="mt-1 text-[11px] text-cyan-400">{sub}</p> : null}
+      {sub ? <p className="mt-1 text-[11px] text-emerald-400">{sub}</p> : null}
     </div>
   );
 }
@@ -145,8 +145,8 @@ function SuccessGauge({ rate }: { rate: number }) {
           <span className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: color }} />
           {label}
         </span>
-        <p className="max-w-xs text-xs leading-relaxed text-cyan-400">
-          Based on tracked AI request outcomes. Values above <span className="text-cyan-400">95%</span> indicate <span className="text-emerald-400">healthy</span> prompt handling
+        <p className="max-w-xs text-xs leading-relaxed text-emerald-400">
+          Based on tracked AI request outcomes. Values above <span className="text-emerald-400">95%</span> indicate <span className="text-emerald-400">healthy</span> prompt handling
           and stable provider connectivity.
         </p>
       </div>
@@ -299,7 +299,7 @@ export default function AiMonitorPage() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold tracking-tight gradient-text">AI Monitor</h1>
-<p className="mt-1 text-sm text-cyan-400">
+<p className="mt-1 text-sm text-emerald-400">
               Usage, quality and cost signals for the EduGuard assistant
             </p>
           </div>
@@ -353,14 +353,14 @@ export default function AiMonitorPage() {
                 </code>
               </div>
               <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-                <span className="text-xs font-medium uppercase tracking-wider bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Provider</span>
-                <span className="rounded-md bg-cyan-500/10 px-2.5 py-1 text-sm font-semibold text-cyan-400">
+                <span className="text-xs font-medium uppercase tracking-wider bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Provider</span>
+                <span className="rounded-md bg-emerald-500/10 px-2.5 py-1 text-sm font-semibold text-emerald-400">
                   {AI_MODEL.provider}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-                  <p className="text-xs uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">AI Calls Tracked</p>
+                  <p className="text-xs uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">AI Calls Tracked</p>
                   <p className="mt-1 text-xl font-bold tabular-nums gradient-text">
                     {formatNumber(aiMetrics.total)}
                   </p>
@@ -398,7 +398,7 @@ export default function AiMonitorPage() {
                 style={{ width: `${clamp(perf.errorRate * 10)}%` }}
               />
             </div>
-            <p className="mt-2 text-right text-[11px] text-cyan-400">
+            <p className="mt-2 text-right text-[11px] text-emerald-400">
               Bar scaled ×10 for visibility · target &lt; 2% errors
             </p>
           </Panel>
@@ -424,7 +424,7 @@ export default function AiMonitorPage() {
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 Activity stream
               </span>
-              <span className="text-xs text-cyan-400">
+              <span className="text-xs text-emerald-400">
                 Updated {lastUpdated ? lastUpdated.toLocaleTimeString() : "—"}
               </span>
             </div>
@@ -461,9 +461,9 @@ export default function AiMonitorPage() {
               sub="lifetime spend ÷ conversations"
             />
           </div>
-          <p className="mt-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs leading-relaxed text-cyan-400">
+          <p className="mt-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs leading-relaxed text-emerald-400">
             <span className="text-amber-400">Estimates only.</span> Actual billing depends on provider pricing, prompt caching discounts and
-            per-request token variance. Figures are <span className="text-emerald-400">derived locally</span> from message counts and <span className="text-cyan-400">never sent anywhere</span>.
+            per-request token variance. Figures are <span className="text-emerald-400">derived locally</span> from message counts and <span className="text-emerald-400">never sent anywhere</span>.
           </p>
         </Panel>
 
@@ -479,14 +479,14 @@ export default function AiMonitorPage() {
                   {rec.tone === "good" ? "Healthy" : rec.tone === "warn" ? "Action needed" : "Optimization"}
                 </span>
                 <p className="mt-2 text-sm font-semibold bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">{rec.title}</p>
-                <p className="mt-1 text-xs leading-relaxed text-cyan-400">{rec.body}</p>
+                <p className="mt-1 text-xs leading-relaxed text-emerald-400">{rec.body}</p>
               </div>
             ))}
           </div>
         </Panel>
 
         {lastUpdated ? (
-          <p className="text-right text-[11px] text-cyan-400">
+          <p className="text-right text-[11px] text-emerald-400">
             Last refreshed {lastUpdated.toLocaleTimeString()} · overview generated{" "}
             {new Date(overview.generatedAt).toLocaleTimeString()}
           </p>

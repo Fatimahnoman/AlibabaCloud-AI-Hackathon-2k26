@@ -269,7 +269,7 @@ export default function CountryDetailPage({ params }: { params: Promise<{ code: 
                     <h3 className="font-semibold text-gray-100">{v.sourceName}</h3>
                     <div className="flex flex-wrap gap-2 mt-2 text-xs">
                       {v.type && <span className="px-2 py-0.5 rounded-full bg-primary-500/10 text-primary-400">{v.type}</span>}
-                      {v.processingTime && <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400">Processing: {v.processingTime}</span>}
+                      {v.processingTime && <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400">Processing: {v.processingTime}</span>}
                     </div>
                   </div>
                   <VerificationBadge status={v.isVerified ? 'verified' : 'unverified'} compact />

@@ -20,7 +20,7 @@ function ResetPasswordForm() {
       <div className="card text-center">
         <h2 className="text-xl font-bold mb-2">Invalid reset link</h2>
         <p className="text-gray-400 mb-4">This password reset link is invalid or missing a token.</p>
-        <Link href="/forgot-password" className="text-blue-600 hover:text-blue-800 font-medium">
+        <Link href="/forgot-password" className="text-emerald-600 hover:text-emerald-800 font-medium">
           Request a new reset link
         </Link>
       </div>

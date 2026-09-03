@@ -105,7 +105,7 @@ export default function AdminSecurityPage() {
   if (error || !data) return (
     <div className="animate-fade-in">
       <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg p-4">{error || "No data available."}</div>
-      <button onClick={fetchSecurity} className="mt-4 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-blue-600 transition-all">Retry</button>
+      <button onClick={fetchSecurity} className="mt-4 rounded-xl bg-gradient-to-r from-indigo-500 to-teal-400 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-teal-400 transition-all">Retry</button>
     </div>
   );
 
@@ -125,14 +125,14 @@ export default function AdminSecurityPage() {
           <h1 className="text-3xl font-bold gradient-text">Security Center</h1>
           <p className="mt-2"><span className="text-red-400 font-medium">Threat</span> overview, <span className="text-amber-400 font-medium">failed logins</span> and <span className="text-emerald-400 font-medium">session</span> activity</p>
         </div>
-        <button onClick={fetchSecurity} className="rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">Refresh</button>
+        <button onClick={fetchSecurity} className="rounded-xl bg-gradient-to-r from-indigo-500 to-teal-400 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-teal-400 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">Refresh</button>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-1 rounded-2xl overflow-hidden p-6 flex flex-col items-center justify-center animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '50ms' }}>
-          <p className="self-start text-xs font-medium uppercase tracking-widest bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-4">Security Score</p>
+          <p className="self-start text-xs font-medium uppercase tracking-widest bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4">Security Score</p>
           <ScoreGauge score={data.securityScore} />
-          <p className="mt-4 text-xs text-cyan-400">Generated {relativeTime(data.generatedAt)}</p>
+          <p className="mt-4 text-xs text-emerald-400">Generated {relativeTime(data.generatedAt)}</p>
         </div>
 
         <div className="xl:col-span-1 rounded-2xl overflow-hidden p-6 animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '100ms' }}>
@@ -158,7 +158,7 @@ export default function AdminSecurityPage() {
             <span className="mt-2 text-sm text-emerald-400">estimated live sessions</span>
             <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-medium text-emerald-400 border border-emerald-500/20">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-cyan-400">tokens valid &amp; unrevoked</span>
+              <span className="text-emerald-400">tokens valid &amp; unrevoked</span>
             </span>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function AdminSecurityPage() {
             <h2 className="text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Top Offending IPs</h2>
           </div>
           {data.failedLogins.byIp.length === 0 ? (
-            <p className="p-6 text-sm text-cyan-400">No failed login activity recorded.</p>
+            <p className="p-6 text-sm text-emerald-400">No failed login activity recorded.</p>
           ) : (
             <table className="min-w-full">
               <thead style={{ background: 'rgba(11, 17, 32, 0.8)' }}>
@@ -208,7 +208,7 @@ export default function AdminSecurityPage() {
             </span>
           </div>
           {data.suspiciousActivity.length === 0 ? (
-            <p className="p-6 text-sm text-cyan-400">No suspicious events logged. All clear.</p>
+            <p className="p-6 text-sm text-emerald-400">No suspicious events logged. All clear.</p>
           ) : (
             <ul className="max-h-[420px] overflow-y-auto" style={{ borderTop: '1px solid rgba(148, 163, 184, 0.1)' }}>
               {data.suspiciousActivity.map(item => (
@@ -216,18 +216,18 @@ export default function AdminSecurityPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${SUSPICIOUS_BADGES[item.action] || "bg-white/5 text-cyan-400 border border-white/10"}`}>
+                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${SUSPICIOUS_BADGES[item.action] || "bg-white/5 text-emerald-400 border border-white/10"}`}>
                           <span className="gradient-text">{item.action}</span>
                         </span>
                         <span className="text-sm gradient-text truncate">{item.user ? item.user.name : "Unknown user"}</span>
-                        {item.user && <span className="text-xs text-cyan-400 truncate">{item.user.email}</span>}
+                        {item.user && <span className="text-xs text-emerald-400 truncate">{item.user.email}</span>}
                       </div>
                       <p className="mt-1 text-xs text-violet-400 truncate">
                         {item.entityType} · {item.ipAddress || "unknown IP"}
                         {item.userAgent ? ` · ${item.userAgent.slice(0, 60)}` : ""}
                       </p>
                     </div>
-                    <span className="text-xs text-cyan-400 whitespace-nowrap">{relativeTime(item.createdAt)}</span>
+                    <span className="text-xs text-emerald-400 whitespace-nowrap">{relativeTime(item.createdAt)}</span>
                   </div>
                 </li>
               ))}
@@ -238,14 +238,14 @@ export default function AdminSecurityPage() {
 
       <div className="rounded-2xl overflow-hidden animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '300ms' }}>
         <div className="px-6 py-4" style={{ borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
-          <h2 className="text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Security Recommendations</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Security Recommendations</h2>
         </div>
         <div className="p-6">
           <ul className="space-y-3">
             {recommendations.map((rec, index) => (
               <li key={index} className={`flex items-start gap-3 rounded-lg border p-4 text-sm ${TONE_STYLES[rec.tone]}`}>
                 <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${TONE_DOTS[rec.tone]}`} />
-                <span className="text-sm text-cyan-400">{rec.text}</span>
+                <span className="text-sm text-emerald-400">{rec.text}</span>
               </li>
             ))}
           </ul>

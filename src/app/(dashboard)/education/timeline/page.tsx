@@ -21,7 +21,7 @@ interface Application {
 
 function statusIcon(status: string) {
   const s = status.toLowerCase();
-  if (s === 'researching') return { icon: '&#128269;', color: 'bg-blue-500', label: 'Researching' };
+  if (s === 'researching') return { icon: '&#128269;', color: 'bg-emerald-500', label: 'Researching' };
   if (s === 'in_progress' || s === 'in-progress') return { icon: '&#9997;', color: 'bg-yellow-500', label: 'In Progress' };
   if (s === 'submitted') return { icon: '&#128232;', color: 'bg-purple-500', label: 'Submitted' };
   if (s === 'under_review') return { icon: '&#9203;', color: 'bg-indigo-500', label: 'Under Review' };
@@ -61,7 +61,7 @@ export default function ApplicationTimelinePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-600" />
       </div>
     );
   }
@@ -92,7 +92,7 @@ export default function ApplicationTimelinePage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <a href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+          <a href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Education Center
           </a>
@@ -101,7 +101,7 @@ export default function ApplicationTimelinePage() {
             Track all your university and scholarship applications
           </p>
         </div>
-        <Link href="/workspace/new" className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+        <Link href="/workspace/new" className="px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition-colors">
           + New Application
         </Link>
       </div>
@@ -131,7 +131,7 @@ export default function ApplicationTimelinePage() {
           <p className="text-4xl mb-4">&#128203;</p>
           <h3 className="text-lg font-semibold text-white mb-2">No applications yet</h3>
           <p className="text-gray-400 text-sm">Start tracking your university and scholarship applications.</p>
-          <Link href="/workspace/new" className="mt-4 inline-block px-4 py-2 rounded-xl bg-blue-600 text-white text-sm hover:bg-blue-700 transition-colors">
+          <Link href="/workspace/new" className="mt-4 inline-block px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm hover:bg-emerald-700 transition-colors">
             Create First Application
           </Link>
         </div>
@@ -163,7 +163,7 @@ export default function ApplicationTimelinePage() {
                       <Link
                         key={app.id}
                         href={`/workspace/${app.id}`}
-                        className="block bg-card border border-border/50 rounded-xl p-4 hover:border-blue-500/30 transition-all"
+                        className="block bg-card border border-border/50 rounded-xl p-4 hover:border-emerald-500/30 transition-all"
                       >
                         <div className="flex flex-wrap items-start justify-between gap-3">
                           <div>

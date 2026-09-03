@@ -111,7 +111,7 @@ export default function InstitutionDetailPage() {
         </div>
 
         <div className="flex flex-wrap gap-2 mt-4">
-          <span className="text-xs bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full">
+          <span className="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">
             {typeLabels[institution.type] || institution.type}
           </span>
           {institution.province && institution.province !== 'all' && (
@@ -158,7 +158,7 @@ export default function InstitutionDetailPage() {
               <div key={i} className="border border-white/10 rounded-lg p-4">
                 <h3 className="font-semibold text-gray-100">{course.name}</h3>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  <span className="text-xs bg-blue-500/10 text-blue-700 px-2 py-0.5 rounded-full">{course.duration}</span>
+                  <span className="text-xs bg-emerald-500/10 text-emerald-700 px-2 py-0.5 rounded-full">{course.duration}</span>
                   <span className="text-xs bg-emerald-500/10 text-green-700 px-2 py-0.5 rounded-full">{course.fee}</span>
                   {course.batchStart && (
                     <span className="text-xs bg-purple-500/10 text-purple-700 px-2 py-0.5 rounded-full">Starts: {course.batchStart}</span>

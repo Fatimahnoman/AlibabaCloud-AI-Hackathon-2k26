@@ -3,7 +3,16 @@ interface RateLimitEntry {
   resetAt: number;
 }
 
+interface LockoutEntry {
+  lockedUntil: number;
+  failedAttempts: number;
+}
+
 const rateLimitStore = new Map<string, RateLimitEntry>();
+const lockoutStore = new Map<string, LockoutEntry>();
+
+const LOCKOUT_THRESHOLD = 5;
+const LOCKOUT_DURATION = 30 * 60 * 1000; // 30 minutes
 
 setInterval(() => {
   const now = Date.now();
@@ -12,7 +21,46 @@ setInterval(() => {
       rateLimitStore.delete(key);
     }
   }
+  for (const [key, entry] of lockoutStore.entries()) {
+    if (now > entry.lockedUntil) {
+      lockoutStore.delete(key);
+    }
+  }
 }, 5 * 60 * 1000);
+
+export function isLockedOut(key: string): { locked: boolean; remainingMs?: number } {
+  const entry = lockoutStore.get(key);
+  if (!entry) return { locked: false };
+  const now = Date.now();
+  if (now > entry.lockedUntil) {
+    lockoutStore.delete(key);
+    return { locked: false };
+  }
+  return { locked: true, remainingMs: entry.lockedUntil - now };
+}
+
+export function recordFailedAttempt(key: string): { locked: boolean; attempts: number } {
+  const existing = lockoutStore.get(key);
+  const now = Date.now();
+
+  if (existing && now < existing.lockedUntil) {
+    existing.failedAttempts++;
+    return { locked: true, attempts: existing.failedAttempts };
+  }
+
+  const attempts = (existing?.failedAttempts || 0) + 1;
+  if (attempts >= LOCKOUT_THRESHOLD) {
+    lockoutStore.set(key, { lockedUntil: now + LOCKOUT_DURATION, failedAttempts: attempts });
+    return { locked: true, attempts };
+  }
+
+  lockoutStore.set(key, { lockedUntil: 0, failedAttempts: attempts });
+  return { locked: false, attempts };
+}
+
+export function clearLockout(key: string): void {
+  lockoutStore.delete(key);
+}
 
 export interface RateLimitConfig {
   windowMs: number;

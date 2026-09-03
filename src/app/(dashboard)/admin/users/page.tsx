@@ -79,15 +79,15 @@ const PAGE_SIZE = 10;
 const inputClass =
   "w-full rounded-xl border-2 border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-100 placeholder:text-gray-500 focus:border-indigo-500 focus:ring-0 outline-none transition-all duration-200";
 
-const labelClass = "mb-1 block text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent";
+const labelClass = "mb-1 block text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent";
 
 const thClass =
   "px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent whitespace-nowrap";
 
 const ROLE_BADGES: Record<string, string> = {
   admin: "bg-gradient-to-r from-violet-500/15 to-purple-500/15 text-violet-400 border border-violet-500/30",
-  teacher: "bg-gradient-to-r from-blue-500/15 to-cyan-500/15 text-blue-400 border border-blue-500/30",
-  user: "bg-white/5 text-cyan-400 border border-white/10",
+  teacher: "bg-gradient-to-r from-emerald-500/15 to-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+  user: "bg-white/5 text-emerald-400 border border-white/10",
 };
 
 const SORT_OPTIONS: { value: SortField; label: string }[] = [
@@ -119,7 +119,7 @@ function RoleBadge({ role }: { role: string }) {
   return (
     <span
       className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold capitalize ${
-        ROLE_BADGES[role] ?? "bg-white/5 text-cyan-400 border-white/10"
+        ROLE_BADGES[role] ?? "bg-white/5 text-emerald-400 border-white/10"
       }`}
     >
       {role}
@@ -142,7 +142,7 @@ function StatusBadge({ active }: { active: boolean }) {
 
 function Avatar({ name }: { name: string }) {
   return (
-    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 text-xs font-bold text-white shadow-sm">
+    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-teal-400 text-xs font-bold text-white shadow-sm">
       {name.charAt(0).toUpperCase()}
     </div>
   );
@@ -196,7 +196,7 @@ function ModalShell({
           <h3 className="text-base font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-xl p-1.5 text-cyan-400 transition-colors hover:bg-white/5 hover:text-cyan-300"
+            className="rounded-xl p-1.5 text-emerald-400 transition-colors hover:bg-white/5 hover:text-emerald-300"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -228,7 +228,7 @@ function PrimaryButton({
       disabled={disabled}
       onClick={onClick}
       className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${
-        danger ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:shadow-lg hover:shadow-red-500/25 hover:scale-[1.02] active:scale-[0.98]' : 'bg-gradient-to-r from-indigo-600 to-blue-600 hover:shadow-lg hover:shadow-indigo-500/25 hover:scale-[1.02] active:scale-[0.98]'
+        danger ? 'bg-gradient-to-r from-red-500 to-rose-600 hover:shadow-lg hover:shadow-red-500/25 hover:scale-[1.02] active:scale-[0.98]' : 'bg-gradient-to-r from-indigo-600 to-teal-400 hover:shadow-lg hover:shadow-indigo-500/25 hover:scale-[1.02] active:scale-[0.98]'
       }`}
     >
       {children}
@@ -476,7 +476,7 @@ function DetailPanel({
 
   const statItems = detail
     ? [
-        { label: "Conversations", value: detail.stats.conversationCount, gradient: "from-cyan-400 to-blue-400" },
+        { label: "Conversations", value: detail.stats.conversationCount, gradient: "from-emerald-400 to-teal-400" },
         { label: "Messages", value: detail.stats.messageCount, gradient: "from-violet-400 to-purple-400" },
         { label: "Documents", value: detail.stats.documentCount, gradient: "from-emerald-400 to-teal-400" },
         { label: "Fraud Reports", value: detail.stats.fraudReportCount, gradient: "from-rose-400 to-red-400" },
@@ -491,7 +491,7 @@ function DetailPanel({
           <h2 className="text-base font-semibold gradient-text">User Details</h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-cyan-400 transition-colors hover:bg-white/5 hover:text-cyan-300"
+            className="rounded-lg p-1 text-emerald-400 transition-colors hover:bg-white/5 hover:text-emerald-300"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -523,7 +523,7 @@ function DetailPanel({
                 <Avatar name={detail.user.name} />
                 <div className="min-w-0">
                   <p className="truncate text-lg font-bold gradient-text">{detail.user.name}</p>
-                  <p className="truncate text-sm text-cyan-400">{detail.user.email}</p>
+                  <p className="truncate text-sm text-emerald-400">{detail.user.email}</p>
                 </div>
               </div>
 
@@ -531,7 +531,7 @@ function DetailPanel({
                 <RoleBadge role={detail.user.role} />
                 <StatusBadge active={detail.user.isActive} />
                 {detail.user.emailVerified ? (
-                  <span className="inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-0.5 text-xs font-medium text-blue-400">
+                  <span className="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
                     Email verified
                   </span>
                 ) : (
@@ -592,7 +592,7 @@ function DetailPanel({
                         <div
                           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
                             item.type === "conversation"
-                              ? "bg-cyan-500/10 text-cyan-400"
+                              ? "bg-emerald-500/10 text-emerald-400"
                               : "bg-violet-500/10 text-violet-400"
                           }`}
                         >
@@ -621,7 +621,7 @@ function DetailPanel({
                               : `Message (${item.role})`}
                           </p>
                           {item.preview ? (
-                            <p className="mt-0.5 line-clamp-2 text-xs text-cyan-400">{item.preview}</p>
+                            <p className="mt-0.5 line-clamp-2 text-xs text-emerald-400">{item.preview}</p>
                           ) : null}
                           <p className="mt-1 text-[11px] text-violet-400">
                             {formatDateTime(item.createdAt)}
@@ -715,7 +715,7 @@ export default function AdminUsersPage() {
   const pageNumbers = getPageRange(page, totalPages);
 
   const actionButtonClass =
-    "rounded-lg border border-white/10 card px-2.5 py-1 text-xs font-medium text-cyan-400 transition-colors hover:border-white/10 hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-40";
+    "rounded-lg border border-white/10 card px-2.5 py-1 text-xs font-medium text-emerald-400 transition-colors hover:border-white/10 hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-40";
 
   return (
     <div className="-m-6 min-h-screen p-6 text-gray-100 md:p-8">
@@ -723,8 +723,8 @@ export default function AdminUsersPage() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold tracking-tight gradient-text">User Management</h1>
-            <p className="mt-1 text-sm text-cyan-400">
-              <span className="text-cyan-400">Search</span>, filter and administer{" "}
+            <p className="mt-1 text-sm text-emerald-400">
+              <span className="text-emerald-400">Search</span>, filter and administer{" "}
               <span className="text-violet-400">every account</span> on the platform
             </p>
           </div>
@@ -761,7 +761,7 @@ export default function AdminUsersPage() {
               </div>
               <button
                 type="submit"
-                className="shrink-0 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+                className="shrink-0 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-400 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
               >
                 Search
               </button>
@@ -910,12 +910,12 @@ export default function AdminUsersPage() {
                           <div className="min-w-0">
                             <p className="truncate text-sm font-medium gradient-text">{u.name}</p>
                             <p className="text-[11px] text-violet-400">
-                              {isSelf(u) ? "You" : u.lastLoginAt ? <><span className="text-cyan-400">Last seen </span><span className="text-violet-400">{formatDate(u.lastLoginAt)}</span></> : "Never logged in"}
+                              {isSelf(u) ? "You" : u.lastLoginAt ? <><span className="text-emerald-400">Last seen </span><span className="text-violet-400">{formatDate(u.lastLoginAt)}</span></> : "Never logged in"}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-3.5 text-sm text-cyan-400">{u.email}</td>
+                      <td className="px-5 py-3.5 text-sm text-emerald-400">{u.email}</td>
                       <td className="px-5 py-3.5">
                         <RoleBadge role={u.role} />
                       </td>
@@ -927,7 +927,7 @@ export default function AdminUsersPage() {
                         <div className="flex justify-end gap-1.5 whitespace-nowrap">
                           <button
                             onClick={() => setDetailUserId(u.id)}
-                            className={`${actionButtonClass} hover:!border-blue-500/50 hover:!text-blue-400`}
+                            className={`${actionButtonClass} hover:!border-emerald-500/50 hover:!text-emerald-400`}
                           >
                             View
                           </button>
@@ -981,7 +981,7 @@ export default function AdminUsersPage() {
                     onClick={() => setPage(n)}
                     className={`min-w-[2rem] rounded-xl px-2.5 py-1.5 text-sm font-medium transition-all duration-200 ${
                       n === page
-                        ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg shadow-indigo-500/25"
+                        ? "bg-gradient-to-r from-indigo-600 to-teal-400 text-white shadow-lg shadow-indigo-500/25"
                         : "border border-white/10 card gradient-text hover:bg-white/5"
                     }`}
                   >

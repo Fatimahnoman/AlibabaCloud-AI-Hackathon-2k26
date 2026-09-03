@@ -109,7 +109,7 @@ export default function ExpensesPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <Link href="/budget" className="text-blue-600 hover:text-blue-800 text-sm font-medium">&larr; Back</Link>
+        <Link href="/budget" className="text-emerald-500 hover:text-emerald-600 text-sm font-medium">&larr; Back</Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-100">Expenses</h1>
           <p className="text-gray-500 mt-1">Manage and track your expenses</p>
@@ -207,7 +207,7 @@ export default function ExpensesPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="card p-6 text-center">

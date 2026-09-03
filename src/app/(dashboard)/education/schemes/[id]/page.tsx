@@ -107,7 +107,7 @@ export default function SchemeDetailPage() {
         </div>
 
         <div className="flex flex-wrap gap-2 mt-4">
-          <span className="text-xs bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full">
+          <span className="text-xs bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full">
             {categoryLabels[scheme.category] || scheme.category}
           </span>
           {scheme.province && scheme.province !== 'all' && (

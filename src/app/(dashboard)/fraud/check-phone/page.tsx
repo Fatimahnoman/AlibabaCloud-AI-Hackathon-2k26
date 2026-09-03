@@ -110,7 +110,7 @@ export default function CheckPhonePage() {
     switch (type) {
       case 'danger': return 'bg-red-500/10 border-red-500/30 text-red-300';
       case 'warning': return 'bg-yellow-500/10 border-yellow-500/30 text-yellow-300';
-      default: return 'bg-blue-500/10 border-blue-500/30 text-blue-300';
+      default: return 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
     }
   };
 
@@ -150,7 +150,7 @@ export default function CheckPhonePage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Fraud Center
         </a>
@@ -202,14 +202,14 @@ export default function CheckPhonePage() {
                 onChange={(e) => setPhone(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleScan()}
                 placeholder={selectedCountry.placeholder}
-                className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] text-gray-100 placeholder-gray-500 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-sm"
               />
             </div>
 
             <button
               onClick={handleScan}
               disabled={loading || !phone.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-medium text-sm hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-400 text-white rounded-xl font-medium text-sm hover:from-emerald-700 hover:to-teal-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {loading ? (
                 <>
@@ -287,7 +287,7 @@ export default function CheckPhonePage() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {result.analysisConfidence.factors.map((factor, idx) => (
-                  <span key={idx} className="px-2 py-1 bg-blue-500/10 text-blue-300 rounded text-xs border border-blue-500/20">
+                  <span key={idx} className="px-2 py-1 bg-emerald-500/10 text-emerald-300 rounded text-xs border border-emerald-500/20">
                     ✓ {factor}
                   </span>
                 ))}
@@ -312,7 +312,7 @@ export default function CheckPhonePage() {
                 <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                   <p className="text-sm text-gray-300">{result.detailedAnalysis.riskAssessment}</p>
                 </div>
-                <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-lg p-4 border border-blue-500/30">
+                <div className="bg-gradient-to-r from-emerald-500/10 to-indigo-500/10 rounded-lg p-4 border border-emerald-500/30">
                   <p className="text-sm text-gray-200 font-medium">💡 {result.detailedAnalysis.recommendation}</p>
                 </div>
               </div>
@@ -387,7 +387,7 @@ export default function CheckPhonePage() {
               <p className="text-sm text-gray-400 mb-2">Use these platforms to verify the sender:</p>
               <div className="flex gap-2 flex-wrap">
                 {result.socialPresence.platforms.map((platform) => (
-                  <span key={platform} className="px-3 py-1 bg-blue-500/10 text-blue-300 rounded-full text-xs font-medium border border-blue-500/30">
+                  <span key={platform} className="px-3 py-1 bg-emerald-500/10 text-emerald-300 rounded-full text-xs font-medium border border-emerald-500/30">
                     {platform}
                   </span>
                 ))}

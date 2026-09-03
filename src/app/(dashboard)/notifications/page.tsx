@@ -70,7 +70,7 @@ export default function NotificationsPage() {
     switch (priority) {
       case 'urgent': return 'bg-red-500/10 border-l-4 border-red-500';
       case 'high': return 'bg-orange-500/10 border-l-4 border-orange-500';
-      case 'normal': return 'bg-blue-500/10 border-l-4 border-blue-500';
+      case 'normal': return 'bg-emerald-500/10 border-l-4 border-emerald-500';
       default: return 'bg-white/5 border-l-4 border-white/10';
     }
   };
@@ -90,7 +90,7 @@ export default function NotificationsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <a href="/dashboard" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+          <a href="/dashboard" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Dashboard
           </a>
@@ -98,7 +98,7 @@ export default function NotificationsPage() {
           <p className="text-sm text-gray-500 mt-1">Only verified deadlines generate notifications</p>
         </div>
         <div className="flex gap-2">
-          <Link href="/notifications/deadlines" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">Manage Deadlines</Link>
+          <Link href="/notifications/deadlines" className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700">Manage Deadlines</Link>
           {dashboard && dashboard.unreadCount > 0 && (
             <button onClick={handleMarkAllAsRead} className="btn-secondary text-sm">Mark all read ({dashboard.unreadCount})</button>
           )}
@@ -143,7 +143,7 @@ export default function NotificationsPage() {
       <div className="flex gap-2">
         {(['all', 'unread'] as const).map(f => (
           <button key={f} onClick={() => setFilter(f)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${filter === f ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${filter === f ? 'bg-emerald-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
             {f === 'all' ? 'All' : 'Unread'}
           </button>
         ))}
@@ -159,7 +159,7 @@ export default function NotificationsPage() {
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  {!n.isRead && <div className="w-2 h-2 rounded-full bg-blue-500" />}
+                  {!n.isRead && <div className="w-2 h-2 rounded-full bg-emerald-500" />}
                   <h3 className="font-medium text-sm">{n.title}</h3>
                 </div>
                 <p className="text-sm text-gray-400 mt-1">{n.message}</p>
@@ -170,7 +170,7 @@ export default function NotificationsPage() {
               </div>
               {!n.isRead && (
                 <button onClick={() => handleMarkAsRead(n.id)}
-                  className="text-xs text-blue-600 hover:text-blue-800 ml-4 whitespace-nowrap">Mark read</button>
+                  className="text-xs text-emerald-600 hover:text-emerald-800 ml-4 whitespace-nowrap">Mark read</button>
               )}
             </div>
           </div>

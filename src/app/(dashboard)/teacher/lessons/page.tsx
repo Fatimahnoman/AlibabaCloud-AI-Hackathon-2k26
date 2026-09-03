@@ -93,7 +93,7 @@ export default function TeacherLessonsPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <Link href="/teacher" className="text-blue-600 hover:text-blue-800 text-sm font-medium">&larr; Back</Link>
+        <Link href="/teacher" className="text-emerald-600 hover:text-emerald-800 text-sm font-medium">&larr; Back</Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-100">Lesson Plans</h1>
           <p className="text-gray-500 mt-1">Generate and manage AI-powered lesson plans</p>
@@ -173,7 +173,7 @@ export default function TeacherLessonsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
         </div>
       ) : lessons.length === 0 ? (
         <div className="card p-6 text-center">
@@ -201,7 +201,7 @@ export default function TeacherLessonsPage() {
                   <td className="px-4 py-3 text-gray-400">{lesson.durationMin} min</td>
                   <td className="px-4 py-3 text-gray-500">{new Date(lesson.createdAt).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right space-x-2">
-                    <button onClick={() => setViewingId(lesson.id)} className="text-blue-600 hover:text-blue-800 text-sm font-medium">View</button>
+                    <button onClick={() => setViewingId(lesson.id)} className="text-emerald-600 hover:text-emerald-800 text-sm font-medium">View</button>
                     <button onClick={() => handleDelete(lesson.id)} className="text-red-600 hover:text-red-800 text-sm font-medium">Delete</button>
                   </td>
                 </tr>

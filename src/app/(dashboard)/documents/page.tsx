@@ -55,7 +55,7 @@ interface Guidelines {
 
 const DOC_TYPES: { value: AnalysisDocumentType; label: string; icon: string; color: string }[] = [
   { value: 'sop', label: 'Statement of Purpose (SOP)', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', color: 'from-indigo-500 to-purple-500' },
-  { value: 'personal_statement', label: 'Personal Statement', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', color: 'from-cyan-500 to-blue-500' },
+    { value: 'personal_statement', label: 'Personal Statement', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', color: 'from-emerald-500 to-teal-400' },
   { value: 'recommendation_letter', label: 'Recommendation Letter', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'from-emerald-500 to-teal-500' },
   { value: 'cv_resume', label: 'CV / Resume', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'from-amber-500 to-orange-500' },
   { value: 'cover_letter', label: 'Cover Letter', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: 'from-rose-500 to-pink-500' },
@@ -81,7 +81,7 @@ function ScoreCircle({ label, score, delay }: { label: string; score: number; de
 
   const colorMap: Record<string, { ring: string; text: string; glow: string }> = {
     overall: { ring: 'from-indigo-500 via-purple-500 to-pink-500', text: 'text-indigo-400', glow: 'shadow-indigo-500/20' },
-    structure: { ring: 'from-cyan-500 to-blue-500', text: 'text-cyan-400', glow: 'shadow-cyan-500/20' },
+    structure: { ring: 'from-emerald-500 to-teal-400', text: 'text-emerald-400', glow: 'shadow-emerald-500/20' },
     clarity: { ring: 'from-emerald-500 to-teal-500', text: 'text-emerald-400', glow: 'shadow-emerald-500/20' },
     grammar: { ring: 'from-amber-500 to-orange-500', text: 'text-amber-400', glow: 'shadow-amber-500/20' },
     relevance: { ring: 'from-rose-500 to-pink-500', text: 'text-rose-400', glow: 'shadow-rose-500/20' },
@@ -210,19 +210,19 @@ export default function DocumentsPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <a href="/dashboard" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+          <a href="/dashboard" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Dashboard
           </a>
           <h1 className="text-2xl font-bold gradient-text">Document Intelligence</h1>
-          <p className="text-sm mt-1 text-cyan-400"><span className="text-blue-400 font-medium">AI-powered</span> analysis with <span className="text-indigo-400 font-medium">integrity checks</span></p>
+          <p className="text-sm mt-1 text-emerald-400"><span className="text-emerald-400 font-medium">AI-powered</span> analysis with <span className="text-indigo-400 font-medium">integrity checks</span></p>
         </div>
       </div>
 
       <div className="flex gap-1 p-1 rounded-xl w-fit" style={{ background: 'rgba(15, 23, 42, 0.7)', border: '1px solid rgba(148, 163, 184, 0.1)' }}>
         {(['analyze', 'history', 'guidelines'] as const).map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${activeTab === tab ? 'gradient-bg text-white shadow-lg shadow-indigo-500/25' : 'text-cyan-400 hover:text-cyan-300 hover:bg-white/10'}`}>
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${activeTab === tab ? 'gradient-bg text-white shadow-lg shadow-indigo-500/25' : 'text-emerald-400 hover:text-emerald-300 hover:bg-white/10'}`}>
             {tab === 'analyze' ? 'Analyze' : tab === 'history' ? 'History' : 'Guidelines'}
           </button>
         ))}
@@ -239,11 +239,11 @@ export default function DocumentsPage() {
             </h2>
 
             <div>
-              <label className="block text-sm font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Document Type</label>
+              <label className="block text-sm font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">Document Type</label>
               <div className="grid grid-cols-2 gap-2">
                 {DOC_TYPES.map(dt => (
                   <button key={dt.value} onClick={() => setDocumentType(dt.value)}
-                    className={`flex items-center gap-2 p-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${documentType === dt.value ? `gradient-bg text-white shadow-lg ${dt.color}` : 'bg-white/[0.03] border border-white/10 text-cyan-400 hover:border-cyan-400/30 hover:text-cyan-300'}`}>
+                    className={`flex items-center gap-2 p-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${documentType === dt.value ? `gradient-bg text-white shadow-lg ${dt.color}` : 'bg-white/[0.03] border border-white/10 text-emerald-400 hover:border-emerald-400/30 hover:text-emerald-300'}`}>
                     <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={dt.icon} /></svg>
                     <span className="truncate">{dt.label}</span>
                   </button>
@@ -252,10 +252,10 @@ export default function DocumentsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Upload a file</label>
+              <label className="block text-sm font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">Upload a file</label>
               <div onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={handleDragLeave}
                 onClick={() => fileInputRef.current?.click()}
-                className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${isDragging ? 'border-cyan-400 bg-cyan-500/10 scale-[1.02]' : 'border-white/10 hover:border-cyan-400/50 hover:bg-white/5'}`}>
+                className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${isDragging ? 'border-emerald-400 bg-emerald-500/10 scale-[1.02]' : 'border-white/10 hover:border-emerald-400/50 hover:bg-white/5'}`}>
                 <input ref={fileInputRef} type="file" accept=".pdf,.md,.txt,.docx,.xlsx,.xls"
                   onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} className="hidden" />
                 {uploadedFile ? (
@@ -264,16 +264,16 @@ export default function DocumentsPage() {
                       <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
                     <p className="text-sm font-medium gradient-text">{uploadedFile.name}</p>
-                    <p className="text-xs text-cyan-400">{formatFileSize(uploadedFile.size)}</p>
+                    <p className="text-xs text-emerald-400">{formatFileSize(uploadedFile.size)}</p>
                     <button onClick={(e) => { e.stopPropagation(); setUploadedFile(null); setContent(''); }}
                       className="text-xs text-red-400 hover:text-red-300 transition-colors">Remove file</button>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     <div className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15))' }}>
-                      <svg className="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                      <svg className="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                     </div>
-                    <p className="text-sm text-cyan-400">Drag & drop a file here, or click to browse</p>
+                    <p className="text-sm text-emerald-400">Drag & drop a file here, or click to browse</p>
                     <p className="text-xs text-violet-400">PDF, Markdown, Word, Excel, Text</p>
                   </div>
                 )}
@@ -288,36 +288,36 @@ export default function DocumentsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Paste or type your document</label>
+              <label className="block text-sm font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">Paste or type your document</label>
               <textarea value={content} onChange={e => setContent(e.target.value)} rows={12}
                 className="w-full rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm text-gray-200 transition-all duration-300"
                 style={{ background: 'rgba(11, 17, 32, 0.8)', border: '1.5px solid rgba(148, 163, 184, 0.15)' }}
                 placeholder="Paste your SOP, personal statement, CV, or any document here..." />
               <div className="flex items-center justify-between mt-1.5">
-                <p className="text-xs text-cyan-400">{content.split(/\s+/).filter(Boolean).length} words</p>
+                <p className="text-xs text-emerald-400">{content.split(/\s+/).filter(Boolean).length} words</p>
                 {content.length > 0 && <span className="text-xs text-indigo-400 animate-pulse">Ready to analyze</span>}
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Target Institution</label>
+                <label className="block text-sm font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">Target Institution</label>
                 <input value={targetInstitution} onChange={e => setTargetInstitution(e.target.value)}
-                  className="w-full rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                  className="w-full rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
                   style={{ background: 'rgba(11, 17, 32, 0.8)', border: '1.5px solid rgba(148, 163, 184, 0.15)' }}
                   placeholder="e.g. MIT" />
               </div>
               <div>
-                <label className="block text-sm font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Target Program</label>
+                <label className="block text-sm font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">Target Program</label>
                 <input value={targetProgram} onChange={e => setTargetProgram(e.target.value)}
-                  className="w-full rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                  className="w-full rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
                   style={{ background: 'rgba(11, 17, 32, 0.8)', border: '1.5px solid rgba(148, 163, 184, 0.15)' }}
                   placeholder="e.g. Computer Science" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">Additional Context</label>
+              <label className="block text-sm font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">Additional Context</label>
               <input value={additionalContext} onChange={e => setAdditionalContext(e.target.value)}
                 className="w-full rounded-xl px-4 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-300"
                 style={{ background: 'rgba(11, 17, 32, 0.8)', border: '1.5px solid rgba(148, 163, 184, 0.15)' }}
@@ -341,7 +341,7 @@ export default function DocumentsPage() {
 
             <div className="p-3 rounded-xl text-sm" style={{ background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.2)' }}>
               <span className="text-amber-400 font-semibold">Integrity Policy:</span>
-              <span className="text-cyan-400"> Our AI analyzes and <span className="text-emerald-400">improves</span> your <span className="text-cyan-400">REAL writing</span> only. It will never fabricate achievements, grades, certificates, or experiences.</span>
+              <span className="text-emerald-400"> Our AI analyzes and <span className="text-emerald-400">improves</span> your <span className="text-emerald-400">REAL writing</span> only. It will never fabricate achievements, grades, certificates, or experiences.</span>
             </div>
           </div>
 
@@ -360,7 +360,7 @@ export default function DocumentsPage() {
                           {(result.detectedType || result.documentType).replace(/_/g, ' ')}
                         </span>
                         {result.detectedType && result.detectedType !== result.documentType && (
-                          <span className="text-xs text-cyan-400">Auto-detected</span>
+                          <span className="text-xs text-emerald-400">Auto-detected</span>
                         )}
                       </div>
                     </div>
@@ -373,7 +373,7 @@ export default function DocumentsPage() {
                     <ScoreCircle label="Grammar" score={result.grammarScore} delay={300} />
                     <ScoreCircle label="Relevance" score={result.relevanceScore} delay={400} />
                   </div>
-                  <p className="text-sm text-cyan-400 mt-5 p-3 rounded-xl" style={{ background: 'rgba(11, 17, 32, 0.5)' }}><span className="text-indigo-400">Summary:</span> {result.executiveSummary}</p>
+                  <p className="text-sm text-emerald-400 mt-5 p-3 rounded-xl" style={{ background: 'rgba(11, 17, 32, 0.5)' }}><span className="text-indigo-400">Summary:</span> {result.executiveSummary}</p>
                 </div>
 
                 <div className="card animate-slide-up" style={{ animationDelay: '100ms' }}>
@@ -436,7 +436,7 @@ export default function DocumentsPage() {
                                   <span className="text-emerald-400">{s.suggestedText}</span>
                                 </div>
                               )}
-                               <p className="text-cyan-400 pt-1"><span className="text-cyan-400">Key insight:</span> {s.explanation}</p>
+                               <p className="text-emerald-400 pt-1"><span className="text-emerald-400">Key insight:</span> {s.explanation}</p>
                             </div>
                           )}
                         </div>
@@ -446,7 +446,7 @@ export default function DocumentsPage() {
                 )}
 
                 <div className="card animate-slide-up" style={{ animationDelay: '400ms' }}>
-                  <h2 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-3 flex items-center gap-2">
+                  <h2 className="text-lg font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-3 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full" style={{ background: result.integrityCheck.integrityScore >= 80 ? '#10b981' : result.integrityCheck.integrityScore >= 60 ? '#f59e0b' : '#ef4444' }}></span>
                     Integrity Check
                   </h2>
@@ -494,7 +494,7 @@ export default function DocumentsPage() {
                 <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4 gradient-bg animate-float">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                 </div>
-                <p className="text-lg text-cyan-400">Paste your document and click <span className="text-indigo-400 font-medium">Analyze</span> to get started</p>
+                <p className="text-lg text-emerald-400">Paste your document and click <span className="text-indigo-400 font-medium">Analyze</span> to get started</p>
               </div>
             )}
           </div>
@@ -505,7 +505,7 @@ export default function DocumentsPage() {
         <div className="card animate-fade-in">
           <h2 className="text-lg font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">Analysis History</h2>
           {history.length === 0 ? (
-            <p className="text-cyan-400 text-center py-12">No analyses yet. <span className="text-indigo-400 font-medium">Analyze</span> a document to see history here.</p>
+            <p className="text-emerald-400 text-center py-12">No analyses yet. <span className="text-indigo-400 font-medium">Analyze</span> a document to see history here.</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -526,7 +526,7 @@ export default function DocumentsPage() {
                       </td>
                       <td className="py-3 text-violet-400">{new Date(h.createdAt).toLocaleDateString()}</td>
                       <td className="py-3 text-right">
-                        <button onClick={() => setActiveTab('analyze')} className="text-cyan-400 hover:text-cyan-300 text-xs mr-3 transition-colors">View</button>
+                        <button onClick={() => setActiveTab('analyze')} className="text-emerald-400 hover:text-emerald-300 text-xs mr-3 transition-colors">View</button>
                         <button onClick={() => handleDelete(h.id)} className="text-red-400 hover:text-red-300 text-xs transition-colors">Delete</button>
                       </td>
                     </tr>
@@ -540,14 +540,14 @@ export default function DocumentsPage() {
 
       {activeTab === 'guidelines' && (
         <div className="space-y-4 animate-fade-in">
-          <p className="text-cyan-400">Understanding what makes a <span className="text-indigo-400 font-medium">strong document</span> for each type.</p>
+          <p className="text-emerald-400">Understanding what makes a <span className="text-indigo-400 font-medium">strong document</span> for each type.</p>
           {Object.entries(guidelines).map(([key, g], idx) => (
             <div key={key} className="card overflow-hidden animate-slide-up" style={{ animationDelay: `${idx * 50}ms` }}>
               <button onClick={() => setActiveGuideline(activeGuideline === key ? null : key)}
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition-all duration-300">
                 <div>
                   <h3 className="font-semibold gradient-text">{g.title}</h3>
-                  <p className="text-sm text-cyan-400 mt-0.5">{g.description}</p>
+                  <p className="text-sm text-emerald-400 mt-0.5">{g.description}</p>
                 </div>
                 <span className="text-gray-400 transition-transform duration-300" style={{ transform: activeGuideline === key ? 'rotate(180deg)' : 'rotate(0deg)' }}>&#9660;</span>
               </button>
@@ -557,7 +557,7 @@ export default function DocumentsPage() {
                     {g.tips.map((tip, i) => (
                       <li key={i} className="flex items-start gap-3 text-sm p-2 rounded-lg hover:bg-white/5 transition-colors">
                         <span className="text-indigo-400 mt-0.5 text-lg">&#8226;</span>
-                         <span className="text-cyan-400"><span className="text-indigo-400">Tip:</span> {tip}</span>
+                         <span className="text-emerald-400"><span className="text-indigo-400">Tip:</span> {tip}</span>
                       </li>
                     ))}
                   </ul>

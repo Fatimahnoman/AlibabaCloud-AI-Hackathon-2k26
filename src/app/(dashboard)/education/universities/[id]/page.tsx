@@ -73,7 +73,7 @@ interface UniversityDetail {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  university: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  university: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
   college: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
   school: 'bg-green-500/10 text-green-400 border-green-500/20',
 };
@@ -400,7 +400,7 @@ export default function UniversityDetailPage() {
 
   return (
     <div className="space-y-6 animate-fade-in max-w-4xl">
-      <button onClick={() => router.back()} className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1">
+      <button onClick={() => router.back()} className="text-sm text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         Back to Search
       </button>
@@ -431,7 +431,7 @@ export default function UniversityDetailPage() {
               {uni.foundedYear && <span>📅 Est. {uni.foundedYear}</span>}
               {uni.courses?.length > 0 && <span>📋 {uni.courses.length} programs</span>}
               {mainCampus && (
-                <span className="flex items-center gap-1 text-blue-600">
+                <span className="flex items-center gap-1 text-emerald-600">
                   🏛️ Main: {mainCampus.city || mainCampus.name}
                 </span>
               )}
@@ -455,7 +455,7 @@ export default function UniversityDetailPage() {
             <button
               onClick={handleSave}
               disabled={saving || saved}
-              className={`text-sm px-4 py-2 rounded-lg font-medium transition-colors ${saved ? 'bg-green-500/10 text-green-400' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+              className={`text-sm px-4 py-2 rounded-lg font-medium transition-colors ${saved ? 'bg-green-500/10 text-green-400' : 'bg-emerald-600 text-white hover:bg-emerald-700'}`}
             >
               {saved ? 'Saved' : saving ? 'Saving...' : 'Save'}
             </button>
@@ -471,7 +471,7 @@ export default function UniversityDetailPage() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
               activeTab === tab.key
-                ? 'border-blue-600 text-blue-600'
+                ? 'border-emerald-600 text-emerald-600'
                 : 'border-transparent text-gray-500 hover:text-gray-300'
             }`}
           >
@@ -508,11 +508,11 @@ export default function UniversityDetailPage() {
           )}
           
           {/* Fee Information Notice */}
-          <div className="card bg-blue-500/5 border border-blue-500/20 mt-4">
+          <div className="card bg-emerald-500/5 border border-emerald-500/20 mt-4">
             <div className="flex items-start gap-3">
               <div className="text-2xl">💰</div>
               <div className="flex-1">
-                <h4 className="font-semibold text-blue-400 mb-1">Fee Information</h4>
+                <h4 className="font-semibold text-emerald-400 mb-1">Fee Information</h4>
                 <p className="text-sm text-gray-400">
                   For accurate and up-to-date tuition fees, please visit the official university website or contact their admissions office directly.
                 </p>
@@ -521,7 +521,7 @@ export default function UniversityDetailPage() {
                     href={uni.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-3 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                    className="inline-flex items-center gap-2 mt-3 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -598,15 +598,15 @@ export default function UniversityDetailPage() {
         <div className="space-y-4">
           {/* Main Campus */}
           {mainCampus && (
-            <div className="card border-l-4 border-blue-500">
+            <div className="card border-l-4 border-emerald-500">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
                   <span className="text-lg">🏛️</span>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h3 className="font-bold text-gray-100">{mainCampus.name}</h3>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 font-medium">Main Campus</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">Main Campus</span>
                   </div>
                   {mainCampus.city && <p className="text-sm text-gray-500 mt-1">📍 {mainCampus.city}{mainCampus.address ? `, ${mainCampus.address}` : ''}</p>}
                   {mainCampus.description && <p className="text-sm text-gray-400 mt-2">{mainCampus.description}</p>}
@@ -614,7 +614,7 @@ export default function UniversityDetailPage() {
                     {mainCampus.phone && <span>📞 {mainCampus.phone}</span>}
                     {mainCampus.email && <span>✉️ {mainCampus.email}</span>}
                     {mainCampus.website && (
-                      <a href={mainCampus.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">🌐 Website</a>
+                      <a href={mainCampus.website} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">🌐 Website</a>
                     )}
                   </div>
                   {mainCampus.facilities && (
@@ -696,7 +696,7 @@ export default function UniversityDetailPage() {
       {/* AI Chat */}
       {showAI && (
         <div className="card p-0 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-900/30 to-purple-900/30 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-900/30 to-purple-900/30 border-b border-white/10">
             <div className="flex items-center gap-2">
               <span className="text-lg">🤖</span>
               <span className="font-semibold text-gray-100">Ask AI about {uni.name}</span>
@@ -717,7 +717,7 @@ export default function UniversityDetailPage() {
               title={`${uni.name} AI Advisor`}
               subtitle={`Ask anything about ${uni.name}`}
               avatar="🎓"
-              avatarColor="bg-gradient-to-br from-blue-500 to-purple-500 text-white"
+              avatarColor="bg-gradient-to-br from-emerald-500 to-purple-500 text-white"
               systemMessage={buildUniversitySystemMessage(uni)}
               freshStart={true}
               suggestions={[
@@ -739,7 +739,7 @@ export default function UniversityDetailPage() {
       {!showAI && (
         <button
           onClick={handleAIQuestion}
-          className="w-full card-hover flex items-center justify-center gap-3 py-4 border-2 border-dashed border-blue-500/30 hover:border-blue-400 text-blue-400 transition-colors"
+          className="w-full card-hover flex items-center justify-center gap-3 py-4 border-2 border-dashed border-emerald-500/30 hover:border-emerald-400 text-emerald-400 transition-colors"
         >
           <span className="text-2xl">🤖</span>
           <span className="font-medium">Ask AI about this institution</span>

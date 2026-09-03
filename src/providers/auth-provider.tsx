@@ -42,12 +42,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshUser = useCallback(async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        setUser(null);
-        return;
-      }
-
       const response = await apiClient.get<{ data: { user: User } }>('/api/auth/me');
       setUser(response.data.user);
     } catch {
@@ -86,8 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      const refreshToken = localStorage.getItem('refreshToken');
-      await apiClient.post('/api/auth/logout', { refreshToken });
+      await apiClient.post('/api/auth/logout');
     } catch {
       // Ignore logout errors
     } finally {

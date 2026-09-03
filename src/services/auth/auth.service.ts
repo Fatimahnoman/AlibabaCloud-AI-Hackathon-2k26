@@ -3,6 +3,7 @@ import { hashPassword, comparePassword, validatePasswordStrength } from '@/lib/p
 import { generateTokenPair, verifyRefreshToken, generateResetToken, hashToken } from '@/lib/jwt';
 import { auditService } from '@/services/audit/audit.service';
 import { emailService } from '@/services/email/email.service';
+import { isLockedOut, recordFailedAttempt, clearLockout } from '@/lib/rate-limit';
 import type { RegisterRequest, LoginRequest, AuthTokens, User } from '@/types';
 
 interface AuthContext {
@@ -80,18 +81,29 @@ export class AuthService {
   }
 
   async login(data: LoginRequest, context?: AuthContext): Promise<{ user: Omit<User, 'passwordHash'>; tokens: AuthTokens }> {
+    const email = data.email.toLowerCase().trim();
+    const lockoutKey = `lockout:${email}`;
+
+    // Check account lockout
+    const lockout = isLockedOut(lockoutKey);
+    if (lockout.locked) {
+      const minutes = Math.ceil((lockout.remainingMs || 0) / 60000);
+      throw new Error(`Account is temporarily locked due to too many failed attempts. Try again in ${minutes} minutes.`);
+    }
+
     // Find user by email
     const user = await prisma.user.findUnique({
-      where: { email: data.email.toLowerCase().trim() },
+      where: { email },
     });
 
     if (!user || user.deletedAt) {
       // Generic error to prevent email enumeration
+      recordFailedAttempt(lockoutKey);
       await auditService.log({
         action: 'LOGIN_FAILED',
         entityType: 'user',
         entityId: 'unknown',
-        details: { email: data.email.toLowerCase().trim(), reason: 'user_not_found' },
+        details: { email, reason: 'user_not_found' },
         ipAddress: context?.ipAddress,
         userAgent: context?.userAgent,
       });
@@ -106,17 +118,32 @@ export class AuthService {
     // Verify password
     const isValidPassword = await comparePassword(data.password, user.passwordHash);
     if (!isValidPassword) {
+      const lockoutResult = recordFailedAttempt(lockoutKey);
+      if (lockoutResult.locked) {
+        await auditService.log({
+          userId: user.id,
+          action: 'ACCOUNT_LOCKED',
+          entityType: 'user',
+          entityId: user.id,
+          details: { reason: 'too_many_failed_attempts', attempts: lockoutResult.attempts },
+          ipAddress: context?.ipAddress,
+          userAgent: context?.userAgent,
+        });
+      }
       await auditService.log({
         userId: user.id,
         action: 'LOGIN_FAILED',
         entityType: 'user',
         entityId: user.id,
-        details: { reason: 'invalid_password' },
+        details: { reason: 'invalid_password', attempts: lockoutResult.attempts },
         ipAddress: context?.ipAddress,
         userAgent: context?.userAgent,
       });
       throw new Error('Invalid email or password');
     }
+
+    // Clear lockout on successful login
+    clearLockout(lockoutKey);
 
     // Generate tokens
     const tokenPair = generateTokenPair({

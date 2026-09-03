@@ -54,7 +54,7 @@ export default function ScholarshipMatchPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-600" />
       </div>
     );
   }
@@ -63,7 +63,7 @@ export default function ScholarshipMatchPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <Link href="/education/scholarships" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+          <Link href="/education/scholarships" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Scholarships
           </Link>
@@ -77,7 +77,7 @@ export default function ScholarshipMatchPage() {
             )}
           </p>
         </div>
-        <Link href="/education/scholarships" className="text-sm text-blue-400 hover:underline">
+        <Link href="/education/scholarships" className="text-sm text-emerald-400 hover:underline">
           Browse all scholarships
         </Link>
       </div>
@@ -89,7 +89,7 @@ export default function ScholarshipMatchPage() {
           <p className="text-gray-400 text-sm">
             Update your profile with country and education level to get personalized matches.
           </p>
-          <Link href="/profile" className="mt-4 inline-block px-4 py-2 rounded-xl bg-blue-600 text-white text-sm hover:bg-blue-700 transition-colors">
+          <Link href="/profile" className="mt-4 inline-block px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm hover:bg-emerald-700 transition-colors">
             Update Profile
           </Link>
         </div>
@@ -99,7 +99,7 @@ export default function ScholarshipMatchPage() {
             <Link
               key={s.id}
               href={`/education/scholarships/${s.id}`}
-              className="block bg-card border border-border/50 rounded-2xl p-5 hover:border-blue-500/30 transition-all"
+              className="block bg-card border border-border/50 rounded-2xl p-5 hover:border-emerald-500/30 transition-all"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
@@ -114,12 +114,12 @@ export default function ScholarshipMatchPage() {
                   {/* Match Reasons */}
                   <div className="flex flex-wrap gap-2 mt-3">
                     {s.matchReasons.slice(0, 4).map((reason, i) => (
-                      <span key={i} className="px-2 py-1 rounded-lg bg-dark/60 text-xs text-gray-300">
+                      <span key={i} className="px-2 py-1 rounded-lg bg-black/60 text-xs text-gray-300">
                         {reason}
                       </span>
                     ))}
                     {s.matchReasons.length > 4 && (
-                      <span className="px-2 py-1 rounded-lg bg-dark/60 text-xs text-gray-500">
+                      <span className="px-2 py-1 rounded-lg bg-black/60 text-xs text-gray-500">
                         +{s.matchReasons.length - 4} more
                       </span>
                     )}
@@ -141,7 +141,7 @@ export default function ScholarshipMatchPage() {
                   </span>
                 )}
                 {s.category && (
-                  <span className="px-2 py-1 rounded-lg bg-blue-500/10 text-xs text-blue-300">{s.category}</span>
+                  <span className="px-2 py-1 rounded-lg bg-emerald-500/10 text-xs text-emerald-300">{s.category}</span>
                 )}
                 <span className={`text-sm ml-auto ${s.daysUntilDeadline <= 7 ? 'text-red-400 font-bold' : s.daysUntilDeadline <= 14 ? 'text-yellow-400' : 'text-gray-400'}`}>
                   Deadline: {formatDate(s.deadline)} ({s.daysUntilDeadline}d)

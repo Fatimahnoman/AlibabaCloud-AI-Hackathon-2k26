@@ -39,7 +39,7 @@ const PROGRAM_LABELS: Record<string, string> = {
 };
 
 const DEGREE_COLORS: Record<string, string> = {
-  bachelor: 'bg-blue-500/10 text-blue-400',
+  bachelor: 'bg-emerald-500/10 text-emerald-400',
   master: 'bg-purple-500/10 text-purple-400',
   phd: 'bg-red-500/10 text-red-400',
   intermediate: 'bg-green-500/10 text-green-400',
@@ -168,12 +168,12 @@ export default function CoursesPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </Link>
         <h1 className="text-2xl font-bold gradient-text">Find a Course</h1>
-        <p className="text-cyan-400 mt-1">Search courses from universities worldwide</p>
+        <p className="text-emerald-400 mt-1">Search courses from universities worldwide</p>
       </div>
 
       {/* 5-Step Cascading Filters */}
@@ -181,13 +181,13 @@ export default function CoursesPage() {
         <div className="flex items-center gap-2 text-sm text-violet-400">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
           <span className="font-medium">Filter by:</span>
-          <span className="text-cyan-400">Country → City → University → Department → Program</span>
+          <span className="text-emerald-400">Country → City → University → Department → Program</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {/* 1. Country */}
           <div>
-            <label className="block text-xs font-semibold text-cyan-400 mb-1">1. Country</label>
+            <label className="block text-xs font-semibold text-emerald-400 mb-1">1. Country</label>
             <select value={country} onChange={(e) => setCountry(e.target.value)} className="input-field text-sm">
               <option value="">All Countries</option>
               {countries.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -196,7 +196,7 @@ export default function CoursesPage() {
 
           {/* 2. City */}
           <div>
-            <label className="block text-xs font-semibold text-cyan-400 mb-1">2. City</label>
+            <label className="block text-xs font-semibold text-emerald-400 mb-1">2. City</label>
             <select value={city} onChange={(e) => setCity(e.target.value)} className="input-field text-sm" disabled={!country || loadingCities}>
               <option value="">{loadingCities ? 'Loading...' : country ? 'All Cities' : '—'}</option>
               {cities.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -205,7 +205,7 @@ export default function CoursesPage() {
 
           {/* 3. University */}
           <div>
-            <label className="block text-xs font-semibold text-cyan-400 mb-1">3. University</label>
+            <label className="block text-xs font-semibold text-emerald-400 mb-1">3. University</label>
             <select value={universityId} onChange={(e) => setUniversityId(e.target.value)} className="input-field text-sm" disabled={!country || loadingUnis}>
               <option value="">{loadingUnis ? 'Loading...' : country ? 'All Universities' : '—'}</option>
               {universities.map((u) => <option key={u.id} value={u.id}>{u.name} ({u._count.courses})</option>)}
@@ -214,7 +214,7 @@ export default function CoursesPage() {
 
           {/* 4. Department */}
           <div>
-            <label className="block text-xs font-semibold text-cyan-400 mb-1">4. Department</label>
+            <label className="block text-xs font-semibold text-emerald-400 mb-1">4. Department</label>
             <select value={department} onChange={(e) => setDepartment(e.target.value)} className="input-field text-sm" disabled={!country || loadingDepts}>
               <option value="">{loadingDepts ? 'Loading...' : country ? 'All Departments' : '—'}</option>
               {departments.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -223,7 +223,7 @@ export default function CoursesPage() {
 
           {/* 5. Program */}
           <div>
-            <label className="block text-xs font-semibold text-cyan-400 mb-1">5. Program</label>
+            <label className="block text-xs font-semibold text-emerald-400 mb-1">5. Program</label>
             <select value={program} onChange={(e) => setProgram(e.target.value)} className="input-field text-sm" disabled={!country || loadingProgs}>
               <option value="">{loadingProgs ? 'Loading...' : country ? 'All Programs' : '—'}</option>
               {programs.map((p) => <option key={p} value={p}>{PROGRAM_LABELS[p] || p}</option>)}
@@ -233,8 +233,8 @@ export default function CoursesPage() {
 
         {activeFilters.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 pt-1">
-            <span className="text-xs text-cyan-400">Active:</span>
-            {country && <button onClick={() => { setCountry(''); setCity(''); setUniversityId(''); setDepartment(''); setProgram(''); }} className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full hover:bg-blue-500/20">{country} ×</button>}
+            <span className="text-xs text-emerald-400">Active:</span>
+            {country && <button onClick={() => { setCountry(''); setCity(''); setUniversityId(''); setDepartment(''); setProgram(''); }} className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full hover:bg-emerald-500/20">{country} ×</button>}
             {city && <button onClick={() => { setCity(''); setUniversityId(''); setDepartment(''); setProgram(''); }} className="text-xs bg-green-500/10 text-green-400 px-2 py-0.5 rounded-full hover:bg-green-500/20">{city} ×</button>}
             {universityId && <button onClick={() => { setUniversityId(''); setDepartment(''); setProgram(''); }} className="text-xs bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full hover:bg-purple-500/20">{universities.find((u) => u.id === universityId)?.name} ×</button>}
             {department && <button onClick={() => { setDepartment(''); setProgram(''); }} className="text-xs bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-full hover:bg-orange-500/20">{department} ×</button>}
@@ -247,12 +247,12 @@ export default function CoursesPage() {
       {!country ? (
         <div className="card text-center py-16">
           <div className="text-5xl mb-4">🌍</div>
-          <p className="text-lg font-medium text-cyan-400">Select a country to get started</p>
+          <p className="text-lg font-medium text-emerald-400">Select a country to get started</p>
           <p className="text-sm text-violet-400 mt-2">Browse {countries.length} countries with universities in our database</p>
           <div className="flex flex-wrap justify-center gap-2 mt-6">
             {countries.map((c) => (
               <button key={c} onClick={() => setCountry(c)}
-                className="px-4 py-2 bg-white/[0.03] border border-white/10 rounded-lg text-sm font-medium text-cyan-400 hover:border-blue-400 hover:text-blue-600 transition-colors">
+                className="px-4 py-2 bg-white/[0.03] border border-white/10 rounded-lg text-sm font-medium text-emerald-400 hover:border-emerald-400 hover:text-emerald-600 transition-colors">
                 {c === 'Pakistan' ? '🇵🇰' : c === 'United States' ? '🇺🇸' : c === 'United Kingdom' ? '🇬🇧' : c === 'Germany' ? '🇩🇪' : c === 'Canada' ? '🇨🇦' : c === 'Australia' ? '🇦🇺' : '🌍'} {c}
               </button>
             ))}
@@ -271,21 +271,21 @@ export default function CoursesPage() {
       ) : courses.length === 0 ? (
         <div className="card text-center py-12">
           <div className="text-4xl mb-3">📚</div>
-          <p className="text-cyan-400 font-medium">No courses found</p>
+          <p className="text-emerald-400 font-medium">No courses found</p>
           <p className="text-sm text-violet-400 mt-1">Try adjusting your filters or selecting a different university</p>
         </div>
       ) : (
         <>
           <p className="text-sm text-violet-400">
-            <span className="font-semibold text-cyan-400">{pagination.total}</span> courses found
-            {city && <span> in <span className="font-medium text-cyan-400">{city}</span></span>}
+            <span className="font-semibold text-emerald-400">{pagination.total}</span> courses found
+            {city && <span> in <span className="font-medium text-emerald-400">{city}</span></span>}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {courses.map((c) => (
               <Link key={c.id} href={`/education/universities/${c.university.id}`} className="card-hover">
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent hover:text-blue-600 transition-colors">{c.name}</h3>
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full whitespace-nowrap ${DEGREE_COLORS[c.degree] || 'bg-white/5 text-cyan-400'}`}>
+                  <h3 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent hover:text-emerald-600 transition-colors">{c.name}</h3>
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full whitespace-nowrap ${DEGREE_COLORS[c.degree] || 'bg-white/5 text-emerald-400'}`}>
                     {PROGRAM_LABELS[c.degree] || c.degree}
                   </span>
                 </div>
@@ -295,7 +295,7 @@ export default function CoursesPage() {
                   {c.duration && <><span>&middot;</span><span>{c.duration}</span></>}
                 </div>
                 {c.description && (
-                  <p className="text-xs text-cyan-400 mt-2 line-clamp-2">{c.description}</p>
+                  <p className="text-xs text-emerald-400 mt-2 line-clamp-2">{c.description}</p>
                 )}
               </Link>
             ))}
@@ -303,7 +303,7 @@ export default function CoursesPage() {
           {pagination.totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               <button disabled={pagination.page <= 1} onClick={() => fetchCourses(pagination.page - 1)} className="btn-secondary text-sm disabled:opacity-40">Prev</button>
-              <span className="text-sm text-cyan-400">Page {pagination.page} of {pagination.totalPages}</span>
+              <span className="text-sm text-emerald-400">Page {pagination.page} of {pagination.totalPages}</span>
               <button disabled={pagination.page >= pagination.totalPages} onClick={() => fetchCourses(pagination.page + 1)} className="btn-secondary text-sm disabled:opacity-40">Next</button>
             </div>
           )}

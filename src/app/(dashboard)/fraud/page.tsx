@@ -6,7 +6,7 @@ import DepartmentChat from '@/components/department-chat/DepartmentChat';
 
 const tools = [
   { title: 'Check SMS/Text', description: <>Analyze <span className="text-red-400">suspicious text messages</span> for scam patterns and phishing attempts</>, href: '/fraud/check-text', icon: '💬', query: '' },
-  { title: 'Check Phone Number', description: <><span className="text-cyan-400">Scan a phone number</span> for network, region, and fraud indicators</>, href: '/fraud/check-phone', icon: '📱', query: '' },
+  { title: 'Check Phone Number', description: <><span className="text-emerald-400">Scan a phone number</span> for network, region, and fraud indicators</>, href: '/fraud/check-phone', icon: '📱', query: '' },
   { title: 'Check URL', description: <><span className="text-emerald-400">Scan a URL</span> to determine if it is a phishing or malicious link</>, href: '/fraud/check-url', icon: '🔗', query: '' },
   { title: 'Scan Document', description: <>Upload a PDF, DOCX, or <span className="text-amber-400">text file</span> to check for fraud indicators</>, href: '/fraud/check-document', icon: '📄', query: '' },
   { title: 'Scan Screenshot', description: <>Upload a <span className="text-violet-400">screenshot image</span> for visual fraud analysis</>, href: '/fraud/check-document', icon: '🖼️', query: '?type=image' },
@@ -18,11 +18,11 @@ const tools = [
 
 const cardColors = [
   { gradient: 'from-red-500 via-rose-500 to-pink-500', glow: 'rgba(239,68,68,0.15)' },
-  { gradient: 'from-blue-500 via-cyan-500 to-teal-500', glow: 'rgba(59,130,246,0.15)' },
+  { gradient: 'from-emerald-500 via-teal-500 to-teal-500', glow: 'rgba(59,130,246,0.15)' },
   { gradient: 'from-emerald-500 via-green-500 to-lime-500', glow: 'rgba(16,185,129,0.15)' },
   { gradient: 'from-amber-500 via-orange-500 to-red-500', glow: 'rgba(245,158,11,0.15)' },
   { gradient: 'from-violet-500 via-purple-500 to-fuchsia-500', glow: 'rgba(139,92,246,0.15)' },
-  { gradient: 'from-indigo-500 via-blue-500 to-cyan-500', glow: 'rgba(99,102,241,0.15)' },
+  { gradient: 'from-indigo-500 via-emerald-500 to-teal-500', glow: 'rgba(99,102,241,0.15)' },
   { gradient: 'from-teal-500 via-emerald-500 to-green-500', glow: 'rgba(20,184,166,0.15)' },
   { gradient: 'from-rose-500 via-pink-500 to-fuchsia-500', glow: 'rgba(244,63,94,0.15)' },
   { gradient: 'from-yellow-500 via-amber-500 to-orange-500', glow: 'rgba(234,179,8,0.15)' },

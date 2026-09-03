@@ -14,16 +14,16 @@ interface Deadline {
 
 const sections = [
   { title: 'AI Recommendations', emoji: '🎯', href: '/education/recommendations', desc: <>Get <span className="text-violet-400">personalized</span> university, course, and scholarship matches</>, gradient: 'from-violet-500 via-purple-500 to-fuchsia-500', iconBg: 'rgba(139,92,246,0.15)', delay: 0 },
-  { title: 'Find a Course', emoji: '🎓', href: '/education/courses', desc: <><span className="text-cyan-400">Search courses</span> by field, level, and country</>, gradient: 'from-cyan-500 via-blue-500 to-indigo-500', iconBg: 'rgba(6,182,212,0.15)', delay: 50 },
-  { title: 'Find a University', emoji: '🏫', href: '/education/universities', desc: <><span className="text-emerald-400">Explore</span> universities worldwide</>, gradient: 'from-emerald-500 via-teal-500 to-cyan-500', iconBg: 'rgba(16,185,129,0.15)', delay: 100 },
+  { title: 'Find a Course', emoji: '🎓', href: '/education/courses', desc: <><span className="text-emerald-400">Search courses</span> by field, level, and country</>, gradient: 'from-emerald-500 via-emerald-500 to-indigo-500', iconBg: 'rgba(6,182,212,0.15)', delay: 50 },
+  { title: 'Find a University', emoji: '🏫', href: '/education/universities', desc: <><span className="text-emerald-400">Explore</span> universities worldwide</>, gradient: 'from-emerald-500 via-teal-500 to-teal-400', iconBg: 'rgba(16,185,129,0.15)', delay: 100 },
   { title: 'Find Scholarships', emoji: '🎁', href: '/education/scholarships', desc: <><span className="text-amber-400">Find scholarships</span> you qualify for</>, gradient: 'from-amber-500 via-orange-500 to-red-500', iconBg: 'rgba(245,158,11,0.15)', delay: 150 },
   { title: 'Internships & Fellowships', emoji: '💼', href: '/education/internships', desc: <><span className="text-rose-400">Find</span> internships, fellowships, and house jobs</>, gradient: 'from-rose-500 via-pink-500 to-fuchsia-500', iconBg: 'rgba(244,63,94,0.15)', delay: 200 },
   { title: 'Government Schemes', emoji: '🇵🇰', href: '/education/schemes', desc: <><span className="text-green-400">Scholarships</span>, loans, and aid from Pakistani government</>, gradient: 'from-green-500 via-emerald-500 to-teal-500', iconBg: 'rgba(34,197,94,0.15)', delay: 250 },
-  { title: 'CM Programs', emoji: '🏛️', href: '/education/cm-programs', desc: <>Chief Minister <span className="text-indigo-400">programs</span> for all Pakistan provinces</>, gradient: 'from-indigo-500 via-blue-500 to-cyan-500', iconBg: 'rgba(99,102,241,0.15)', delay: 300 },
+  { title: 'CM Programs', emoji: '🏛️', href: '/education/cm-programs', desc: <>Chief Minister <span className="text-indigo-400">programs</span> for all Pakistan provinces</>, gradient: 'from-indigo-500 via-emerald-500 to-teal-400', iconBg: 'rgba(99,102,241,0.15)', delay: 300 },
   { title: 'Free Course Institutions', emoji: '📚', href: '/education/institutions', desc: <>Find institutions offering <span className="text-yellow-400">free courses</span></>, gradient: 'from-yellow-500 via-amber-500 to-orange-500', iconBg: 'rgba(234,179,8,0.15)', delay: 350 },
   { title: 'Build My Roadmap', emoji: '🗺️', href: '/education/roadmap', desc: <><span className="text-pink-400">Create</span> your personalized education roadmap</>, gradient: 'from-pink-500 via-rose-500 to-red-500', iconBg: 'rgba(236,72,153,0.15)', delay: 400 },
-  { title: 'Career After Degree', emoji: '💼', href: '/education/careers', desc: <><span className="text-teal-400">Explore</span> career paths and guidance</>, gradient: 'from-teal-500 via-cyan-500 to-blue-500', iconBg: 'rgba(20,184,166,0.15)', delay: 450 },
-  { title: 'Study Abroad', emoji: '✈️', href: '/education/study-abroad', desc: <><span className="text-blue-400">Guide</span> to studying in another country</>, gradient: 'from-blue-500 via-indigo-500 to-violet-500', iconBg: 'rgba(59,130,246,0.15)', delay: 500 },
+  { title: 'Career After Degree', emoji: '💼', href: '/education/careers', desc: <><span className="text-teal-400">Explore</span> career paths and guidance</>, gradient: 'from-teal-500 via-teal-400 to-teal-400', iconBg: 'rgba(20,184,166,0.15)', delay: 450 },
+  { title: 'Study Abroad', emoji: '✈️', href: '/education/study-abroad', desc: <><span className="text-emerald-400">Guide</span> to studying in another country</>, gradient: 'from-emerald-500 via-indigo-500 to-violet-500', iconBg: 'rgba(59,130,246,0.15)', delay: 500 },
   { title: 'Cost Planner', emoji: '💰', href: '/education/cost-planner', desc: <><span className="text-orange-400">Plan</span> and compare education costs worldwide</>, gradient: 'from-orange-500 via-red-500 to-pink-500', iconBg: 'rgba(249,115,22,0.15)', delay: 550 },
 ];
 
@@ -41,12 +41,12 @@ export default function EducationPage() {
   return (
     <div className="space-y-8">
       <div className="animate-slide-up">
-        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Dashboard
         </Link>
         <h1 className="text-3xl font-bold gradient-text">Education Center</h1>
-        <p className="text-sm mt-2">Everything you need for your <span className="text-cyan-400 font-medium">education</span> journey</p>
+        <p className="text-sm mt-2">Everything you need for your <span className="text-emerald-400 font-medium">education</span> journey</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -68,8 +68,8 @@ export default function EducationPage() {
       <div className="rounded-2xl overflow-hidden animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '600ms' }}>
         <div className="px-6 py-4" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.08), rgba(6,182,212,0.08))', borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
           <h2 className="text-lg font-semibold flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 animate-pulse" />
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Upcoming Scholarship Deadlines</span>
+            <span className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 animate-pulse" />
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Upcoming Scholarship Deadlines</span>
           </h2>
         </div>
         <div className="p-6">
@@ -92,7 +92,7 @@ export default function EducationPage() {
                       <div className={`w-2 h-2 rounded-full ${urgent ? 'bg-rose-400 animate-pulse' : 'bg-emerald-400'}`} />
                       <div>
                         <p className="text-sm font-semibold text-slate-200 group-hover:text-white transition-all">{d.name}</p>
-                        <p className="text-xs text-slate-400">{d.provider} &middot; <span className="text-cyan-400">{d.country}</span></p>
+                        <p className="text-xs text-slate-400">{d.provider} &middot; <span className="text-emerald-400">{d.country}</span></p>
                       </div>
                     </div>
                     <span className={`text-xs font-semibold px-3 py-1 rounded-full ${urgent ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}`}>

@@ -14,12 +14,12 @@ interface RoadmapStep {
 }
 
 const phaseColors = [
-  { bg: 'bg-blue-500/10', border: 'border-blue-500/20', dot: 'bg-blue-500', ring: 'ring-blue-500/20', text: 'text-blue-400', badge: 'bg-blue-500/10 text-blue-400', treeBg: '#0b1628', treeBorder: '#1e3a5f' },
+  { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', dot: 'bg-emerald-500', ring: 'ring-emerald-500/20', text: 'text-emerald-400', badge: 'bg-emerald-500/10 text-emerald-400', treeBg: '#0b1628', treeBorder: '#1e3a5f' },
   { bg: 'bg-purple-500/10', border: 'border-purple-500/20', dot: 'bg-purple-500', ring: 'ring-purple-500/20', text: 'text-purple-400', badge: 'bg-purple-500/10 text-purple-400', treeBg: '#0f0b28', treeBorder: '#2e1a5f' },
   { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', dot: 'bg-emerald-500', ring: 'ring-emerald-500/20', text: 'text-emerald-400', badge: 'bg-emerald-500/10 text-emerald-400', treeBg: '#0b2818', treeBorder: '#1a5f3a' },
   { bg: 'bg-amber-500/10', border: 'border-amber-500/20', dot: 'bg-amber-500', ring: 'ring-amber-500/20', text: 'text-amber-400', badge: 'bg-amber-500/10 text-amber-400', treeBg: '#28200b', treeBorder: '#5f4a1a' },
   { bg: 'bg-rose-500/10', border: 'border-rose-500/20', dot: 'bg-rose-500', ring: 'ring-rose-500/20', text: 'text-rose-400', badge: 'bg-rose-500/10 text-rose-400', treeBg: '#280b12', treeBorder: '#5f1a2e' },
-  { bg: 'bg-cyan-500/10', border: 'border-cyan-500/20', dot: 'bg-cyan-500', ring: 'ring-cyan-500/20', text: 'text-cyan-400', badge: 'bg-cyan-500/10 text-cyan-400', treeBg: '#0b2028', treeBorder: '#1a4a5f' },
+  { bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', dot: 'bg-emerald-500', ring: 'ring-emerald-500/20', text: 'text-emerald-400', badge: 'bg-emerald-500/10 text-emerald-400', treeBg: '#0b2028', treeBorder: '#1a4a5f' },
   { bg: 'bg-indigo-500/10', border: 'border-indigo-500/20', dot: 'bg-indigo-500', ring: 'ring-indigo-500/20', text: 'text-indigo-400', badge: 'bg-indigo-500/10 text-indigo-400', treeBg: '#0b0f28', treeBorder: '#1a2e5f' },
   { bg: 'bg-pink-500/10', border: 'border-pink-500/20', dot: 'bg-pink-500', ring: 'ring-pink-500/20', text: 'text-pink-400', badge: 'bg-pink-500/10 text-pink-400', treeBg: '#280b1e', treeBorder: '#5f1a4a' },
 ];
@@ -98,7 +98,7 @@ export default function RoadmapPage() {
     <div className="space-y-6 animate-fade-in max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center">
-        <a href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <a href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </a>

@@ -46,10 +46,10 @@ const typeLabels: Record<string, string> = {
 };
 
 const typeColors: Record<string, string> = {
-  govt: 'bg-blue-500/10 text-blue-400',
+  govt: 'bg-emerald-500/10 text-emerald-400',
   ngo: 'bg-purple-500/10 text-purple-400',
   private: 'bg-orange-500/10 text-orange-400',
-  international: 'bg-cyan-500/10 text-cyan-400',
+  international: 'bg-emerald-500/10 text-emerald-400',
 };
 
 export default function InstitutionsPage() {
@@ -97,12 +97,12 @@ export default function InstitutionsPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </Link>
         <h1 className="text-2xl font-bold gradient-text">Free Course Institutions</h1>
-        <p className="text-cyan-400 mt-1">Find government and NGO institutions offering free courses across Pakistan</p>
+        <p className="text-emerald-400 mt-1">Find government and NGO institutions offering free courses across Pakistan</p>
       </div>
 
       <form onSubmit={handleSearch} className="card space-y-4">
@@ -151,7 +151,7 @@ export default function InstitutionsPage() {
         </div>
       ) : institutions.length === 0 ? (
         <div className="card text-center py-12">
-          <p className="text-cyan-400">No institutions found. Try adjusting your search filters.</p>
+          <p className="text-emerald-400">No institutions found. Try adjusting your search filters.</p>
         </div>
       ) : (
         <>
@@ -160,15 +160,15 @@ export default function InstitutionsPage() {
             {institutions.map((inst) => (
               <Link key={inst.id} href={`/education/institutions/${inst.id}`} className="card-hover">
                 <div className="flex items-start justify-between">
-                  <h3 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{inst.name}</h3>
+                  <h3 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">{inst.name}</h3>
                   <VerificationBadge status={inst.verificationStatus === 'verified' ? 'verified' : 'unverified'} compact />
                 </div>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${typeColors[inst.type] || 'bg-white/5 text-cyan-400'}`}>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${typeColors[inst.type] || 'bg-white/5 text-emerald-400'}`}>
                     {typeLabels[inst.type] || inst.type}
                   </span>
                   {inst.province && inst.province !== 'all' && (
-                    <span className="text-xs bg-white/5 text-cyan-400 px-2 py-0.5 rounded-full capitalize">{inst.province}</span>
+                    <span className="text-xs bg-white/5 text-emerald-400 px-2 py-0.5 rounded-full capitalize">{inst.province}</span>
                   )}
                   {inst.province === 'all' && (
                     <span className="text-xs bg-green-500/10 text-green-400 px-2 py-0.5 rounded-full">All Pakistan</span>
@@ -200,7 +200,7 @@ export default function InstitutionsPage() {
           {pagination.totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)} className="btn-secondary text-sm disabled:opacity-40">Prev</button>
-              <span className="text-sm text-cyan-400">Page {page} of {pagination.totalPages}</span>
+              <span className="text-sm text-emerald-400">Page {page} of {pagination.totalPages}</span>
               <button disabled={page >= pagination.totalPages} onClick={() => setPage((p) => p + 1)} className="btn-secondary text-sm disabled:opacity-40">Next</button>
             </div>
           )}

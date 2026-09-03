@@ -28,7 +28,7 @@ interface Pagination {
 
 
 const DEGREE_COLORS: Record<string, string> = {
-  bachelor: 'bg-blue-500/10 text-blue-400',
+  bachelor: 'bg-emerald-500/10 text-emerald-400',
   bachelor_of_medicine: 'bg-red-500/10 text-red-400',
   bachelor_of_engineering: 'bg-orange-500/10 text-orange-400',
   bachelor_of_law: 'bg-indigo-500/10 text-indigo-400',
@@ -56,7 +56,7 @@ const TYPE_LABELS: Record<string, string> = {
 
 const SECTOR_COLORS: Record<string, string> = {
   government: 'bg-green-500/10 text-green-400 border-green-500/20',
-  private: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  private: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
   federal: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
   'semi-government': 'bg-amber-500/10 text-amber-400 border-amber-500/20',
 };
@@ -208,7 +208,7 @@ export default function UniversitiesPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </Link>
@@ -219,9 +219,9 @@ export default function UniversitiesPage() {
       {/* ===== 6-LEVEL CASCADING FILTER ===== */}
       <div className="card space-y-4">
         <div className="flex items-center gap-2 text-sm">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
-            <span className="font-medium bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Cascading Filter</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
+            <span className="font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Cascading Filter</span>
           </div>
           <span className="text-gray-500 text-xs">Country → City → Type → Sector → Institute → Department → Program</span>
         </div>
@@ -230,8 +230,8 @@ export default function UniversitiesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* 1. Country — Blue */}
           <div>
-            <label className="block text-xs font-semibold text-blue-400 mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />1. Country
+            <label className="block text-xs font-semibold text-emerald-400 mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />1. Country
             </label>
             <select value={country} onChange={(e) => setCountry(e.target.value)} className="input-field">
               <option value="">Select Country</option>
@@ -241,8 +241,8 @@ export default function UniversitiesPage() {
 
           {/* 2. City — Cyan */}
           <div>
-            <label className="block text-xs font-semibold text-cyan-400 mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />2. City
+            <label className="block text-xs font-semibold text-emerald-400 mb-1.5 uppercase tracking-wide flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />2. City
             </label>
             <select value={city} onChange={(e) => setCity(e.target.value)} className="input-field input-cyan"
               disabled={!country || loadingCities}>
@@ -328,7 +328,7 @@ export default function UniversitiesPage() {
             <span className="text-xs text-gray-500">Active:</span>
             {country && (
               <button onClick={() => { setCountry(''); setCity(''); setInstType(''); setSector(''); setSelectedInstitute(''); setDepartment(''); setProgram(''); }}
-                className="text-xs bg-blue-500/10 text-blue-400 px-2 py-1 rounded-full hover:bg-blue-500/20 transition-colors flex items-center gap-1">
+                className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-full hover:bg-emerald-500/20 transition-colors flex items-center gap-1">
                 {country} <span className="font-bold">×</span>
               </button>
             )}
@@ -352,7 +352,7 @@ export default function UniversitiesPage() {
             )}
             {selectedInstitute && (
               <button onClick={() => { setSelectedInstitute(''); setDepartment(''); setProgram(''); }}
-                className="text-xs bg-cyan-500/10 text-cyan-400 px-2 py-1 rounded-full hover:bg-cyan-500/20 transition-colors flex items-center gap-1">
+                className="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded-full hover:bg-emerald-500/20 transition-colors flex items-center gap-1">
                 {institutes.find(i => i.id === selectedInstitute)?.name || 'Selected'} <span className="font-bold">×</span>
               </button>
             )}
@@ -381,13 +381,13 @@ export default function UniversitiesPage() {
         <div className="card text-center py-16">
           <div className="text-5xl mb-4 animate-float">🌍</div>
           <p className="text-lg font-semibold gradient-text">Select a country to get started</p>
-          <p className="text-sm text-gray-400 mt-2">Browse <span className="font-semibold text-cyan-400">{countries.length}</span> countries with universities in our database</p>
+          <p className="text-sm text-gray-400 mt-2">Browse <span className="font-semibold text-emerald-400">{countries.length}</span> countries with universities in our database</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-8 max-w-3xl mx-auto">
             {countries.map((c, idx) => {
               const flag = c === 'Pakistan' ? '🇵🇰' : c === 'United States' ? '🇺🇸' : c === 'United Kingdom' ? '🇬🇧' : c === 'Germany' ? '🇩🇪' : c === 'Canada' ? '🇨🇦' : c === 'Australia' ? '🇦🇺' : c === 'China' ? '🇨🇳' : c === 'Japan' ? '🇯🇵' : c === 'South Korea' ? '🇰🇷' : c === 'Turkey' ? '🇹🇷' : c === 'Saudi Arabia' ? '🇸🇦' : c === 'UAE' || c === 'United Arab Emirates' ? '🇦🇪' : c === 'India' ? '🇮🇳' : c === 'Malaysia' ? '🇲🇾' : c === 'Singapore' ? '🇸🇬' : c === 'Thailand' ? '🇹🇭' : c === 'Philippines' ? '🇵🇭' : c === 'Sweden' ? '🇸🇪' : c === 'Norway' ? '🇳🇴' : c === 'Denmark' ? '🇩🇰' : c === 'Finland' ? '🇫🇮' : c === 'Hungary' ? '🇭🇺' : c === 'New Zealand' ? '🇳🇿' : '🌍';
               const colors = [
-                'bg-blue-500/10 border-blue-500/20 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400/40 hover:shadow-[0_0_24px_rgba(59,130,246,0.15)]',
-                'bg-cyan-500/10 border-cyan-500/20 text-cyan-300 hover:bg-cyan-500/20 hover:border-cyan-400/40 hover:shadow-[0_0_24px_rgba(6,182,212,0.15)]',
+                'bg-emerald-500/10 border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-400/40 hover:shadow-[0_0_24px_rgba(59,130,246,0.15)]',
+                'bg-emerald-500/10 border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-400/40 hover:shadow-[0_0_24px_rgba(6,182,212,0.15)]',
                 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-400/40 hover:shadow-[0_0_24px_rgba(16,185,129,0.15)]',
                 'bg-purple-500/10 border-purple-500/20 text-purple-300 hover:bg-purple-500/20 hover:border-purple-400/40 hover:shadow-[0_0_24px_rgba(139,92,246,0.15)]',
                 'bg-amber-500/10 border-amber-500/20 text-amber-300 hover:bg-amber-500/20 hover:border-amber-400/40 hover:shadow-[0_0_24px_rgba(245,158,11,0.15)]',
@@ -429,7 +429,7 @@ export default function UniversitiesPage() {
             <p className="text-sm text-gray-400">
               <span className="font-bold text-lg gradient-text">{pagination.total}</span>
               <span className="ml-1.5">institutions found</span>
-              {city && <span> in <span className="font-medium text-cyan-400">{city}</span></span>}
+              {city && <span> in <span className="font-medium text-emerald-400">{city}</span></span>}
               {instType && <span> &middot; <span className="font-medium text-purple-400">{TYPE_LABELS[instType] || instType}</span></span>}
               {sector && <span> &middot; <span className="font-medium text-amber-400">{SECTOR_LABELS[sector] || sector}</span></span>}
               {department && <span> &middot; <span className="font-medium text-rose-400">{department}</span></span>}
@@ -443,14 +443,14 @@ export default function UniversitiesPage() {
                 {/* Top accent bar */}
                 <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${
                   u.sector === 'government' ? 'from-green-500 to-emerald-500' :
-                  u.sector === 'private' ? 'from-blue-500 to-indigo-500' :
+                  u.sector === 'private' ? 'from-emerald-500 to-indigo-500' :
                   u.sector === 'federal' ? 'from-purple-500 to-violet-500' :
                   'from-amber-500 to-orange-500'
                 }`} />
 
                 <div className="flex items-start justify-between mb-2 mt-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                       {TYPE_LABELS[u.type] || u.type}
                     </span>
                     {u.sector && (
@@ -468,7 +468,7 @@ export default function UniversitiesPage() {
                     </span>
                   )}
                 </div>
-                <h3 className="font-semibold text-gray-100 group-hover:text-blue-400 transition-colors line-clamp-2">{u.name}</h3>
+                <h3 className="font-semibold text-gray-100 group-hover:text-emerald-400 transition-colors line-clamp-2">{u.name}</h3>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <svg className="w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                   <p className="text-sm text-gray-500">{u.city || 'N/A'}, {u.country}</p>
@@ -523,7 +523,7 @@ export default function UniversitiesPage() {
                 return (
                   <button key={pageNum} onClick={() => fetchUniversities(pageNum)}
                     className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-                      pagination.page === pageNum ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-white/5'
+                      pagination.page === pageNum ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:bg-white/5'
                     }`}>{pageNum}</button>
                 );
               })}

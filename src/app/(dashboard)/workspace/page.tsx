@@ -34,7 +34,7 @@ interface WorkspaceSummary {
 }
 
 const statusColors: Record<string, string> = {
-  researching: 'bg-blue-500/10 text-blue-400',
+  researching: 'bg-emerald-500/10 text-emerald-400',
   preparing: 'bg-yellow-500/10 text-yellow-400',
   documents_ready: 'bg-purple-500/10 text-purple-400',
   submitted: 'bg-indigo-500/10 text-indigo-400',
@@ -48,7 +48,7 @@ const statusColors: Record<string, string> = {
 
 const priorityColors: Record<string, string> = {
   low: 'bg-white/5 text-gray-400',
-  medium: 'bg-blue-500/10 text-blue-400',
+  medium: 'bg-emerald-500/10 text-emerald-400',
   high: 'bg-orange-500/10 text-orange-400',
   urgent: 'bg-red-500/10 text-red-400',
 };
@@ -123,7 +123,7 @@ export default function WorkspaceDashboard() {
           <h1 className="text-2xl font-bold text-gray-100">Application Workspace</h1>
           <p className="text-gray-500 mt-1">Track and manage your applications</p>
         </div>
-        <Link href="/workspace/new" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+        <Link href="/workspace/new" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium">
           + New Application
         </Link>
       </div>
@@ -142,7 +142,7 @@ export default function WorkspaceDashboard() {
               </div>
               <div className="w-full bg-white/5 rounded-full h-2">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all"
+                      className="bg-emerald-600 h-2 rounded-full transition-all"
                   style={{ width: `${summary.overallProgress}%` }}
                 />
               </div>
@@ -219,7 +219,7 @@ export default function WorkspaceDashboard() {
       ) : workspaces.length === 0 ? (
         <div className="card text-center py-12">
           <p className="text-gray-500 mb-4">No applications found</p>
-          <Link href="/workspace/new" className="text-blue-600 hover:underline font-medium">
+          <Link href="/workspace/new" className="text-emerald-600 hover:underline font-medium">
             Create your first application
           </Link>
         </div>
@@ -265,7 +265,7 @@ export default function WorkspaceDashboard() {
                 <div className="flex items-center gap-3">
                   <div className="flex-1 bg-white/5 rounded-full h-2">
                     <div
-                      className="bg-blue-600 h-2 rounded-full transition-all"
+                  className="bg-emerald-600 h-2 rounded-full transition-all"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

@@ -120,7 +120,7 @@ export default function BudgetPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
       </div>
     );
   }
@@ -218,12 +218,12 @@ export default function BudgetPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+          <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Dashboard
           </Link>
           <h1 className="text-2xl font-bold gradient-text">Smart Budget Dashboard</h1>
-          <p className="text-sm mt-1 text-cyan-400"><span className="text-emerald-400 font-medium">Track</span> your <span className="text-green-400 font-medium">income</span>, <span className="text-red-400 font-medium">expenses</span>, and <span className="text-teal-400 font-medium">savings goals</span></p>
+          <p className="text-sm mt-1 text-emerald-400"><span className="text-emerald-400 font-medium">Track</span> your <span className="text-green-400 font-medium">income</span>, <span className="text-red-400 font-medium">expenses</span>, and <span className="text-teal-400 font-medium">savings goals</span></p>
         </div>
         <div className="flex gap-2">
           {!budgetProfile && (
@@ -250,7 +250,7 @@ export default function BudgetPage() {
           <div className="text-center mb-6">
             <div className="text-4xl mb-2">⚙️</div>
             <h2 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Quick Setup - Just 3 Steps!</h2>
-            <p className="text-cyan-400 text-sm mt-1">Fill in your details below to start tracking</p>
+            <p className="text-emerald-400 text-sm mt-1">Fill in your details below to start tracking</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
@@ -308,7 +308,7 @@ export default function BudgetPage() {
         <div className="bg-gradient-to-br from-white/[0.04] to-white/[0.02] rounded-2xl shadow-xl p-10 text-center animate-fade-in border border-emerald-500/20">
           <div className="text-6xl mb-4">💰</div>
           <h3 className="text-2xl font-bold gradient-text mb-3">Welcome to Smart Budget!</h3>
-          <p className="text-cyan-400 text-base mb-6 max-w-md mx-auto">Track your income, expenses, and savings goals easily. Set up your budget in just 30 seconds!</p>
+          <p className="text-emerald-400 text-base mb-6 max-w-md mx-auto">Track your income, expenses, and savings goals easily. Set up your budget in just 30 seconds!</p>
           <button onClick={() => setShowSetup(true)}
             className="px-8 py-3 rounded-xl font-semibold text-base bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 transition-all shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105">
             🚀 Get Started - It&apos;s Free!
@@ -424,7 +424,7 @@ export default function BudgetPage() {
               <p className="text-3xl font-bold gradient-text mt-2">{currencySymbol}{totalExpenses.toFixed(2)}</p>
               <p className="text-xs text-gray-500 mt-1">Total spending</p>
             </div>
-            <div className="bg-gradient-to-br from-teal-500/10 to-cyan-500/10 rounded-2xl shadow-lg p-6 text-center border-2 border-teal-500/30 hover:border-teal-500/50 transition-all sm:col-span-2 lg:col-span-1">
+            <div className="bg-gradient-to-br from-teal-500/10 to-emerald-500/10 rounded-2xl shadow-lg p-6 text-center border-2 border-teal-500/30 hover:border-teal-500/50 transition-all sm:col-span-2 lg:col-span-1">
               <div className="text-3xl mb-2">📊</div>
               <p className="text-xs bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent font-semibold uppercase tracking-wide">Savings Rate</p>
               <p className="text-3xl font-bold gradient-text mt-2">{savingsRate.toFixed(1)}%</p>
@@ -436,7 +436,7 @@ export default function BudgetPage() {
             <div className="card">
               <h2 className="text-lg font-semibold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent mb-4">Category Breakdown</h2>
               {Object.keys(categoryBreakdown).length === 0 ? (
-                <p className="text-cyan-400 text-sm">No expenses recorded yet</p>
+                <p className="text-emerald-400 text-sm">No expenses recorded yet</p>
               ) : (
                 <div className="space-y-3">
                   {Object.entries(categoryBreakdown)
@@ -449,7 +449,7 @@ export default function BudgetPage() {
                         </div>
                         <div className="w-full bg-white/5 rounded-full h-2">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all"
+                            className="bg-emerald-600 h-2 rounded-full transition-all"
                             style={{ width: `${(amount / maxCategoryAmount) * 100}%` }}
                           />
                         </div>
@@ -462,7 +462,7 @@ export default function BudgetPage() {
             <div className="card">
               <h2 className="text-lg font-semibold bg-gradient-to-r from-red-400 to-rose-400 bg-clip-text text-transparent mb-4">Recent Expenses</h2>
               {recentExpenses.length === 0 ? (
-                <p className="text-cyan-400 text-sm">No recent expenses</p>
+                <p className="text-emerald-400 text-sm">No recent expenses</p>
               ) : (
                 <div className="space-y-3">
                   {recentExpenses.map((expense) => (
@@ -480,7 +480,7 @@ export default function BudgetPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent mb-4 flex items-center gap-2">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4 flex items-center gap-2">
               <span>⚡</span> Quick Actions
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -494,7 +494,7 @@ export default function BudgetPage() {
                 <p className="text-sm font-bold gradient-text">Add Income</p>
                 <p className="text-xs text-gray-500 mt-1">Record earnings</p>
               </Link>
-              <Link href="/budget/savings" className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl shadow-lg p-5 text-center hover:shadow-xl hover:from-blue-500/20 hover:to-cyan-500/20 transition-all border-2 border-blue-500/20 hover:border-blue-500/40 group">
+              <Link href="/budget/savings" className="bg-gradient-to-br from-emerald-500/10 to-emerald-500/10 rounded-2xl shadow-lg p-5 text-center hover:shadow-xl hover:from-emerald-500/20 hover:to-emerald-500/20 transition-all border-2 border-emerald-500/20 hover:border-emerald-500/40 group">
                 <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">🎯</div>
                 <p className="text-sm font-bold gradient-text">Savings Goals</p>
                 <p className="text-xs text-gray-500 mt-1">Set targets</p>

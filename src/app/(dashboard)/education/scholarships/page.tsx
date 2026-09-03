@@ -78,7 +78,7 @@ export default function ScholarshipsPage() {
       <div>
         <div className="flex items-center justify-between">
           <div>
-            <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2 transition-colors">
+            <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2 transition-colors">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               Back to Education Center
             </Link>
@@ -193,11 +193,11 @@ export default function ScholarshipsPage() {
               return (
                 <Link key={s.id} href={`/education/scholarships/${s.id}`} className={`card-hover group relative overflow-hidden ${passed ? 'opacity-60' : ''}`}>
                   {/* Top accent bar */}
-                  <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${isLocal ? 'from-emerald-500 to-teal-500' : 'from-blue-500 to-indigo-500'}`} />
+                  <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${isLocal ? 'from-emerald-500 to-teal-500' : 'from-emerald-500 to-indigo-500'}`} />
 
                   <div className="flex items-start justify-between mt-1">
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-100 text-sm leading-tight group-hover:text-blue-400 transition-colors line-clamp-2">{s.name}</h3>
+                      <h3 className="font-semibold text-gray-100 text-sm leading-tight group-hover:text-emerald-400 transition-colors line-clamp-2">{s.name}</h3>
                       <p className="text-xs text-gray-500 mt-1.5 truncate">{s.provider}</p>
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0 ml-3">
@@ -208,7 +208,7 @@ export default function ScholarshipsPage() {
                           </svg>
                         </span>
                       )}
-                      <span className={`text-xs px-2 py-0.5 rounded-full border ${isLocal ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded-full border ${isLocal ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'}`}>
                         {isLocal ? 'Pakistan' : 'International'}
                       </span>
                     </div>

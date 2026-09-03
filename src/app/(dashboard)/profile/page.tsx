@@ -60,7 +60,7 @@ export default function ProfilePage() {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold">Account Information</h2>
           {!isEditing && (
-            <button onClick={() => setIsEditing(true)} className="text-sm text-blue-600 hover:text-blue-800">
+            <button onClick={() => setIsEditing(true)} className="text-sm text-emerald-600 hover:text-emerald-800">
               Edit
             </button>
           )}

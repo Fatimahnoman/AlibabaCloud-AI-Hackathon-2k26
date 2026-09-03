@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
               href={devResetLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+              className="block w-full text-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors"
             >
               Reset Password Now
             </a>
@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
           </div>
         )}
 
-        <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+        <Link href="/login" className="text-emerald-600 hover:text-emerald-800 font-medium">
           Back to sign in
         </Link>
       </div>
@@ -97,7 +97,7 @@ export default function ForgotPasswordPage() {
 
       <p className="mt-6 text-center text-sm text-gray-400">
         Remember your password?{' '}
-        <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">Sign in</Link>
+        <Link href="/login" className="text-emerald-600 hover:text-emerald-800 font-medium">Sign in</Link>
       </p>
     </div>
   );

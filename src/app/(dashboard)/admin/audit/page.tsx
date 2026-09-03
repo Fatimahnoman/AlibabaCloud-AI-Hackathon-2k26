@@ -79,11 +79,11 @@ const ENTITY_TYPE_OPTIONS = [
 
 const ACTION_BADGES: Record<string, string> = {
   CREATE: "bg-emerald-500/15 text-emerald-400",
-  UPDATE: "bg-blue-500/15 text-blue-400",
+  UPDATE: "bg-emerald-500/15 text-emerald-400",
   DELETE: "bg-red-500/15 text-red-400",
   LOGIN_FAILED: "bg-amber-500/15 text-amber-400",
   LOGIN_SUCCESS: "bg-emerald-500/15 text-emerald-400",
-  LOGOUT: "bg-white/5 text-cyan-400",
+  LOGOUT: "bg-white/5 text-emerald-400",
   ADMIN_ACTION: "bg-purple-500/15 text-purple-400",
   UNAUTHORIZED: "bg-red-500/15 text-red-400 border border-red-500/20",
 };
@@ -160,7 +160,7 @@ function AuditCard({ log }: { log: AuditLogEntry }) {
   const reason =
     log.details && typeof log.details.reason === "string" ? log.details.reason : null;
   const hasDetails = Boolean(log.details && Object.keys(log.details).length > 0);
-  const badgeClass = ACTION_BADGES[log.action] || "bg-white/5 text-cyan-400";
+  const badgeClass = ACTION_BADGES[log.action] || "bg-white/5 text-emerald-400";
 
   return (
     <div className="card rounded-2xl border border-white/10 shadow-sm">
@@ -179,14 +179,14 @@ function AuditCard({ log }: { log: AuditLogEntry }) {
                   </span>
                 )}
               </p>
-              <p className="text-xs text-cyan-400 truncate">{log.user ? log.user.email : "no associated account"}</p>
+              <p className="text-xs text-emerald-400 truncate">{log.user ? log.user.email : "no associated account"}</p>
             </div>
           </div>
           <div className="flex flex-col items-end gap-1 shrink-0">
             <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${badgeClass}`}>
               {log.action}
             </span>
-            <span className="text-xs text-cyan-400" title={formatFullTime(log.createdAt)}>
+            <span className="text-xs text-emerald-400" title={formatFullTime(log.createdAt)}>
               {relativeTime(log.createdAt)}
             </span>
           </div>
@@ -198,8 +198,8 @@ function AuditCard({ log }: { log: AuditLogEntry }) {
             <p className="font-medium gradient-text">{log.entityType}</p>
           </div>
           <div className="min-w-0">
-            <p className="text-xs uppercase tracking-wide bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Entity ID / Name</p>
-            <p className="font-mono text-xs text-cyan-400 truncate" title={log.entityId}>
+            <p className="text-xs uppercase tracking-wide bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Entity ID / Name</p>
+            <p className="font-mono text-xs text-emerald-400 truncate" title={log.entityId}>
               {(log.details && typeof log.details.entityName === "string"
                 ? log.details.entityName
                 : log.entityId) || "—"}
@@ -212,7 +212,7 @@ function AuditCard({ log }: { log: AuditLogEntry }) {
         </div>
 
         {reason && (
-          <div className="mt-3 rounded-lg bg-blue-500/10 border border-blue-500/20 px-3 py-2 text-sm text-blue-400">
+          <div className="mt-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 text-sm text-emerald-400">
             <span className="font-semibold">Reason: </span>
             {reason}
           </div>
@@ -222,7 +222,7 @@ function AuditCard({ log }: { log: AuditLogEntry }) {
           <div className="mt-3">
             <button
               onClick={() => setExpanded(prev => !prev)}
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
             >
               <svg
                 className={`h-4 w-4 transition-transform ${expanded ? "rotate-90" : ""}`}
@@ -345,7 +345,7 @@ export default function AdminAuditPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold gradient-text">Audit Trail</h1>
-          <p className="text-sm mt-2">Complete history of <span className="text-violet-400 font-medium">user actions</span> and <span className="text-cyan-400 font-medium">data changes</span></p>
+          <p className="text-sm mt-2">Complete history of <span className="text-violet-400 font-medium">user actions</span> and <span className="text-emerald-400 font-medium">data changes</span></p>
         </div>
         <button
           onClick={exportLogs}
@@ -387,7 +387,7 @@ export default function AdminAuditPage() {
             className={inputClass}
           />
           <label className="relative flex items-center">
-            <span className="absolute left-3 text-xs font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent pointer-events-none">From</span>
+            <span className="absolute left-3 text-xs font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent pointer-events-none">From</span>
             <input
               type="date"
               value={draft.dateFrom}
@@ -396,7 +396,7 @@ export default function AdminAuditPage() {
             />
           </label>
           <label className="relative flex items-center">
-            <span className="absolute left-3 text-xs font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent pointer-events-none">To</span>
+            <span className="absolute left-3 text-xs font-medium bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent pointer-events-none">To</span>
             <input
               type="date"
               value={draft.dateTo}

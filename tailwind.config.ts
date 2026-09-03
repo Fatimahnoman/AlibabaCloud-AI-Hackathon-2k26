@@ -10,17 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          50: "#eff6ff",
-          100: "#dbeafe",
-          200: "#bfdbfe",
-          300: "#93c5fd",
-          400: "#60a5fa",
-          500: "#3b82f6",
-          600: "#2563eb",
-          700: "#1d4ed8",
-          800: "#1e40af",
-          900: "#1e3a8a",
-          950: "#172554",
+          50: "#ecfdf5",
+          100: "#d1fae5",
+          200: "#a7f3d0",
+          300: "#6ee7b7",
+          400: "#34d399",
+          500: "#10b981",
+          600: "#059669",
+          700: "#047857",
+          800: "#065f46",
+          900: "#064e3b",
+          950: "#022c22",
         },
         secondary: {
           50: "#f0fdf4",
@@ -61,6 +61,16 @@ const config: Config = {
           900: "#881337",
           950: "#4c0519",
         },
+        surface: {
+          50: "#0f1a12",
+          100: "#0a120d",
+          200: "#070d09",
+          300: "#050a07",
+          400: "#030604",
+          500: "#020402",
+          600: "#010201",
+          700: "#000000",
+        },
       },
       fontFamily: {
         sans: [
@@ -92,6 +102,10 @@ const config: Config = {
         "fade-in": "fadeIn 0.5s ease-in-out",
         "slide-up": "slideUp 0.3s ease-out",
         "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "glow-green": "glowGreen 3s ease-in-out infinite alternate",
+        "float": "float 4s ease-in-out infinite",
+        "shimmer": "shimmer 2s infinite",
+        "gradient-shift": "gradientShift 3s ease infinite",
       },
       keyframes: {
         fadeIn: {
@@ -102,6 +116,28 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        glowGreen: {
+          "0%": { boxShadow: "0 0 20px rgba(16, 185, 129, 0.15), 0 0 40px rgba(16, 185, 129, 0.08)" },
+          "100%": { boxShadow: "0 0 30px rgba(16, 185, 129, 0.25), 0 0 60px rgba(16, 185, 129, 0.15)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        gradientShift: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+      },
+      backgroundImage: {
+        "green-gradient": "linear-gradient(135deg, #059669, #047857, #065f46)",
+        "green-radial": "radial-gradient(circle at center, #059669 0%, #022c22 100%)",
+        "dark-green": "linear-gradient(180deg, #022c22 0%, #000000 100%)",
       },
     },
   },

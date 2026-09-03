@@ -46,9 +46,9 @@ const DATA_CARDS = [
     statKey: "universities" as const,
     iconPath:
       "M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z",
-    iconClass: "bg-blue-500/10 text-blue-600",
-    hoverClass: "hover:border-blue-500/30 hover:bg-blue-500/10",
-    labelGradient: "bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent",
+    iconClass: "bg-emerald-500/10 text-emerald-600",
+    hoverClass: "hover:border-emerald-500/30 hover:bg-emerald-500/10",
+    labelGradient: "bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent",
   },
   {
     label: "Scholarships",
@@ -86,9 +86,9 @@ const DATA_CARDS = [
     statKey: "countries" as const,
     iconPath:
       "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
-    iconClass: "bg-cyan-500/10 text-cyan-600",
-    hoverClass: "hover:border-cyan-500/30 hover:bg-cyan-500/10",
-    labelGradient: "bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent",
+    iconClass: "bg-emerald-500/10 text-emerald-600",
+    hoverClass: "hover:border-emerald-500/30 hover:bg-emerald-500/10",
+    labelGradient: "bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent",
   },
   {
     label: "Visa Sources",
@@ -252,7 +252,7 @@ export default function DataManagementPage() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold tracking-tight gradient-text">Data Management</h1>
-            <p className="mt-1 text-sm text-cyan-400">
+            <p className="mt-1 text-sm text-emerald-400">
               Central hub for every managed dataset in EduGuard
             </p>
           </div>
@@ -268,7 +268,7 @@ export default function DataManagementPage() {
         ) : null}
 
         <section>
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-widest bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-widest bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
             Data Overview · click a card to manage
           </h2>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
@@ -287,7 +287,7 @@ export default function DataManagementPage() {
                       </svg>
                     </div>
                     <svg
-                      className="h-4 w-4 text-cyan-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-cyan-300"
+                      className="h-4 w-4 text-emerald-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-emerald-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -299,7 +299,7 @@ export default function DataManagementPage() {
                     {value === null ? "—" : formatNumber(value)}
                   </p>
                   <p className={`truncate text-xs font-medium ${card.labelGradient}`}>{card.label}</p>
-                  <p className="mt-0.5 truncate text-[11px] text-cyan-400">{card.description}</p>
+                  <p className="mt-0.5 truncate text-[11px] text-emerald-400">{card.description}</p>
                 </Link>
               );
             })}
@@ -313,16 +313,16 @@ export default function DataManagementPage() {
               <div className="rounded-lg border border-white/10 bg-white/5 p-4">
                 <p className="text-xs uppercase tracking-wider bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Total Data Entries</p>
                 <p className="mt-1 text-3xl font-bold tabular-nums gradient-text">{formatNumber(totalEntries)}</p>
-                <p className="mt-1 text-[11px] text-cyan-400">universities, scholarships, sources, rules & countries</p>
+                <p className="mt-1 text-[11px] text-emerald-400">universities, scholarships, sources, rules & countries</p>
               </div>
               <div className="rounded-lg border border-white/10 bg-white/5 p-4">
                 <p className="text-xs uppercase tracking-wider bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">Tracked Changes</p>
                 <p className="mt-1 text-3xl font-bold tabular-nums gradient-text">{formatNumber(stats.changeLogs)}</p>
-                <p className="mt-1 text-[11px] text-cyan-400">recorded in the audit trail</p>
+                <p className="mt-1 text-[11px] text-emerald-400">recorded in the audit trail</p>
               </div>
             </div>
             <p className="mt-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-right text-xs">
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Last updated{" "}</span>
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Last updated{" "}</span>
               <span className="font-semibold gradient-text">
                 {lastUpdated ? lastUpdated.toLocaleString() : "—"}
               </span>
@@ -380,7 +380,7 @@ export default function DataManagementPage() {
                 </div>
               </>
             ) : (
-              <p className="mt-4 rounded-lg border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-cyan-400">
+              <p className="mt-4 rounded-lg border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-emerald-400">
                 No sources registered yet.
               </p>
             )}
@@ -393,7 +393,7 @@ export default function DataManagementPage() {
               <h2 className="text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
                 Backup & Restore
               </h2>
-              <p className="mt-0.5 text-xs text-cyan-400">
+              <p className="mt-0.5 text-xs text-emerald-400">
                 SQLite snapshots{backups?.directory ? ` · ${backups.directory}` : ""}
               </p>
             </div>
@@ -422,7 +422,7 @@ export default function DataManagementPage() {
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium gradient-text">{backup.fileName}</p>
-                    <p className="text-[11px] text-cyan-400">
+                    <p className="text-[11px] text-emerald-400">
                       {new Date(backup.createdAt).toLocaleString()} · {backup.sizeFormatted}
                     </p>
                   </div>
@@ -436,7 +436,7 @@ export default function DataManagementPage() {
                 </div>
               ))
             ) : (
-              <p className="bg-white/[0.03] px-4 py-6 text-center text-sm text-cyan-400">
+              <p className="bg-white/[0.03] px-4 py-6 text-center text-sm text-emerald-400">
                 No backups found yet. Create one to enable point-in-time restore.
               </p>
             )}
@@ -444,7 +444,7 @@ export default function DataManagementPage() {
         </section>
 
         {lastUpdated ? (
-          <p className="text-right text-[11px] text-cyan-400">
+          <p className="text-right text-[11px] text-emerald-400">
             Counts refreshed {lastUpdated.toLocaleTimeString()}
           </p>
         ) : null}

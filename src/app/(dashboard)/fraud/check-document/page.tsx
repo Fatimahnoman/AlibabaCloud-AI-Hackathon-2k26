@@ -251,7 +251,7 @@ function CheckDocumentContent() {
   return (
     <div className="space-y-6 animate-fade-in max-w-3xl">
       <div>
-        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Fraud Center
         </a>
@@ -273,7 +273,7 @@ function CheckDocumentContent() {
           onClick={() => fileInputRef.current?.click()}
           className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
             isDragging
-              ? 'border-blue-500 bg-blue-500/10'
+              ? 'border-emerald-500 bg-emerald-500/10'
               : 'border-white/10 hover:border-gray-400 hover:bg-white/5'
           }`}
         >
@@ -407,8 +407,8 @@ function CheckDocumentContent() {
             )}
 
             {result.realWorldContext && (
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-3">
-                <h3 className="text-sm font-semibold text-blue-300 mb-1">Real-World Context</h3>
+              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-3">
+                <h3 className="text-sm font-semibold text-emerald-300 mb-1">Real-World Context</h3>
                 <p className="text-sm text-gray-300 whitespace-pre-wrap">{result.realWorldContext}</p>
               </div>
             )}
@@ -443,7 +443,7 @@ function CheckDocumentContent() {
                                 href={contact.website}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-blue-400 hover:text-blue-300 hover:underline"
+                                className="text-xs text-emerald-400 hover:text-emerald-300 hover:underline"
                               >
                                 {contact.website.replace('https://', '').replace(/\/$/, '')} ↗
                               </a>
@@ -524,7 +524,7 @@ function CheckDocumentContent() {
 
 export default function CheckDocumentPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center py-12"><div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" /></div>}>
+    <Suspense fallback={<div className="flex items-center justify-center py-12"><div className="w-6 h-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" /></div>}>
       <CheckDocumentContent />
     </Suspense>
   );

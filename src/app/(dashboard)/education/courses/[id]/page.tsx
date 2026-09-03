@@ -94,7 +94,7 @@ export default function CourseDetailPage() {
 
   return (
     <div className="space-y-6 animate-fade-in max-w-3xl">
-      <button onClick={() => router.back()} className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1">
+      <button onClick={() => router.back()} className="text-sm text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         Back
       </button>
@@ -106,14 +106,14 @@ export default function CourseDetailPage() {
               {DEGREE_LABELS[course.degree] || course.degree}
             </span>
             <h1 className="text-2xl font-bold gradient-text mt-2">{course.name}</h1>
-            <Link href={`/education/universities/${course.university.id}`} className="text-blue-600 hover:underline mt-1 inline-block">
+            <Link href={`/education/universities/${course.university.id}`} className="text-emerald-600 hover:underline mt-1 inline-block">
               {course.university.name} — {course.university.city || ''}, {course.university.country}
             </Link>
           </div>
           <button
             onClick={handleSave}
             disabled={saving || saved}
-            className={`text-sm px-4 py-2 rounded-lg font-medium transition-colors ${saved ? 'bg-green-500/10 text-green-400' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+            className={`text-sm px-4 py-2 rounded-lg font-medium transition-colors ${saved ? 'bg-green-500/10 text-green-400' : 'bg-emerald-600 text-white hover:bg-emerald-700'}`}
           >
             {saved ? 'Saved' : saving ? 'Saving...' : 'Save'}
           </button>
@@ -124,27 +124,27 @@ export default function CourseDetailPage() {
         {course.duration && (
           <div className="card text-center py-4">
             <p className="text-sm text-violet-400">Duration</p>
-            <p className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{course.duration}</p>
+            <p className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">{course.duration}</p>
           </div>
         )}
         {course.language && (
           <div className="card text-center py-4">
             <p className="text-sm text-violet-400">Language</p>
-            <p className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{course.language}</p>
+            <p className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">{course.language}</p>
           </div>
         )}
         {course.tuitionFee && (
           <div className="card text-center py-4">
             <p className="text-sm text-violet-400">Tuition Fee</p>
-            <p className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{course.currency} {Number(course.tuitionFee).toLocaleString()}/year</p>
+            <p className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">{course.currency} {Number(course.tuitionFee).toLocaleString()}/year</p>
           </div>
         )}
       </div>
 
       {course.description && (
         <div className="card">
-          <h2 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">About this course</h2>
-          <p className="text-cyan-400 leading-relaxed">{course.description}</p>
+          <h2 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-2">About this course</h2>
+          <p className="text-emerald-400 leading-relaxed">{course.description}</p>
         </div>
       )}
 
@@ -153,9 +153,9 @@ export default function CourseDetailPage() {
           <h2 className="font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-3">Admission Requirements</h2>
           <div className="space-y-3">
             {course.admissionRequirements.map((req) => (
-              <div key={req.id} className="border-l-4 border-blue-200 pl-3">
-                <h3 className="font-medium bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent capitalize">{req.requirementType.replace(/_/g, ' ')}</h3>
-                <p className="text-sm text-cyan-400 mt-0.5">{req.requirementValue}</p>
+              <div key={req.id} className="border-l-4 border-emerald-200 pl-3">
+                <h3 className="font-medium bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent capitalize">{req.requirementType.replace(/_/g, ' ')}</h3>
+                <p className="text-sm text-emerald-400 mt-0.5">{req.requirementValue}</p>
                 {req.notes && <p className="text-xs text-violet-400 mt-0.5">{req.notes}</p>}
               </div>
             ))}

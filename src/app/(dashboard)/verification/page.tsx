@@ -119,7 +119,7 @@ export default function VerificationDashboardPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-start justify-between">
         <div>
-          <a href="/dashboard" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+          <a href="/dashboard" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Dashboard
           </a>
@@ -171,7 +171,7 @@ export default function VerificationDashboardPage() {
             onClick={() => setStatusFilter(f.value)}
             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
               statusFilter === f.value
-                ? "bg-blue-700 text-white"
+                ? "bg-emerald-700 text-white"
                 : "bg-white/5 text-gray-400 hover:bg-white/10"
             }`}
           >
@@ -182,7 +182,7 @@ export default function VerificationDashboardPage() {
 
       <div className="flex justify-between items-center">
         <p className="text-sm text-gray-500">{sources.length} sources</p>
-        <Link href="/audit" className="text-sm text-blue-600 hover:underline">
+        <Link href="/audit" className="text-sm text-emerald-600 hover:underline">
           View Audit Logs
         </Link>
       </div>
@@ -235,7 +235,7 @@ export default function VerificationDashboardPage() {
                       href={source.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:underline truncate block max-w-[250px]"
+                      className="text-sm text-emerald-600 hover:underline truncate block max-w-[250px]"
                     >
                       {source.sourceName || source.sourceUrl}
                     </a>
@@ -272,7 +272,7 @@ export default function VerificationDashboardPage() {
                     <button
                       onClick={() => handleVerify(source._id)}
                       disabled={verifyingId === source._id}
-                      className="rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-800 disabled:opacity-50 transition-colors"
+                      className="rounded-lg bg-emerald-700 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-800 disabled:opacity-50 transition-colors"
                     >
                       {verifyingId === source._id ? "Verifying..." : "Verify Now"}
                     </button>

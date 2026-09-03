@@ -254,7 +254,7 @@ export default function ReportingPage() {
     <div className="space-y-6 animate-fade-in max-w-3xl">
       <div className="flex items-start justify-between">
         <div>
-          <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+          <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Back to Fraud Center
           </a>
@@ -296,8 +296,8 @@ export default function ReportingPage() {
       </div>
 
       {!selectedCountry && (
-        <div className="card bg-blue-500/10 border border-blue-500/30">
-          <p className="text-sm text-blue-300">
+        <div className="card bg-emerald-500/10 border border-emerald-500/30">
+          <p className="text-sm text-emerald-300">
             Select your country above to view relevant cybercrime authorities, reporting procedures, and emergency contacts.
           </p>
         </div>
@@ -361,7 +361,7 @@ export default function ReportingPage() {
                       {auth.email && (
                         <div className="flex items-center gap-1.5">
                           <span className="text-xs text-gray-500">Email:</span>
-                          <a href={`mailto:${auth.email}`} className="text-xs text-blue-400 hover:underline">
+                          <a href={`mailto:${auth.email}`} className="text-xs text-emerald-400 hover:underline">
                             {auth.email}
                           </a>
                         </div>
@@ -371,7 +371,7 @@ export default function ReportingPage() {
                           href={auth.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-blue-400 hover:underline"
+                          className="text-xs text-emerald-400 hover:underline"
                         >
                           Website \u2197
                         </a>
@@ -419,7 +419,7 @@ export default function ReportingPage() {
                         href={proc.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block mt-2 text-sm text-blue-400 hover:text-blue-300 underline"
+                        className="inline-block mt-2 text-sm text-emerald-400 hover:text-emerald-300 underline"
                       >
                         File Complaint Online ↗
                       </a>
@@ -437,7 +437,7 @@ export default function ReportingPage() {
             <div className="space-y-2">
               {evidenceTips[lang].map((tip, i) => (
                 <div key={i} className="flex items-start gap-2">
-                  <span className="w-2 h-2 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0" />
                   <p className="text-sm text-gray-400">{tip}</p>
                 </div>
               ))}

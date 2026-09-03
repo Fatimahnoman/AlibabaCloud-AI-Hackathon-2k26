@@ -35,7 +35,7 @@ function daysUntil(d: string | null) {
 
 function riskColor(level: string) {
   if (level === 'safe') return 'text-green-400';
-  if (level === 'low') return 'text-blue-400';
+  if (level === 'low') return 'text-emerald-400';
   if (level === 'medium') return 'text-yellow-400';
   if (level === 'high') return 'text-orange-400';
   return 'text-red-400';
@@ -43,7 +43,7 @@ function riskColor(level: string) {
 
 function statusColor(status: string) {
   const s = status.toLowerCase();
-  if (s === 'researching') return 'bg-blue-500/20 text-blue-300';
+  if (s === 'researching') return 'bg-emerald-500/20 text-emerald-300';
   if (s === 'in_progress' || s === 'in-progress') return 'bg-yellow-500/20 text-yellow-300';
   if (s === 'submitted') return 'bg-purple-500/20 text-purple-300';
   if (s === 'accepted') return 'bg-green-500/20 text-green-300';
@@ -65,7 +65,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-600" />
       </div>
     );
   }
@@ -88,7 +88,7 @@ export default function DashboardPage() {
           <p className="text-gray-400 text-sm mt-1">Here&apos;s what&apos;s happening with your education journey</p>
         </div>
         <div className="flex gap-2">
-          <Link href="/education/scholarships" className="px-4 py-2 rounded-xl bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 text-sm font-medium transition-colors">
+          <Link href="/education/scholarships" className="px-4 py-2 rounded-xl bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 text-sm font-medium transition-colors">
             Scholarships
           </Link>
           <Link href="/fraud/check-text" className="px-4 py-2 rounded-xl bg-red-600/20 text-red-300 hover:bg-red-600/30 text-sm font-medium transition-colors">
@@ -124,19 +124,19 @@ export default function DashboardPage() {
           </p>
           <p className="text-xs text-gray-500 mt-1">This month</p>
         </Link>
-        <Link href="/education/scholarships" className="bg-card border border-border/50 rounded-2xl p-4 hover:border-blue-500/30 transition-colors">
+        <Link href="/education/scholarships" className="bg-card border border-border/50 rounded-2xl p-4 hover:border-emerald-500/30 transition-colors">
           <p className="text-xs text-gray-500 uppercase tracking-wider">Upcoming Deadlines</p>
-          <p className="text-2xl font-bold mt-1 text-blue-400">
+          <p className="text-2xl font-bold mt-1 text-emerald-400">
             {(d?.deadlines.scholarships.length || 0) + (d?.deadlines.internships.length || 0)}
           </p>
           <p className="text-xs text-gray-500 mt-1">Next 30 days</p>
         </Link>
-        <Link href="/workspace" className="bg-card border border-border/50 rounded-2xl p-4 hover:border-purple-500/30 transition-colors">
+        <Link href="/workspace" className="bg-card border border-border/50 rounded-2xl p-4 hover:border-violet-500/30 transition-colors">
           <p className="text-xs text-gray-500 uppercase tracking-wider">Applications</p>
           <p className="text-2xl font-bold mt-1 text-purple-400">{d?.applications.length || 0}</p>
           <p className="text-xs text-gray-500 mt-1">Active</p>
         </Link>
-        <Link href="/fraud/history" className="bg-card border border-border/50 rounded-2xl p-4 hover:border-orange-500/30 transition-colors">
+        <Link href="/fraud/history" className="bg-card border border-border/50 rounded-2xl p-4 hover:border-amber-500/30 transition-colors">
           <p className="text-xs text-gray-500 uppercase tracking-wider">Fraud Scans</p>
           <p className="text-2xl font-bold mt-1 text-orange-400">{d?.fraudScans.length || 0}</p>
           <p className="text-xs text-gray-500 mt-1">Recent</p>
@@ -151,14 +151,14 @@ export default function DashboardPage() {
           <div className="bg-card border border-border/50 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-white">Upcoming Deadlines</h3>
-              <Link href="/notifications/deadlines" className="text-xs text-blue-400 hover:underline">View all</Link>
+              <Link href="/notifications/deadlines" className="text-xs text-emerald-400 hover:underline">View all</Link>
             </div>
             {d?.deadlines.scholarships.length ? (
               <div className="space-y-3">
                 {d.deadlines.scholarships.slice(0, 4).map((s) => {
                   const days = daysUntil(s.deadline);
                   return (
-                    <div key={s.id} className="flex items-center justify-between bg-dark/40 rounded-xl p-3">
+                    <div key={s.id} className="flex items-center justify-between bg-black/40 rounded-xl p-3">
                       <div>
                         <p className="text-sm font-medium text-white">{s.name}</p>
                         <p className="text-xs text-gray-500">{s.provider} {s.country ? `· ${s.country}` : ''}</p>
@@ -182,12 +182,12 @@ export default function DashboardPage() {
           <div className="bg-card border border-border/50 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-white">Application Tracker</h3>
-              <Link href="/workspace" className="text-xs text-blue-400 hover:underline">View all</Link>
+              <Link href="/workspace" className="text-xs text-emerald-400 hover:underline">View all</Link>
             </div>
             {d?.applications.length ? (
               <div className="space-y-2">
                 {d.applications.slice(0, 4).map((app) => (
-                  <Link key={app.id} href={`/workspace/${app.id}`} className="flex items-center justify-between bg-dark/40 rounded-xl p-3 hover:bg-dark/60 transition-colors">
+                  <Link key={app.id} href={`/workspace/${app.id}`} className="flex items-center justify-between bg-black/40 rounded-xl p-3 hover:bg-black/60 transition-colors">
                     <div>
                       <p className="text-sm font-medium text-white">{app.title}</p>
                       <p className="text-xs text-gray-500">{app.institutionName || 'No institution'} {app.country ? `· ${app.country}` : ''}</p>
@@ -201,7 +201,7 @@ export default function DashboardPage() {
             ) : (
               <div className="text-center py-4">
                 <p className="text-gray-500 text-sm">No applications yet</p>
-                <Link href="/workspace/new" className="text-xs text-blue-400 hover:underline mt-1 inline-block">Create your first application</Link>
+                <Link href="/workspace/new" className="text-xs text-emerald-400 hover:underline mt-1 inline-block">Create your first application</Link>
               </div>
             )}
           </div>
@@ -213,19 +213,19 @@ export default function DashboardPage() {
           <div className="bg-card border border-border/50 rounded-2xl p-5">
             <h3 className="font-semibold text-white mb-4">Quick Actions</h3>
             <div className="grid grid-cols-2 gap-2">
-              <Link href="/education/scholarships" className="flex flex-col items-center p-3 bg-dark/40 rounded-xl hover:bg-dark/60 transition-colors">
+              <Link href="/education/scholarships" className="flex flex-col items-center p-3 bg-black/40 rounded-xl hover:bg-black/60 transition-colors">
                 <span className="text-2xl mb-1">&#127891;</span>
                 <span className="text-xs text-gray-400">Scholarships</span>
               </Link>
-              <Link href="/education/universities" className="flex flex-col items-center p-3 bg-dark/40 rounded-xl hover:bg-dark/60 transition-colors">
+              <Link href="/education/universities" className="flex flex-col items-center p-3 bg-black/40 rounded-xl hover:bg-black/60 transition-colors">
                 <span className="text-2xl mb-1">&#127979;</span>
                 <span className="text-xs text-gray-400">Universities</span>
               </Link>
-              <Link href="/fraud/check-text" className="flex flex-col items-center p-3 bg-dark/40 rounded-xl hover:bg-dark/60 transition-colors">
+              <Link href="/fraud/check-text" className="flex flex-col items-center p-3 bg-black/40 rounded-xl hover:bg-black/60 transition-colors">
                 <span className="text-2xl mb-1">&#128270;</span>
                 <span className="text-xs text-gray-400">Scan Text</span>
               </Link>
-              <Link href="/budget" className="flex flex-col items-center p-3 bg-dark/40 rounded-xl hover:bg-dark/60 transition-colors">
+              <Link href="/budget" className="flex flex-col items-center p-3 bg-black/40 rounded-xl hover:bg-black/60 transition-colors">
                 <span className="text-2xl mb-1">&#128176;</span>
                 <span className="text-xs text-gray-400">Budget</span>
               </Link>
@@ -236,7 +236,7 @@ export default function DashboardPage() {
           <div className="bg-card border border-border/50 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-white">Savings Goals</h3>
-              <Link href="/budget/savings" className="text-xs text-blue-400 hover:underline">View all</Link>
+              <Link href="/budget/savings" className="text-xs text-emerald-400 hover:underline">View all</Link>
             </div>
             {d?.savings.length ? (
               <div className="space-y-3">
@@ -249,7 +249,7 @@ export default function DashboardPage() {
                         <span className="text-gray-400">{pct}%</span>
                       </div>
                       <div className="h-2 bg-dark rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
+                        <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all" style={{ width: `${pct}%` }} />
                       </div>
                     </div>
                   );
@@ -264,12 +264,12 @@ export default function DashboardPage() {
           <div className="bg-card border border-border/50 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-white">Security Scans</h3>
-              <Link href="/fraud/history" className="text-xs text-blue-400 hover:underline">History</Link>
+              <Link href="/fraud/history" className="text-xs text-emerald-400 hover:underline">History</Link>
             </div>
             {d?.fraudScans.length ? (
               <div className="space-y-2">
                 {d.fraudScans.map((scan) => (
-                  <div key={scan.id} className="flex items-center justify-between bg-dark/40 rounded-xl p-2">
+                  <div key={scan.id} className="flex items-center justify-between bg-black/40 rounded-xl p-2">
                     <div>
                       <span className="text-xs text-gray-400 uppercase">{scan.inputType}</span>
                       <p className="text-xs text-gray-500">{formatDate(scan.createdAt)}</p>

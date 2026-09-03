@@ -147,7 +147,7 @@ export default function CheckUrlPage() {
   return (
     <div className="space-y-6 animate-fade-in max-w-3xl">
       <div>
-        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Fraud Center
         </a>
@@ -335,8 +335,8 @@ export default function CheckUrlPage() {
             )}
 
             {result.realWorldContext && (
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-3">
-                <h3 className="text-sm font-semibold text-blue-300 mb-1">Real-World Context</h3>
+              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-3">
+                <h3 className="text-sm font-semibold text-emerald-300 mb-1">Real-World Context</h3>
                 <p className="text-sm text-gray-300 whitespace-pre-wrap">{result.realWorldContext}</p>
               </div>
             )}
@@ -371,7 +371,7 @@ export default function CheckUrlPage() {
                                 href={contact.website}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-blue-400 hover:text-blue-300 hover:underline"
+                                className="text-xs text-emerald-400 hover:text-emerald-300 hover:underline"
                               >
                                 {contact.website.replace('https://', '').replace(/\/$/, '')} ↗
                               </a>

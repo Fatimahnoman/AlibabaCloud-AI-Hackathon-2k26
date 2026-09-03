@@ -66,7 +66,7 @@ export default function TeacherDashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
       </div>
     );
   }
@@ -86,32 +86,32 @@ export default function TeacherDashboard() {
     <div className="space-y-6 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold gradient-text">Teacher Dashboard</h1>
-        <p className="text-cyan-400 mt-1">Manage lesson plans, assessments, and homework</p>
+        <p className="text-emerald-400 mt-1">Manage lesson plans, assessments, and homework</p>
       </div>
 
       {profile && (
         <div className="card p-6">
-          <h2 className="text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-3">Teacher Profile</h2>
+          <h2 className="text-lg font-semibold bg-gradient-to-r from-emerald-400 to-purple-400 bg-clip-text text-transparent mb-3">Teacher Profile</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <p className="text-xs text-violet-400 uppercase tracking-wide">Name</p>
-              <p className="text-sm font-medium text-cyan-400 mt-1">{profile.name || 'Not set'}</p>
+              <p className="text-sm font-medium text-emerald-400 mt-1">{profile.name || 'Not set'}</p>
             </div>
             <div>
               <p className="text-xs text-violet-400 uppercase tracking-wide">Subjects</p>
               <div className="flex flex-wrap gap-1 mt-1">
                 {(profile.subjects || []).map((s) => (
-                  <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400">{s}</span>
+                  <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400">{s}</span>
                 ))}
               </div>
             </div>
             <div>
               <p className="text-xs text-violet-400 uppercase tracking-wide">Lesson Plans</p>
-              <p className="text-sm font-medium text-cyan-400 mt-1">{profile.totalLessonPlans}</p>
+              <p className="text-sm font-medium text-emerald-400 mt-1">{profile.totalLessonPlans}</p>
             </div>
             <div>
               <p className="text-xs text-violet-400 uppercase tracking-wide">Assessments</p>
-              <p className="text-sm font-medium text-cyan-400 mt-1">{profile.totalAssessments}</p>
+              <p className="text-sm font-medium text-emerald-400 mt-1">{profile.totalAssessments}</p>
             </div>
           </div>
         </div>
@@ -122,35 +122,35 @@ export default function TeacherDashboard() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <Link href="/teacher/lessons" className="card-hover p-4 text-center">
             <div className="text-2xl mb-2">📝</div>
-            <p className="text-sm font-medium text-cyan-400">Lesson Plan</p>
+            <p className="text-sm font-medium text-emerald-400">Lesson Plan</p>
           </Link>
           <Link href="/teacher/assessments" className="card-hover p-4 text-center">
             <div className="text-2xl mb-2">📊</div>
-            <p className="text-sm font-medium text-cyan-400">Assessment</p>
+            <p className="text-sm font-medium text-emerald-400">Assessment</p>
           </Link>
           <Link href="/teacher/homework" className="card-hover p-4 text-center">
             <div className="text-2xl mb-2">📚</div>
-            <p className="text-sm font-medium text-cyan-400">Homework</p>
+            <p className="text-sm font-medium text-emerald-400">Homework</p>
           </Link>
           <Link href="/teacher/lessons" className="card-hover p-4 text-center">
             <div className="text-2xl mb-2">📋</div>
-            <p className="text-sm font-medium text-cyan-400">Rubric</p>
+            <p className="text-sm font-medium text-emerald-400">Rubric</p>
           </Link>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="card p-6">
-          <h2 className="text-lg font-semibold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent mb-4">Recent Lesson Plans</h2>
+          <h2 className="text-lg font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4">Recent Lesson Plans</h2>
           {lessonPlans.length === 0 ? (
-            <p className="text-cyan-400 text-sm">No lesson plans yet</p>
+            <p className="text-emerald-400 text-sm">No lesson plans yet</p>
           ) : (
             <div className="space-y-3">
               {lessonPlans.slice(0, 5).map((plan) => (
                 <div key={plan.id} className="border border-white/10 rounded-lg p-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-medium text-cyan-400">{plan.topic}</p>
+                      <p className="text-sm font-medium text-emerald-400">{plan.topic}</p>
                       <p className="text-xs text-violet-400">{plan.subject} &middot; Grade {plan.grade}</p>
                     </div>
                     <span className="text-xs text-gray-400">{new Date(plan.createdAt).toLocaleDateString()}</span>
@@ -160,7 +160,7 @@ export default function TeacherDashboard() {
             </div>
           )}
           {lessonPlans.length > 0 && (
-            <Link href="/teacher/lessons" className="block mt-3 text-sm text-blue-600 hover:text-blue-800">View all &rarr;</Link>
+            <Link href="/teacher/lessons" className="block mt-3 text-sm text-emerald-600 hover:text-emerald-800">View all &rarr;</Link>
           )}
         </div>
 
@@ -184,7 +184,7 @@ export default function TeacherDashboard() {
             </div>
           )}
           {assessments.length > 0 && (
-            <Link href="/teacher/assessments" className="block mt-3 text-sm text-blue-600 hover:text-blue-800">View all &rarr;</Link>
+            <Link href="/teacher/assessments" className="block mt-3 text-sm text-emerald-600 hover:text-emerald-800">View all &rarr;</Link>
           )}
         </div>
       </div>

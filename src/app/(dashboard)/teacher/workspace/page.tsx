@@ -155,7 +155,7 @@ export default function TeacherWorkspacePage() {
         <div className="flex gap-2">
           {view === 'dashboard' && (
             <button onClick={() => { setView('classrooms'); fetchClassrooms(); }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">My Classrooms</button>
+              className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700">My Classrooms</button>
           )}
           {view !== 'dashboard' && (
             <button onClick={() => { setView('dashboard'); fetchDashboard(); }}
@@ -212,7 +212,7 @@ export default function TeacherWorkspacePage() {
         <>
           <div className="flex gap-2">
             <button onClick={() => setShowCreateForm(!showCreateForm)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
+              className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700">
               {showCreateForm ? 'Cancel' : 'New Classroom'}
             </button>
           </div>
@@ -273,14 +273,14 @@ export default function TeacherWorkspacePage() {
         <>
           <div className="flex items-center gap-3">
             <button onClick={() => { setView('classrooms'); fetchClassrooms(); }}
-              className="text-blue-600 hover:text-blue-800 text-sm">&larr; Back</button>
+              className="text-emerald-600 hover:text-emerald-800 text-sm">&larr; Back</button>
             <h2 className="text-xl font-bold">{selectedClassroom.name}</h2>
             <span className="text-sm text-gray-500">{selectedClassroom.subject}</span>
           </div>
 
-          <div className="bg-blue-500/10 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-800"><strong>Invite Code:</strong> <span className="font-mono text-lg">{selectedClassroom.inviteCode}</span></p>
-            <p className="text-xs text-blue-600 mt-1">Share this code with students so they can join your classroom</p>
+          <div className="bg-emerald-500/10 border border-emerald-200 rounded-lg p-4">
+            <p className="text-sm text-emerald-800"><strong>Invite Code:</strong> <span className="font-mono text-lg">{selectedClassroom.inviteCode}</span></p>
+            <p className="text-xs text-emerald-600 mt-1">Share this code with students so they can join your classroom</p>
           </div>
 
           <div className="card p-6">
@@ -298,7 +298,7 @@ export default function TeacherWorkspacePage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <button onClick={() => openStudentData(s.studentId)}
-                        className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded text-xs hover:bg-blue-500/20">View Data</button>
+                        className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded text-xs hover:bg-emerald-500/20">View Data</button>
                       <button onClick={() => handleRemoveStudent(s.studentId)}
                         className="px-3 py-1 bg-red-500/10 text-red-400 rounded text-xs hover:bg-red-500/20">Remove</button>
                     </div>
@@ -327,7 +327,7 @@ export default function TeacherWorkspacePage() {
         <>
           <div className="flex items-center gap-3">
             <button onClick={() => setView('classroom-detail')}
-              className="text-blue-600 hover:text-blue-800 text-sm">&larr; Back to {selectedClassroom.name}</button>
+              className="text-emerald-600 hover:text-emerald-800 text-sm">&larr; Back to {selectedClassroom.name}</button>
           </div>
 
           <div className="card p-6">

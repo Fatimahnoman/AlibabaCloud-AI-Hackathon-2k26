@@ -72,7 +72,7 @@ export default function AdminDashboardPage() {
       <div className="flex flex-wrap items-start justify-between gap-4 animate-slide-up">
         <div>
           <h1 className="text-3xl font-bold gradient-text">Admin Dashboard</h1>
-          <p className="text-sm mt-2">Platform-wide <span className="text-cyan-400 font-medium">health</span>, <span className="text-emerald-400 font-medium">activity</span> & <span className="text-red-400 font-medium">security</span> at a glance</p>
+          <p className="text-sm mt-2">Platform-wide <span className="text-emerald-400 font-medium">health</span>, <span className="text-emerald-400 font-medium">activity</span> & <span className="text-red-400 font-medium">security</span> at a glance</p>
         </div>
         <div className="flex items-center gap-3">
           <span className="badge badge-success gap-1.5">
@@ -84,19 +84,19 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <StatCard title="Total Users" value={formatNum(data.users.total)} icon={<UsersIcon />} gradient="from-blue-500 via-cyan-500 to-teal-500" trend={`+${data.users.newToday} today`} trendColor="text-cyan-400" delay={0} />
+        <StatCard title="Total Users" value={formatNum(data.users.total)} icon={<UsersIcon />} gradient="from-emerald-500 via-teal-500 to-teal-500" trend={`+${data.users.newToday} today`} trendColor="text-emerald-400" delay={0} />
         <StatCard title="Active Users" value={formatNum(data.users.active)} icon={<ShieldIcon />} gradient="from-emerald-500 via-green-500 to-lime-500" trend={`${data.users.total > 0 ? Math.round(data.users.active / data.users.total * 100) : 0}% active`} trendColor="text-emerald-400" delay={50} />
         <StatCard title="New Today" value={formatNum(data.users.newToday)} icon={<SparkleIcon />} gradient="from-violet-500 via-purple-500 to-fuchsia-500" trend={`${data.users.newThisWeek} this week`} trendColor="text-purple-400" delay={100} />
-        <StatCard title="Conversations" value={formatNum(data.conversations.total)} icon={<ChatIcon />} gradient="from-cyan-500 via-blue-500 to-indigo-500" trend={`${data.conversations.today} today`} trendColor="text-blue-400" delay={150} />
+        <StatCard title="Conversations" value={formatNum(data.conversations.total)} icon={<ChatIcon />} gradient="from-emerald-500 via-teal-500 to-indigo-500" trend={`${data.conversations.today} today`} trendColor="text-emerald-400" delay={150} />
         <StatCard title="Fraud Reports" value={formatNum(data.fraud.totalReports)} icon={<AlertIcon />} gradient="from-amber-500 via-orange-500 to-red-500" trend={`${data.fraud.pending} pending`} trendColor="text-amber-400" delay={200} />
-        <StatCard title="Security Score" value={`${score}`} icon={<ShieldCheckIcon />} gradient={score > 80 ? "from-emerald-500 via-teal-500 to-cyan-500" : score > 50 ? "from-amber-500 via-orange-500 to-yellow-500" : "from-red-500 via-rose-500 to-pink-500"} trend={score > 80 ? "Excellent" : score > 50 ? "Needs attention" : "Critical"} trendColor={score > 80 ? "text-emerald-400" : score > 50 ? "text-amber-400" : "text-red-400"} delay={250} />
+        <StatCard title="Security Score" value={`${score}`} icon={<ShieldCheckIcon />} gradient={score > 80 ? "from-emerald-500 via-teal-500 to-teal-400" : score > 50 ? "from-amber-500 via-orange-500 to-yellow-500" : "from-red-500 via-rose-500 to-pink-500"} trend={score > 80 ? "Excellent" : score > 50 ? "Needs attention" : "Critical"} trendColor={score > 80 ? "text-emerald-400" : score > 50 ? "text-amber-400" : "text-red-400"} delay={250} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Panel title="User Growth" gradient="from-indigo-500 to-blue-500">
+        <Panel title="User Growth" gradient="from-indigo-500 to-teal-400">
           <div className="grid grid-cols-3 gap-3">
             <MiniStat label="Today" value={data.users.newToday} gradient="from-indigo-500 via-purple-500 to-violet-500" />
-            <MiniStat label="This Week" value={data.users.newThisWeek} gradient="from-blue-500 via-cyan-500 to-teal-500" />
+            <MiniStat label="This Week" value={data.users.newThisWeek} gradient="from-emerald-500 via-teal-500 to-teal-500" />
             <MiniStat label="This Month" value={data.users.newThisMonth} gradient="from-purple-500 via-pink-500 to-rose-500" />
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -106,10 +106,10 @@ export default function AdminDashboardPage() {
           </div>
         </Panel>
 
-        <Panel title="Activity Feed" gradient="from-cyan-500 to-teal-500">
+        <Panel title="Activity Feed" gradient="from-emerald-500 to-teal-500">
           <div className="space-y-3">
-            <ActivityRow label="Conversations today" value={formatNum(data.conversations.today)} gradient="from-cyan-500 to-blue-500" />
-            <ActivityRow label="Messages today" value={formatNum(data.messages.today)} gradient="from-blue-500 to-indigo-500" />
+            <ActivityRow label="Conversations today" value={formatNum(data.conversations.today)} gradient="from-emerald-500 to-teal-400" />
+            <ActivityRow label="Messages today" value={formatNum(data.messages.today)} gradient="from-emerald-500 to-indigo-500" />
             <ActivityRow label="This week" value={formatNum(data.conversations.thisWeek)} gradient="from-indigo-500 to-violet-500" />
             <ActivityRow label="Avg msgs/conversation" value={String(data.aiUsage.avgMessagesPerConversation)} gradient="from-purple-500 to-fuchsia-500" />
             <ActivityRow label="Documents today" value={formatNum(data.documents.today)} gradient="from-amber-500 to-orange-500" />
@@ -120,7 +120,7 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Score</span>
+                <span className="text-sm font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Score</span>
                 <span className={`text-2xl font-bold ${score > 80 ? 'text-emerald-400' : score > 50 ? 'text-amber-400' : 'text-red-400'}`}>{score}/100</span>
               </div>
               <div className="progress-bar">
@@ -141,14 +141,14 @@ export default function AdminDashboardPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <InfoTile label="Uptime" value={formatUptime(data.system.uptimeMs)} icon="⏱" gradient="from-emerald-500 to-teal-500" />
           <InfoTile label="Environment" value={data.system.nodeEnv} icon="⚙" gradient="from-amber-500 to-orange-500" />
-          <InfoTile label="Database" value={data.system.dbSize} icon="🗄" gradient="from-blue-500 to-indigo-500" />
+          <InfoTile label="Database" value={data.system.dbSize} icon="🗄" gradient="from-emerald-500 to-indigo-500" />
           <InfoTile label="Memory" value={`${Math.round(data.system.memoryUsageMB)} MB`} icon="💻" gradient="from-violet-500 to-purple-500" />
         </div>
       </Panel>
 
       <Panel title="Quick Actions" gradient="from-rose-500 to-pink-500">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <ActionCard href="/admin/users" label="Manage Users" desc="Roles, bans & accounts" icon={<UsersIcon />} gradient="from-blue-500 via-cyan-500 to-teal-500" />
+          <ActionCard href="/admin/users" label="Manage Users" desc="Roles, bans & accounts" icon={<UsersIcon />} gradient="from-emerald-500 via-teal-500 to-teal-500" />
           <ActionCard href="/admin/security" label="Security Center" desc="Threats & audit" icon={<ShieldIcon />} gradient="from-emerald-500 via-green-500 to-lime-500" />
           <ActionCard href="/admin/data" label="Data Management" desc="Content & sources" icon={<DatabaseIcon />} gradient="from-violet-500 via-purple-500 to-fuchsia-500" />
           <ActionCard href="/admin/ai-monitor" label="AI Monitor" desc="Usage & performance" icon={<BrainIcon />} gradient="from-amber-500 via-orange-500 to-red-500" />
@@ -162,8 +162,8 @@ function Panel({ title, children, gradient, className = "" }: { title: string; c
   return (
     <div className={`rounded-2xl overflow-hidden animate-slide-up ${className}`} style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)' }}>
       <div className="px-6 py-4 flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
-        <div className={`w-2.5 h-2.5 rounded-full bg-gradient-to-r ${gradient || 'from-indigo-500 to-blue-500'}`} />
-        <h2 className={`text-sm font-bold uppercase tracking-wider bg-gradient-to-r ${gradient || 'from-indigo-500 to-blue-500'} bg-clip-text text-transparent`}>{title}</h2>
+        <div className={`w-2.5 h-2.5 rounded-full bg-gradient-to-r ${gradient || 'from-indigo-500 to-teal-400'}`} />
+        <h2 className={`text-sm font-bold uppercase tracking-wider bg-gradient-to-r ${gradient || 'from-indigo-500 to-teal-400'} bg-clip-text text-transparent`}>{title}</h2>
       </div>
       <div className="p-6">{children}</div>
     </div>

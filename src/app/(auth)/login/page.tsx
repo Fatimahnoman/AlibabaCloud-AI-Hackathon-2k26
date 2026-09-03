@@ -36,7 +36,7 @@ function LoginForm() {
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-[#0f172a]/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 w-full max-w-md px-4 animate-slide-up">

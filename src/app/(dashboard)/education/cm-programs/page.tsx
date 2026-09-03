@@ -28,7 +28,7 @@ const categoryLabels: Record<string, string> = {
 };
 
 const categoryColors: Record<string, string> = {
-  scholarship: 'bg-blue-500/10 text-blue-400',
+  scholarship: 'bg-emerald-500/10 text-emerald-400',
   laptop: 'bg-purple-500/10 text-purple-400',
   internship: 'bg-green-500/10 text-green-400',
   health: 'bg-red-500/10 text-red-400',
@@ -40,7 +40,7 @@ const categoryColors: Record<string, string> = {
 const provinceColors: Record<string, string> = {
   Punjab: 'bg-red-500/10 text-red-700',
   Sindh: 'bg-emerald-500/10 text-green-700',
-  KPK: 'bg-blue-500/10 text-blue-700',
+  KPK: 'bg-emerald-500/10 text-emerald-700',
   Balochistan: 'bg-amber-500/10 text-amber-700',
   Islamabad: 'bg-purple-500/10 text-purple-700',
 };
@@ -72,17 +72,17 @@ export default function CMProgramsPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <a href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <a href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </a>
         <h1 className="text-2xl font-bold gradient-text">Chief Minister Programs</h1>
-        <p className="text-cyan-400 mt-1">Government programs and schemes for all Pakistan provinces</p>
+        <p className="text-emerald-400 mt-1">Government programs and schemes for all Pakistan provinces</p>
       </div>
 
       <div className="card">
-        <h2 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-3">What Are CM Programs?</h2>
-        <p className="text-sm text-cyan-400 leading-relaxed">
+        <h2 className="text-lg font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-3">What Are CM Programs?</h2>
+        <p className="text-sm text-emerald-400 leading-relaxed">
           Chief Minister (CM) programs are provincial government initiatives designed to help citizens with education,
           healthcare, housing, employment, and financial assistance. Each province (Punjab, Sindh, KPK, Balochistan)
           runs its own programs tailored to local needs. These programs provide scholarships, laptops, internships,
@@ -109,40 +109,40 @@ export default function CMProgramsPage() {
         </div>
       ) : programs.length === 0 ? (
         <div className="card text-center py-12">
-          <p className="text-cyan-400">No programs found matching your filters.</p>
+          <p className="text-emerald-400">No programs found matching your filters.</p>
         </div>
       ) : (
         <>
-          <p className="text-sm text-violet-400"><span className="font-semibold text-cyan-400">{pagination.total}</span> programs found</p>
+          <p className="text-sm text-violet-400"><span className="font-semibold text-emerald-400">{pagination.total}</span> programs found</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {programs.map((p) => (
               <div key={p.id} className="card-hover cursor-pointer" onClick={() => setExpandedId(expandedId === p.id ? null : p.id)}>
                 <div className="flex items-start justify-between">
-                  <h3 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent text-sm">{p.name}</h3>
+                  <h3 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent text-sm">{p.name}</h3>
                   <div className="flex gap-1.5">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${categoryColors[p.category] || 'bg-white/5 text-cyan-400'}`}>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${categoryColors[p.category] || 'bg-white/5 text-emerald-400'}`}>
                       {categoryLabels[p.category] || p.category}
                     </span>
                   </div>
                 </div>
-                <span className={`inline-block text-xs px-2 py-0.5 rounded-full mt-1 ${provinceColors[p.province] || 'bg-white/5 text-cyan-400'}`}>
+                <span className={`inline-block text-xs px-2 py-0.5 rounded-full mt-1 ${provinceColors[p.province] || 'bg-white/5 text-emerald-400'}`}>
                   {p.province}
                 </span>
-                <p className="text-xs text-cyan-400 mt-2 line-clamp-2">{p.description}</p>
+                <p className="text-xs text-emerald-400 mt-2 line-clamp-2">{p.description}</p>
 
                 {expandedId === p.id && (
                   <div className="mt-4 space-y-3 border-t pt-4">
                     <div>
-                      <h4 className="text-xs font-semibold text-cyan-400 uppercase">Eligibility</h4>
-                      <p className="text-sm text-cyan-400">{p.eligibility}</p>
+                      <h4 className="text-xs font-semibold text-emerald-400 uppercase">Eligibility</h4>
+                      <p className="text-sm text-emerald-400">{p.eligibility}</p>
                     </div>
                     <div>
                       <h4 className="text-xs font-semibold text-violet-400 uppercase">Benefits</h4>
-                      <p className="text-sm text-cyan-400">{p.benefits}</p>
+                      <p className="text-sm text-emerald-400">{p.benefits}</p>
                     </div>
                     <div>
                       <h4 className="text-xs font-semibold text-emerald-400 uppercase">How to Apply</h4>
-                      <p className="text-sm text-cyan-400">{p.howToApply}</p>
+                      <p className="text-sm text-emerald-400">{p.howToApply}</p>
                     </div>
                     <div className="flex items-center gap-3 text-xs text-violet-400">
                       <span>Target: {p.targetAudience}</span>
@@ -161,7 +161,7 @@ export default function CMProgramsPage() {
           {pagination.totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)} className="btn-secondary text-sm disabled:opacity-40">Prev</button>
-              <span className="text-sm text-cyan-400">Page {page} of {pagination.totalPages}</span>
+              <span className="text-sm text-emerald-400">Page {page} of {pagination.totalPages}</span>
               <button disabled={page >= pagination.totalPages} onClick={() => setPage((p) => p + 1)} className="btn-secondary text-sm disabled:opacity-40">Next</button>
             </div>
           )}

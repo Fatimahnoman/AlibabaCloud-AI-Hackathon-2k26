@@ -65,12 +65,12 @@ export default function CareersPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <a href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-3">
+        <a href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-3">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Education Center
         </a>
         <h1 className="text-2xl font-bold gradient-text">Career Guidance</h1>
-        <p className="text-cyan-400 mt-1">Explore career paths and find your direction</p>
+        <p className="text-emerald-400 mt-1">Explore career paths and find your direction</p>
       </div>
 
       <form onSubmit={handleSearch} className="card space-y-4">
@@ -108,7 +108,7 @@ export default function CareersPage() {
         </div>
       ) : careers.length === 0 ? (
         <div className="card text-center py-12">
-          <p className="text-cyan-400">No career paths found. Try adjusting your search.</p>
+          <p className="text-emerald-400">No career paths found. Try adjusting your search.</p>
         </div>
       ) : (
         <>
@@ -118,16 +118,16 @@ export default function CareersPage() {
               <div key={c._id} className="card-hover" onClick={() => setExpandedId(expandedId === c._id ? null : c._id)}>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{c.title}</h3>
+                    <h3 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">{c.title}</h3>
                     <p className="text-sm text-violet-400">{c.field}</p>
                   </div>
-                  <span className="text-cyan-400 text-sm">{expandedId === c._id ? '▲' : '▼'}</span>
+                  <span className="text-emerald-400 text-sm">{expandedId === c._id ? '▲' : '▼'}</span>
                 </div>
                 {expandedId === c._id && (
                   <div className="mt-4 pt-4 border-t border-white/10 space-y-3">
                     {c.skills?.length > 0 && (
                       <div>
-                        <p className="text-xs font-medium text-cyan-400 mb-1">Key Skills</p>
+                        <p className="text-xs font-medium text-emerald-400 mb-1">Key Skills</p>
                         <div className="flex flex-wrap gap-1">
                           {c.skills.map((s, i) => (
                             <span key={i} className="text-xs bg-primary-500/10 text-primary-400 px-2 py-0.5 rounded-full">{s}</span>
@@ -140,7 +140,7 @@ export default function CareersPage() {
                         <p className="text-xs font-medium text-violet-400 mb-1">Entry Roles</p>
                         <div className="flex flex-wrap gap-1">
                           {c.entryRoles.map((r, i) => (
-                            <span key={i} className="text-xs bg-white/5 text-cyan-400 px-2 py-0.5 rounded-full">{r}</span>
+                            <span key={i} className="text-xs bg-white/5 text-emerald-400 px-2 py-0.5 rounded-full">{r}</span>
                           ))}
                         </div>
                       </div>
@@ -156,7 +156,7 @@ export default function CareersPage() {
           {pagination.totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)} className="btn-secondary text-sm disabled:opacity-40">Prev</button>
-              <span className="text-sm text-cyan-400">Page {page} of {pagination.totalPages}</span>
+              <span className="text-sm text-emerald-400">Page {page} of {pagination.totalPages}</span>
               <button disabled={page >= pagination.totalPages} onClick={() => setPage((p) => p + 1)} className="btn-secondary text-sm disabled:opacity-40">Next</button>
             </div>
           )}

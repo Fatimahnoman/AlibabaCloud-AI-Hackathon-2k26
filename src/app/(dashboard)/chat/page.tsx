@@ -593,7 +593,7 @@ export default function ChatPage() {
             <div className="max-w-4xl mx-auto px-4 py-6">
               {isLoadingMore && (
                 <div className="text-center py-2">
-                  <div className="inline-block w-5 h-5 border-2 border-white/10 border-t-blue-500 rounded-full animate-spin" />
+                  <div className="inline-block w-5 h-5 border-2 border-white/10 border-t-emerald-500 rounded-full animate-spin" />
                 </div>
               )}
               {messages.map((msg) => (

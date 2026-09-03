@@ -75,7 +75,7 @@ export default function TopicsPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <Link href="/study-planner" className="text-blue-600 hover:text-blue-800 text-sm font-medium">&larr; Back</Link>
+        <Link href="/study-planner" className="text-emerald-600 hover:text-emerald-800 text-sm font-medium">&larr; Back</Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-100">Study Topics</h1>
           <p className="text-gray-500 mt-1">Track your mastery of individual topics</p>
@@ -132,7 +132,7 @@ export default function TopicsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
         </div>
       ) : topics.length === 0 ? (
         <div className="card p-6 text-center">
@@ -156,7 +156,7 @@ export default function TopicsPage() {
                       <div className="flex items-center gap-2">
                         <div className="flex-1 bg-white/5 rounded-full h-2">
                           <div
-                            className="bg-blue-600 h-2 rounded-full transition-all"
+                            className="bg-emerald-600 h-2 rounded-full transition-all"
                             style={{ width: `${topic.masteryLevel}%` }}
                           />
                         </div>

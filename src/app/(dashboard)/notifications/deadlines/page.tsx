@@ -24,7 +24,7 @@ interface DeadlineTypeConfig {
 
 const DEADLINE_TYPES: DeadlineTypeConfig[] = [
   { value: 'scholarship', label: 'Scholarship', color: 'bg-purple-500/10 text-purple-400' },
-  { value: 'university', label: 'University', color: 'bg-blue-500/10 text-blue-400' },
+  { value: 'university', label: 'University', color: 'bg-emerald-500/10 text-emerald-400' },
   { value: 'application', label: 'Application', color: 'bg-indigo-500/10 text-indigo-400' },
   { value: 'study', label: 'Study', color: 'bg-green-500/10 text-green-400' },
   { value: 'budget', label: 'Budget', color: 'bg-amber-500/10 text-amber-400' },
@@ -160,7 +160,7 @@ export default function DeadlinesPage() {
     if (days <= 14) {
       return <span className="px-2 py-0.5 rounded text-xs font-medium bg-yellow-500/10 text-yellow-400">Approaching</span>;
     }
-    return <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-500/10 text-blue-400">Upcoming</span>;
+    return <span className="px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400">Upcoming</span>;
   };
 
   const getTypeBadge = (type: string) => {
@@ -200,24 +200,24 @@ export default function DeadlinesPage() {
         </div>
         <div className="flex gap-2">
           <Link href="/notifications" className="px-4 py-2 btn-secondary">&larr; Back</Link>
-          <button onClick={() => setShowForm(!showForm)} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
+          <button onClick={() => setShowForm(!showForm)} className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700">
             {showForm ? 'Cancel' : 'New Deadline'}
           </button>
         </div>
       </div>
 
       {successMsg && (
-        <div className="bg-blue-500/10 border border-blue-200 rounded-lg p-4 text-sm text-blue-700">{successMsg}</div>
+        <div className="bg-emerald-500/10 border border-emerald-200 rounded-lg p-4 text-sm text-emerald-700">{successMsg}</div>
       )}
 
       <div className="flex flex-wrap gap-2">
         <button onClick={() => setTypeFilter('')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium ${typeFilter === '' ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
+          className={`px-4 py-2 rounded-lg text-sm font-medium ${typeFilter === '' ? 'bg-emerald-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
           All
         </button>
         {DEADLINE_TYPES.map((t) => (
           <button key={t.value} onClick={() => setTypeFilter(t.value)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${typeFilter === t.value ? 'bg-blue-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
+            className={`px-4 py-2 rounded-lg text-sm font-medium ${typeFilter === t.value ? 'bg-emerald-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
             {t.label}
           </button>
         ))}
@@ -300,7 +300,7 @@ export default function DeadlinesPage() {
               placeholder="Additional details about this deadline"
             />
           </div>
-          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
+          <button type="submit" className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700">
             Create Deadline
           </button>
         </form>
@@ -308,7 +308,7 @@ export default function DeadlinesPage() {
 
       {loading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
         </div>
       ) : deadlines.length === 0 ? (
         <div className="card p-8 text-center text-gray-400">No deadlines found</div>

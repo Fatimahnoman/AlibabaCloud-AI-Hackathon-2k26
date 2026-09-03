@@ -94,13 +94,13 @@ export default function AnalysisDetailPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <button onClick={() => router.push('/documents')} className="text-blue-600 hover:text-blue-800 text-sm mb-2">&larr; Back to Document Intelligence</button>
+          <button onClick={() => router.push('/documents')} className="text-emerald-600 hover:text-emerald-800 text-sm mb-2">&larr; Back to Document Intelligence</button>
           <h1 className="text-2xl font-bold capitalize">{analysis.documentType.replace(/_/g, ' ')} Analysis</h1>
           <p className="text-gray-500 text-sm mt-1">{new Date(analysis.createdAt).toLocaleString()}</p>
         </div>
         <div className="flex gap-2">
           <button onClick={() => router.push('/documents')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">Re-analyze</button>
+            className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700">Re-analyze</button>
           <button onClick={handleDelete}
             className="px-4 py-2 bg-red-500/10 text-red-400 rounded-lg text-sm hover:bg-red-500/20">Delete</button>
         </div>
@@ -153,7 +153,7 @@ export default function AnalysisDetailPage() {
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                       s.severity === 'high' ? 'bg-red-500/10 text-red-400' :
                       s.severity === 'medium' ? 'bg-yellow-500/10 text-yellow-400' :
-                      'bg-blue-500/10 text-blue-400'}`}>{s.severity}</span>
+                      'bg-emerald-500/10 text-emerald-400'}`}>{s.severity}</span>
                     <span className="px-2 py-0.5 rounded text-xs bg-white/5 text-gray-400">{s.category}</span>
                   </div>
                   <span className="text-gray-400">{expandedSuggestion === i ? '-' : '+'}</span>

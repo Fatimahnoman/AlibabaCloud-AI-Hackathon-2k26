@@ -35,7 +35,7 @@ interface WorkspaceData {
 }
 
 const statusColors: Record<string, string> = {
-  researching: 'bg-blue-500/10 text-blue-400',
+  researching: 'bg-emerald-500/10 text-emerald-400',
   preparing: 'bg-yellow-500/10 text-yellow-400',
   documents_ready: 'bg-purple-500/10 text-purple-400',
   submitted: 'bg-indigo-500/10 text-indigo-400',
@@ -49,7 +49,7 @@ const statusColors: Record<string, string> = {
 
 const priorityColors: Record<string, string> = {
   low: 'bg-white/5 text-gray-400',
-  medium: 'bg-blue-500/10 text-blue-400',
+  medium: 'bg-emerald-500/10 text-emerald-400',
   high: 'bg-orange-500/10 text-orange-400',
   urgent: 'bg-red-500/10 text-red-400',
 };
@@ -80,7 +80,7 @@ const categoryLabels: Record<string, string> = {
 };
 
 const categoryColors: Record<string, string> = {
-  research: 'bg-blue-500/10 text-blue-700',
+  research: 'bg-emerald-500/10 text-emerald-700',
   documents: 'bg-purple-500/10 text-purple-700',
   submission: 'bg-indigo-500/10 text-indigo-700',
   financial: 'bg-emerald-500/10 text-green-700',
@@ -210,7 +210,7 @@ export default function WorkspaceDetailPage() {
     return (
       <div className="card p-6 text-center">
         <p className="text-red-600 mb-4">{error || 'Workspace not found'}</p>
-        <Link href="/workspace" className="text-blue-600 hover:underline">Back to workspace</Link>
+        <Link href="/workspace" className="text-emerald-600 hover:underline">Back to workspace</Link>
       </div>
     );
   }
@@ -239,7 +239,7 @@ export default function WorkspaceDetailPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-2 mb-2">
-        <Link href="/workspace" className="text-blue-600 hover:underline text-sm">Workspace</Link>
+        <Link href="/workspace" className="text-emerald-600 hover:underline text-sm">Workspace</Link>
         <span className="text-gray-400 text-sm">/</span>
         <span className="text-sm text-gray-400 truncate">{workspace.title}</span>
       </div>
@@ -319,7 +319,7 @@ export default function WorkspaceDetailPage() {
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
                         index <= currentStatusIndex
-                          ? 'bg-blue-500 text-white'
+                          ? 'bg-emerald-500 text-white'
                           : 'bg-white/5 text-gray-500'
                       }`}
                     >
@@ -331,7 +331,7 @@ export default function WorkspaceDetailPage() {
                   </div>
                   {index < timelineSteps.length - 1 && (
                     <div className={`flex-1 h-1 mx-1 ${
-                      index < currentStatusIndex ? 'bg-blue-500' : 'bg-white/5'
+                      index < currentStatusIndex ? 'bg-emerald-500' : 'bg-white/5'
                     }`} />
                   )}
                 </div>
@@ -348,7 +348,7 @@ export default function WorkspaceDetailPage() {
         </div>
         <div className="w-full bg-white/5 rounded-full h-2 mb-6">
           <div
-            className="bg-blue-600 h-2 rounded-full transition-all"
+            className="bg-emerald-600 h-2 rounded-full transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -386,7 +386,7 @@ export default function WorkspaceDetailPage() {
               ))}
             </select>
           </div>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+          <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700 transition-colors">
             Add
           </button>
         </form>
@@ -405,7 +405,7 @@ export default function WorkspaceDetailPage() {
                       className={`w-5 h-5 rounded border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
                         item.isCompleted
                           ? 'bg-green-500 border-green-500 text-white'
-                          : 'border-white/10 hover:border-blue-400'
+                          : 'border-white/10 hover:border-emerald-400'
                       }`}
                     >
                       {item.isCompleted && (
@@ -464,7 +464,7 @@ export default function WorkspaceDetailPage() {
                 href={workspace.officialUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-blue-600 hover:underline mt-1 block truncate"
+                className="text-sm text-emerald-600 hover:underline mt-1 block truncate"
               >
                 {workspace.officialUrl}
               </a>
@@ -499,7 +499,7 @@ export default function WorkspaceDetailPage() {
                 <span className="text-sm text-gray-100">{doc.name}</span>
                 <span className={`text-xs px-2 py-1 rounded-full ${
                   doc.status === 'uploaded' ? 'bg-green-500/10 text-green-400' :
-                  doc.status === 'ready' ? 'bg-blue-500/10 text-blue-400' :
+                  doc.status === 'ready' ? 'bg-emerald-500/10 text-emerald-400' :
                   'bg-yellow-500/10 text-yellow-400'
                 }`}>
                   {doc.status}

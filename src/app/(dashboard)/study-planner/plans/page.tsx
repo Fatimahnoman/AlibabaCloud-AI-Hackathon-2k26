@@ -82,13 +82,13 @@ export default function PlansPage() {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <Link href="/study-planner" className="text-sm text-blue-600 hover:underline">&larr; Back to Planner</Link>
+          <Link href="/study-planner" className="text-sm text-emerald-600 hover:underline">&larr; Back to Planner</Link>
           <h1 className="text-2xl font-bold text-gray-100 mt-1">Study Plans</h1>
           <p className="text-gray-500 mt-1">Create and manage your study plans</p>
         </div>
         <button
           onClick={() => setShowCreate(!showCreate)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-medium"
         >
           {showCreate ? 'Cancel' : '+ New Plan'}
         </button>
@@ -152,7 +152,7 @@ export default function PlansPage() {
             <button
               type="submit"
               disabled={creating}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 disabled:opacity-50"
             >
               {creating ? 'Creating...' : 'Create Plan'}
             </button>
@@ -162,7 +162,7 @@ export default function PlansPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
         </div>
       ) : plans.length === 0 ? (
         <div className="card p-12 text-center">
@@ -183,7 +183,7 @@ export default function PlansPage() {
                       <h3 className="text-base font-semibold text-gray-100">{plan.title}</h3>
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                         isCompleted ? 'bg-green-500/10 text-green-400' :
-                        isActive ? 'bg-blue-500/10 text-blue-400' :
+                        isActive ? 'bg-emerald-500/10 text-emerald-400' :
                         'bg-white/5 text-gray-400'
                       }`}>
                         {plan.status}

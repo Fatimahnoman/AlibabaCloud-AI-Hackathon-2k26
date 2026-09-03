@@ -122,7 +122,7 @@ export default function StudyTimerPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <Link href="/study-planner" className="text-blue-600 hover:text-blue-800 text-sm font-medium">&larr; Back</Link>
+        <Link href="/study-planner" className="text-emerald-600 hover:text-emerald-800 text-sm font-medium">&larr; Back</Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-100">Study Timer</h1>
           <p className="text-gray-500 mt-1">Focus timer with automatic session logging</p>
@@ -210,11 +210,11 @@ export default function StudyTimerPage() {
       {todaySummary && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
           <div className="stat-card text-center">
-            <p className="text-2xl font-bold text-blue-600">{todaySummary.totalMinutes}</p>
+            <p className="text-2xl font-bold text-emerald-600">{todaySummary.totalMinutes}</p>
             <p className="text-sm text-gray-500">Minutes Today</p>
           </div>
           <div className="stat-card text-center">
-            <p className="text-2xl font-bold text-blue-600">{todaySummary.sessionCount}</p>
+            <p className="text-2xl font-bold text-emerald-600">{todaySummary.sessionCount}</p>
             <p className="text-sm text-gray-500">Sessions Today</p>
           </div>
         </div>

@@ -86,13 +86,13 @@ export default function CareerDetailPage() {
         <h1 className="text-2xl font-bold gradient-text">{career.title}</h1>
         <p className="text-violet-400 mt-1">{career.field}</p>
         {career.description && (
-          <p className="text-sm text-cyan-400 mt-4 whitespace-pre-line">{career.description}</p>
+          <p className="text-sm text-emerald-400 mt-4 whitespace-pre-line">{career.description}</p>
         )}
       </div>
 
       {(career.skills?.length ?? 0) > 0 && (
         <div className="card">
-          <h2 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-3">Skills</h2>
+          <h2 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-3">Skills</h2>
           <div className="flex flex-wrap gap-2">
             {career.skills.map((s, i) => (
               <span key={i} className="text-sm bg-primary-500/10 text-primary-400 px-3 py-1 rounded-full">{s}</span>
@@ -104,7 +104,7 @@ export default function CareerDetailPage() {
       {(career.entryRoles?.length ?? 0) > 0 && (
         <div className="card">
           <h2 className="font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-3">Entry-Level Roles</h2>
-          <ul className="list-disc list-inside space-y-1 text-sm text-cyan-400">
+          <ul className="list-disc list-inside space-y-1 text-sm text-emerald-400">
             {career.entryRoles.map((r, i) => <li key={i}>{r}</li>)}
           </ul>
         </div>
@@ -113,7 +113,7 @@ export default function CareerDetailPage() {
       {(career.furtherStudyOptions?.length ?? 0) > 0 && (
         <div className="card">
           <h2 className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-3">Further Study Options</h2>
-          <ul className="list-disc list-inside space-y-1 text-sm text-cyan-400">
+          <ul className="list-disc list-inside space-y-1 text-sm text-emerald-400">
             {career.furtherStudyOptions.map((s, i) => <li key={i}>{s}</li>)}
           </ul>
         </div>
@@ -136,7 +136,7 @@ export default function CareerDetailPage() {
           <div className="divide-y divide-gray-100">
             {career.relatedCourses.map((c) => (
               <Link key={c._id} href={`/education/courses/${c._id}`} className="block py-3 hover:bg-white/5 -mx-2 px-2 rounded transition-colors">
-                <p className="text-sm font-medium text-cyan-400">{c.name}</p>
+                <p className="text-sm font-medium text-emerald-400">{c.name}</p>
                 <p className="text-xs text-violet-400">{c.university?.name}</p>
               </Link>
             ))}

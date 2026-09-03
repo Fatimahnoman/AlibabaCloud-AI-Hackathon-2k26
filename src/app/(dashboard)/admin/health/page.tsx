@@ -120,7 +120,7 @@ export default function AdminHealthPage() {
     return (
       <div className="animate-fade-in">
         <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg p-4">{error || "No data available."}</div>
-        <button onClick={fetchHealth} className="mt-4 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-blue-600 transition-all">
+        <button onClick={fetchHealth} className="mt-4 rounded-lg bg-gradient-to-r from-indigo-500 to-teal-400 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-teal-400 transition-all">
           Retry
         </button>
       </div>
@@ -139,13 +139,13 @@ export default function AdminHealthPage() {
       <div className="flex flex-wrap items-start justify-between gap-4 animate-slide-up">
         <div>
           <h1 className="text-3xl font-bold gradient-text">System Health</h1>
-          <p className="text-sm mt-2">Live <span className="text-emerald-400 font-medium">runtime</span>, <span className="text-cyan-400 font-medium">memory</span> and <span className="text-violet-400 font-medium">API performance</span> monitoring</p>
+          <p className="text-sm mt-2">Live <span className="text-emerald-400 font-medium">runtime</span>, <span className="text-emerald-400 font-medium">memory</span> and <span className="text-violet-400 font-medium">API performance</span> monitoring</p>
         </div>
         <div className="text-right">
-          <button onClick={fetchHealth} className="rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+          <button onClick={fetchHealth} className="rounded-xl bg-gradient-to-r from-indigo-500 to-teal-400 px-4 py-2 text-sm font-medium text-white hover:from-indigo-600 hover:to-teal-400 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
             Refresh now
           </button>
-          <p className="mt-1.5 text-xs text-cyan-400">Auto-refreshes every 10s{lastUpdated ? ` · updated ${lastUpdated.toLocaleTimeString()}` : ""}</p>
+          <p className="mt-1.5 text-xs text-emerald-400">Auto-refreshes every 10s{lastUpdated ? ` · updated ${lastUpdated.toLocaleTimeString()}` : ""}</p>
         </div>
       </div>
 
@@ -168,13 +168,13 @@ export default function AdminHealthPage() {
           <div className="p-6">
             <p className="text-xs uppercase tracking-widest bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Uptime</p>
             <p className="mt-2 text-5xl font-bold gradient-text tabular-nums">{formatUptime(perf.uptimeMs)}</p>
-            <p className="mt-4 text-xs text-cyan-400">Snapshot taken {new Date(perf.capturedAt).toLocaleTimeString()}</p>
+            <p className="mt-4 text-xs text-emerald-400">Snapshot taken {new Date(perf.capturedAt).toLocaleTimeString()}</p>
           </div>
         </div>
 
         <div className="rounded-2xl overflow-hidden animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '100ms' }}>
           <div className="px-6 py-4 flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
-            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500" />
+            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" />
             <h2 className="text-base font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Memory Usage</h2>
             <span className={`ml-auto rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums ${memPercent > 90 ? "bg-red-500/20 text-red-400 border border-red-500/30" : memPercent > 75 ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"}`}>
               {clampPercent(memPercent).toFixed(1)}%
@@ -194,7 +194,7 @@ export default function AdminHealthPage() {
                 <span className="text-sm font-semibold gradient-text tabular-nums">{mem.rssMB} MB</span>
               </div>
               <ProgressBar percent={overview.system.memoryUsageMB > 0 ? (mem.rssMB / overview.system.memoryUsageMB) * 100 : 0} barColor="bg-gradient-to-r from-violet-500 to-purple-500" height="h-1.5" />
-              <p className="mt-1 text-xs text-cyan-400">Reported by overview: {overview.system.memoryUsageMB} MB RSS</p>
+              <p className="mt-1 text-xs text-emerald-400">Reported by overview: {overview.system.memoryUsageMB} MB RSS</p>
             </div>
           </div>
         </div>
@@ -204,14 +204,14 @@ export default function AdminHealthPage() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className="rounded-2xl overflow-hidden animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '150ms' }}>
           <div className="px-6 py-4 flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
-            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500" />
+            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500" />
             <h2 className="text-base font-semibold bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">API Performance</h2>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { label: 'Avg', value: perf.responseTime.avg, unit: 'ms', gradient: 'from-blue-500 to-cyan-500' },
-                { label: 'P95', value: perf.responseTime.p95, unit: 'ms', gradient: 'from-indigo-500 to-blue-500' },
+                { label: 'Avg', value: perf.responseTime.avg, unit: 'ms', gradient: 'from-emerald-500 to-teal-500' },
+                { label: 'P95', value: perf.responseTime.p95, unit: 'ms', gradient: 'from-indigo-500 to-teal-400' },
                 { label: 'P99', value: perf.responseTime.p99, unit: 'ms', gradient: 'from-violet-500 to-purple-500' },
                 { label: 'Error Rate', value: perf.errorRate, unit: '%', gradient: perf.errorRate > 5 ? 'from-red-500 to-pink-500' : perf.errorRate > 2 ? 'from-amber-500 to-orange-500' : 'from-emerald-500 to-teal-500', colored: true },
               ].map((m) => (
@@ -224,7 +224,7 @@ export default function AdminHealthPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex items-center justify-between text-sm text-cyan-400">
+            <div className="mt-4 flex items-center justify-between text-sm text-emerald-400">
               <span>{perf.requestTotals.total.toLocaleString()} requests tracked</span>
               {perf.requestTotals.byStatus && (
                 <div className="flex gap-2 flex-wrap">
@@ -253,19 +253,19 @@ export default function AdminHealthPage() {
         <div className="space-y-6">
           <div className="rounded-2xl overflow-hidden animate-slide-up" style={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(148, 163, 184, 0.1)', animationDelay: '200ms' }}>
             <div className="px-6 py-4 flex items-center gap-3" style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid rgba(148, 163, 184, 0.1)' }}>
-              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500" />
-              <h2 className="text-base font-semibold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Database</h2>
+              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500" />
+              <h2 className="text-base font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Database</h2>
             </div>
             <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="rounded-xl p-4 relative overflow-hidden" style={{ background: 'rgba(11, 17, 32, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)' }}>
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500" />
-                <p className="text-xs bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent uppercase tracking-wide">Engine</p>
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500" />
+                <p className="text-xs bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent uppercase tracking-wide">Engine</p>
                 <p className="mt-1 text-lg font-semibold gradient-text">SQLite</p>
-                <p className="text-xs text-cyan-400">local file database</p>
+                <p className="text-xs text-emerald-400">local file database</p>
               </div>
               <div className="rounded-xl p-4 relative overflow-hidden" style={{ background: 'rgba(11, 17, 32, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)' }}>
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-purple-500" />
-                <p className="text-xs bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent uppercase tracking-wide">File Size</p>
+                <p className="text-xs bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent uppercase tracking-wide">File Size</p>
                 <p className="mt-1 text-lg font-semibold gradient-text tabular-nums">{overview.system.dbSize}</p>
               </div>
               <div className="rounded-xl p-4 sm:col-span-2 flex items-center justify-between relative overflow-hidden" style={{ background: 'rgba(11, 17, 32, 0.5)', border: '1px solid rgba(148, 163, 184, 0.1)' }}>
@@ -277,7 +277,7 @@ export default function AdminHealthPage() {
                     Connected
                   </p>
                 </div>
-                <span className="rounded-full px-3 py-1 text-xs font-medium text-cyan-400 tabular-nums border border-white/10">
+                <span className="rounded-full px-3 py-1 text-xs font-medium text-emerald-400 tabular-nums border border-white/10">
                   ~{perf.dbConnections} active handle{perf.dbConnections === 1 ? "" : "s"}
                 </span>
               </div>

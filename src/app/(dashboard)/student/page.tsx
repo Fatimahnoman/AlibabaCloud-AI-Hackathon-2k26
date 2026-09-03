@@ -48,7 +48,7 @@ export default function StudentDashboardPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
       </div>
     );
   }
@@ -81,7 +81,7 @@ export default function StudentDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="card p-6">
           <p className="text-sm text-gray-500">Study Progress</p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">{weeklyHours}h</p>
+          <p className="text-2xl font-bold text-emerald-600 mt-1">{weeklyHours}h</p>
           <p className="text-xs text-gray-400 mt-1">this week &middot; {profile.learning.topicsTracked} topics tracked</p>
         </div>
         <div className="card p-6">
@@ -140,7 +140,7 @@ export default function StudentDashboardPage() {
                 {insight.actionUrl && (
                   <Link
                     href={insight.actionUrl}
-                    className="text-xs font-medium text-blue-600 hover:text-blue-800 whitespace-nowrap mt-1"
+                    className="text-xs font-medium text-emerald-600 hover:text-emerald-800 whitespace-nowrap mt-1"
                   >
                     {insight.actionLabel || 'View'}
                   </Link>
@@ -160,7 +160,7 @@ export default function StudentDashboardPage() {
                 <div className="flex items-start justify-between mb-2">
                   <p className="text-sm font-medium text-gray-100">{app.title}</p>
                   <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                    app.status === 'in_progress' ? 'bg-blue-500/10 text-blue-400' :
+                    app.status === 'in_progress' ? 'bg-emerald-500/10 text-emerald-400' :
                     app.status === 'completed' ? 'bg-green-500/10 text-green-400' :
                     'bg-white/5 text-gray-200'
                   }`}>
@@ -168,7 +168,7 @@ export default function StudentDashboardPage() {
                   </span>
                 </div>
                 <div className="w-full bg-white/5 rounded-full h-1.5">
-                  <div className="bg-blue-600 h-1.5 rounded-full" style={{ width: `${app.progress}%` }} />
+                  <div className="bg-emerald-600 h-1.5 rounded-full" style={{ width: `${app.progress}%` }} />
                 </div>
                 <p className="text-xs text-gray-400 mt-1">{app.progress}% complete</p>
               </div>
@@ -210,22 +210,22 @@ export default function StudentDashboardPage() {
           <h2 className="text-lg font-semibold text-gray-100 mb-4">Weekly Study Summary</h2>
           <div className="grid grid-cols-3 gap-4 text-center mb-4">
             <div>
-              <p className="text-2xl font-bold text-blue-600">{weeklyHours}</p>
+              <p className="text-2xl font-bold text-emerald-600">{weeklyHours}</p>
               <p className="text-xs text-gray-500">Hours</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-blue-600">{weeklySessions}</p>
+              <p className="text-2xl font-bold text-emerald-600">{weeklySessions}</p>
               <p className="text-xs text-gray-500">Sessions</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-blue-600">{profile.learning.subjects.length}</p>
+              <p className="text-2xl font-bold text-emerald-600">{profile.learning.subjects.length}</p>
               <p className="text-xs text-gray-500">Subjects</p>
             </div>
           </div>
           {profile.learning.subjects.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {profile.learning.subjects.map((s) => (
-                <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400">
+                <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400">
                   {s}
                 </span>
               ))}

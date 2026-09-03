@@ -55,27 +55,27 @@ const CATEGORIES: CostCategory[] = [
 ];
 
 const CATEGORY_COLORS: Record<CostCategory, string> = {
-  tuition: 'bg-blue-500/10 text-blue-400',
+  tuition: 'bg-emerald-500/10 text-emerald-400',
   application: 'bg-purple-500/10 text-purple-400',
   testing: 'bg-indigo-500/10 text-indigo-400',
   visa: 'bg-pink-500/10 text-pink-400',
   travel: 'bg-orange-500/10 text-orange-400',
   accommodation: 'bg-teal-500/10 text-teal-400',
   living: 'bg-green-500/10 text-green-400',
-  insurance: 'bg-cyan-500/10 text-cyan-400',
+  insurance: 'bg-emerald-500/10 text-emerald-400',
   emergency: 'bg-red-500/10 text-red-400',
   other: 'bg-white/5 text-gray-300',
 };
 
 const CATEGORY_BARS: Record<CostCategory, string> = {
-  tuition: 'bg-blue-500',
+  tuition: 'bg-emerald-500',
   application: 'bg-purple-500',
   testing: 'bg-indigo-500',
   visa: 'bg-pink-500',
   travel: 'bg-orange-500',
   accommodation: 'bg-teal-500',
   living: 'bg-green-500',
-  insurance: 'bg-cyan-500',
+  insurance: 'bg-emerald-500',
   emergency: 'bg-red-500',
   other: 'bg-gray-500',
 };
@@ -83,15 +83,15 @@ const CATEGORY_BARS: Record<CostCategory, string> = {
 const VERIFICATION_BADGES: Record<string, { label: string; className: string }> = {
   verified: { label: '✓ VERIFIED', className: 'bg-green-500/10 text-green-400' },
   estimated: { label: '~ ESTIMATED', className: 'bg-yellow-500/10 text-yellow-400' },
-  user_provided: { label: '● PROVIDED', className: 'bg-blue-500/10 text-blue-400' },
-  user_entered: { label: '● PROVIDED', className: 'bg-blue-500/10 text-blue-400' },
+  user_provided: { label: '● PROVIDED', className: 'bg-emerald-500/10 text-emerald-400' },
+  user_entered: { label: '● PROVIDED', className: 'bg-emerald-500/10 text-emerald-400' },
 };
 
 const verificationBadge = (status: string) => VERIFICATION_BADGES[status] || VERIFICATION_BADGES.estimated;
 
 const STATUS_COLORS: Record<string, string> = {
   draft: 'bg-white/5 text-gray-300',
-  active: 'bg-blue-500/10 text-blue-400',
+  active: 'bg-emerald-500/10 text-emerald-400',
   completed: 'bg-green-500/10 text-green-400',
   archived: 'bg-yellow-500/10 text-yellow-400',
 };
@@ -369,7 +369,7 @@ export default function CostPlannerPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <Link href="/education" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300">
+      <Link href="/education" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         Back to Education Center
       </Link>
@@ -586,7 +586,7 @@ export default function CostPlannerPage() {
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-500/10 text-yellow-400">
                 ~ ESTIMATED {formatMoney(estimatedTotal, selectedPlan.currency)}
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400">
                 ● PROVIDED {formatMoney(userProvidedTotal, selectedPlan.currency)}
               </span>
             </div>
@@ -621,7 +621,7 @@ export default function CostPlannerPage() {
           <div className="card">
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-semibold text-gray-100">Cost Items ({items.length})</h3>
-              <button onClick={() => setShowAddItem(!showAddItem)} className="text-sm text-blue-400 hover:text-blue-300 font-medium">
+              <button onClick={() => setShowAddItem(!showAddItem)} className="text-sm text-emerald-400 hover:text-emerald-300 font-medium">
                 {showAddItem ? 'Cancel' : '+ Add Item'}
               </button>
             </div>

@@ -144,7 +144,7 @@ export default function PerformancePage() {
           <p className="text-amber-600 text-sm mt-1 bg-amber-500/10 inline-block px-2 py-1 rounded">Academic diagnostic guidance — not medical or psychological diagnosis</p>
         </div>
         <button onClick={() => setShowQuizForm(!showQuizForm)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium">
+          className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium">
           {showQuizForm ? 'Cancel' : 'Log Quiz'}
         </button>
       </div>
@@ -204,7 +204,7 @@ export default function PerformancePage() {
         <>
           <div className="grid grid-cols-5 gap-4">
             {[
-              { label: 'Study Minutes', value: data.totalStudyMinutes, color: 'blue' },
+              { label: 'Study Minutes', value: data.totalStudyMinutes, color: 'emerald' },
               { label: 'Quizzes Taken', value: data.totalQuizzes, color: 'purple' },
               { label: 'Avg Quiz Score', value: `${data.averageQuizScore}%`, color: 'green' },
               { label: 'Active Revisions', value: data.activeRevisionPlans, color: 'yellow' },
@@ -274,11 +274,11 @@ export default function PerformancePage() {
 
               {data.diagnostic.studyPatternInsights.length > 0 && (
                 <div>
-                  <h3 className="font-medium text-blue-400 mb-1">Study Pattern Insights</h3>
+                  <h3 className="font-medium text-emerald-400 mb-1">Study Pattern Insights</h3>
                   <ul className="space-y-1">
                     {data.diagnostic.studyPatternInsights.map((insight, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
-                        <span className="text-blue-500">&#128161;</span>
+                        <span className="text-emerald-500">&#128161;</span>
                         <span>{insight}</span>
                       </li>
                     ))}
@@ -333,7 +333,7 @@ export default function PerformancePage() {
                             </div>
                           </div>
                           <div className="w-full bg-white/5 rounded-full h-2 mb-2">
-                            <div className={`h-2 rounded-full ${t.masteryLevel >= 80 ? 'bg-green-500' : t.masteryLevel >= 60 ? 'bg-blue-500' : t.masteryLevel >= 40 ? 'bg-yellow-500' : 'bg-red-500'}`}
+                            <div className={`h-2 rounded-full ${t.masteryLevel >= 80 ? 'bg-green-500' : t.masteryLevel >= 60 ? 'bg-emerald-500' : t.masteryLevel >= 40 ? 'bg-yellow-500' : 'bg-red-500'}`}
                               style={{ width: `${t.masteryLevel}%` }} />
                           </div>
                           <p className="text-xs text-gray-400">{t.diagnostic}</p>
@@ -354,7 +354,7 @@ export default function PerformancePage() {
                 {revisions.map(r => (
                   <div key={r.id} className={`flex items-center justify-between p-3 rounded-lg border ${
                     r.status === 'completed' ? 'bg-emerald-500/10 border-green-500/20' :
-                    r.status === 'in_progress' ? 'bg-blue-500/10 border-blue-500/20' :
+                    r.status === 'in_progress' ? 'bg-emerald-500/10 border-emerald-500/20' :
                     r.nextRevision && new Date(r.nextRevision) < new Date() ? 'bg-red-500/10 border-red-500/20' :
                     'bg-yellow-500/10 border-yellow-500/20'
                   }`}>
@@ -366,7 +366,7 @@ export default function PerformancePage() {
                     <div className="flex items-center gap-2">
                       <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                         r.status === 'completed' ? 'bg-green-500/10 text-green-400' :
-                        r.status === 'in_progress' ? 'bg-blue-500/10 text-blue-400' :
+                        r.status === 'in_progress' ? 'bg-emerald-500/10 text-emerald-400' :
                         'bg-yellow-500/10 text-yellow-400'
                       }`}>{r.status}</span>
                       {r.status !== 'completed' && (

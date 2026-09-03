@@ -29,10 +29,10 @@ const typeLabels: Record<string, string> = {
 };
 
 const typeBadgeColors: Record<string, string> = {
-  sms: 'bg-blue-500/10 text-blue-400',
+  sms: 'bg-emerald-500/10 text-emerald-400',
   text: 'bg-indigo-500/10 text-indigo-400',
   email: 'bg-purple-500/10 text-purple-400',
-  url: 'bg-cyan-500/10 text-cyan-400',
+  url: 'bg-emerald-500/10 text-emerald-400',
   document: 'bg-white/5 text-gray-200',
   image: 'bg-pink-500/10 text-pink-400',
 };
@@ -126,7 +126,7 @@ export default function FraudHistoryPage() {
   return (
     <div className="space-y-6 animate-fade-in max-w-3xl">
       <div>
-        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 mb-2">
+        <a href="/fraud" className="inline-flex items-center gap-1 text-sm text-emerald-400 hover:text-emerald-300 mb-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           Back to Fraud Center
         </a>

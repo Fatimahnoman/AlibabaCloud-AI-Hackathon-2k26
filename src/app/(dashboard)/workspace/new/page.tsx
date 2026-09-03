@@ -64,7 +64,7 @@ export default function NewWorkspacePage() {
   return (
     <div className="space-y-6 animate-fade-in max-w-2xl">
       <div className="flex items-center gap-2 mb-2">
-        <Link href="/workspace" className="text-blue-600 hover:underline text-sm">Workspace</Link>
+        <Link href="/workspace" className="text-emerald-600 hover:underline text-sm">Workspace</Link>
         <span className="text-gray-400 text-sm">/</span>
         <span className="text-sm text-gray-400">New Application</span>
       </div>
@@ -89,7 +89,7 @@ export default function NewWorkspacePage() {
                   onClick={() => setEntityType(type)}
                   className={`p-3 rounded-lg border-2 text-sm font-medium capitalize transition-colors ${
                     entityType === type
-                      ? 'border-blue-500 bg-blue-500/10 text-blue-700'
+                      ? 'border-emerald-500 bg-emerald-500/10 text-emerald-700'
                       : 'border-white/10 text-gray-400 hover:border-white/10'
                   }`}
                 >
@@ -170,7 +170,7 @@ export default function NewWorkspacePage() {
                   className={`p-2 rounded-lg border-2 text-sm font-medium capitalize transition-colors ${
                     priority === p
                       ? p === 'low' ? 'border-gray-500 bg-white/5 text-gray-300'
-                      : p === 'medium' ? 'border-blue-500 bg-blue-500/10 text-blue-400'
+                      : p === 'medium' ? 'border-emerald-500 bg-emerald-500/10 text-emerald-400'
                       : p === 'high' ? 'border-orange-500 bg-orange-500/10 text-orange-400'
                       : 'border-red-500 bg-red-500/10 text-red-400'
                       : 'border-white/10 text-gray-400 hover:border-white/10'
@@ -197,7 +197,7 @@ export default function NewWorkspacePage() {
             <button
               type="submit"
               disabled={creating}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
+              className="bg-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50"
             >
               {creating ? 'Creating...' : 'Create Application'}
             </button>

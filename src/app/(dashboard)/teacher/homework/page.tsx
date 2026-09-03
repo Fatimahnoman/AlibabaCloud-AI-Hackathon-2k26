@@ -96,7 +96,7 @@ export default function TeacherHomeworkPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-3">
-        <Link href="/teacher" className="text-blue-600 hover:text-blue-800 text-sm font-medium">&larr; Back</Link>
+        <Link href="/teacher" className="text-emerald-600 hover:text-emerald-800 text-sm font-medium">&larr; Back</Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-100">Homework</h1>
           <p className="text-gray-500 mt-1">Create and manage homework assignments</p>
@@ -184,7 +184,7 @@ export default function TeacherHomeworkPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center min-h-[200px]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
         </div>
       ) : homeworkList.length === 0 ? (
         <div className="card p-6 text-center">

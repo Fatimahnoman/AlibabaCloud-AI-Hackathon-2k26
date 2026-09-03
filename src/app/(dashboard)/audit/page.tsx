@@ -35,7 +35,7 @@ const actionFilters: { value: ActionFilter; label: string }[] = [
 ];
 
 const actionBadgeColors: Record<string, string> = {
-  login: "bg-blue-100 text-blue-800",
+  login: "bg-emerald-100 text-emerald-800",
   logout: "bg-white/5 text-gray-400",
   verification: "bg-green-100 text-green-800",
   flag: "bg-red-100 text-red-800",
@@ -105,7 +105,7 @@ export default function AuditLogsPage() {
             onClick={() => handleFilterChange(f.value)}
             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
               actionFilter === f.value
-                ? "bg-blue-700 text-white"
+                ? "bg-emerald-700 text-white"
                 : "bg-white/5 text-gray-400 hover:bg-white/10"
             }`}
           >

@@ -4,8 +4,32 @@ interface FetchOptions {
   headers?: Record<string, string>;
 }
 
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
+function setCookie(name: string, value: string, maxAge: number) {
+  if (typeof document === 'undefined') return;
+  const isSecure = window.location.protocol === 'https:';
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax${isSecure ? '; Secure' : ''}`;
+}
+
+function deleteCookie(name: string) {
+  if (typeof document === 'undefined') return;
+  document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax`;
+}
+
+function generateCSRFToken(): string {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+}
+
 class ApiClient {
   private baseUrl: string;
+  private csrfToken: string | null = null;
 
   constructor() {
     if (typeof window !== 'undefined' && window.location?.origin) {
@@ -16,16 +40,30 @@ class ApiClient {
   }
 
   private getAuthToken(): string | null {
-    if (typeof window === 'undefined') return null;
-    return localStorage.getItem('accessToken');
+    return getCookie('accessToken');
+  }
+
+  private getCSRFToken(): string {
+    if (this.csrfToken) return this.csrfToken;
+    const existing = getCookie('csrf-token');
+    if (existing) {
+      this.csrfToken = existing;
+      return existing;
+    }
+    const token = generateCSRFToken();
+    setCookie('csrf-token', token, 86400);
+    this.csrfToken = token;
+    return token;
   }
 
   private async request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
     const { method = 'GET', body, headers = {} } = options;
 
     const token = this.getAuthToken();
+    const csrfToken = this.getCSRFToken();
     const requestHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
+      'X-CSRF-Token': csrfToken,
       ...headers,
     };
 
@@ -40,6 +78,7 @@ class ApiClient {
         method,
         headers: requestHeaders,
         body: body ? JSON.stringify(body) : undefined,
+        credentials: 'include',
       });
     } catch (fetchErr) {
       throw new Error(`Network error – is the server running? (${fetchErr instanceof Error ? fetchErr.message : 'fetch failed'})`);
@@ -77,17 +116,21 @@ class ApiClient {
   }
 
   setTokens(accessToken: string, refreshToken: string) {
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
+    const accessTokenMaxAge = 15 * 60; // 15 minutes
+    const refreshTokenMaxAge = 7 * 24 * 60 * 60; // 7 days
+    setCookie('accessToken', accessToken, accessTokenMaxAge);
+    setCookie('refreshToken', refreshToken, refreshTokenMaxAge);
   }
 
   clearTokens() {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    deleteCookie('accessToken');
+    deleteCookie('refreshToken');
+    this.csrfToken = null;
+    deleteCookie('csrf-token');
   }
 
   async refreshTokens(): Promise<boolean> {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = getCookie('refreshToken');
     if (!refreshToken) return false;
 
     try {

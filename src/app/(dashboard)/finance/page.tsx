@@ -22,14 +22,14 @@ const financeTools = [
     description: 'Shariah-compliant banking options and profit rates',
     href: '/finance/ai',
     icon: '🏦',
-    color: 'from-teal-500 to-cyan-600',
+    color: 'from-teal-500 to-emerald-600',
   },
   {
     title: 'Tax & FBR',
     description: 'Tax filing guidance and FBR regulations',
     href: '/finance/ai',
     icon: '📋',
-    color: 'from-blue-500 to-indigo-600',
+    color: 'from-emerald-500 to-indigo-600',
   },
   {
     title: 'Remittance',
