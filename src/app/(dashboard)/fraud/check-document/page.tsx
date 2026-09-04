@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { getClientAuthToken } from '@/lib/api-client';
 import { createWorker } from 'tesseract.js';
 
 interface Indicator {
@@ -126,7 +127,7 @@ function CheckDocumentContent() {
     setResult(null);
 
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = getClientAuthToken();
       if (!token) {
         setError('Not authenticated. Please log in.');
         return;

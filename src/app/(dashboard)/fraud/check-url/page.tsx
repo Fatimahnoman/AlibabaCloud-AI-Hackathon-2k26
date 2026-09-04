@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { getClientAuthToken } from '@/lib/api-client';
 
 interface DomainInfo {
   domain: string;
@@ -91,7 +92,7 @@ export default function CheckUrlPage() {
     setResult(null);
 
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = getClientAuthToken();
       if (!token) {
         setError('Not authenticated. Please log in.');
         return;

@@ -10,6 +10,14 @@ function getCookie(name: string): string | null {
   return match ? decodeURIComponent(match[2]) : null;
 }
 
+export function getClientAuthToken(): string | null {
+  if (typeof localStorage !== 'undefined') {
+    const local = localStorage.getItem('accessToken');
+    if (local) return local;
+  }
+  return getCookie('accessToken');
+}
+
 function setCookie(name: string, value: string, maxAge: number) {
   if (typeof document === 'undefined') return;
   const isSecure = window.location.protocol === 'https:';

@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { getClientAuthToken } from '@/lib/api-client';
 
 interface Indicator {
   severity: string;
@@ -87,7 +88,7 @@ function CheckTextContent() {
     setResult(null);
 
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = getClientAuthToken();
       if (!token) {
         setError('Not authenticated. Please log in.');
         return;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { getClientAuthToken } from '@/lib/api-client';
 
 interface PhoneAnalysis {
   number: string;
@@ -122,7 +123,7 @@ export default function CheckPhonePage() {
     setResult(null);
 
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = getClientAuthToken();
       const res = await fetch('/api/fraud/scan/phone', {
         method: 'POST',
         headers: {
