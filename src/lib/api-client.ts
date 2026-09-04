@@ -160,6 +160,14 @@ class ApiClient {
     }
   }
 
+  syncTokensToLocalStorage() {
+    if (typeof localStorage === 'undefined') return;
+    const accessToken = getCookie('accessToken');
+    const refreshToken = getCookie('refreshToken');
+    if (accessToken) localStorage.setItem('accessToken', accessToken);
+    if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+  }
+
   async refreshTokens(): Promise<boolean> {
     const refreshToken = getCookie('refreshToken');
     if (!refreshToken) return false;

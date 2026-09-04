@@ -74,6 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    apiClient.syncTokensToLocalStorage();
     refreshUser().finally(() => setIsLoading(false));
   }, [refreshUser]);
 
