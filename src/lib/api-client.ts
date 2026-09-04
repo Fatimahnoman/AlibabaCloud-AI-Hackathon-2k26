@@ -143,6 +143,10 @@ class ApiClient {
     const refreshTokenMaxAge = 7 * 24 * 60 * 60;
     setCookie('accessToken', accessToken, accessTokenMaxAge);
     setCookie('refreshToken', refreshToken, refreshTokenMaxAge);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    }
   }
 
   clearTokens() {
@@ -150,6 +154,10 @@ class ApiClient {
     deleteCookie('refreshToken');
     this.csrfToken = null;
     deleteCookie('csrf-token');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    }
   }
 
   async refreshTokens(): Promise<boolean> {
