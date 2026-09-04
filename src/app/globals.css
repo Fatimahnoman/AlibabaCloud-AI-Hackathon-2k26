@@ -44,6 +44,19 @@
     background-attachment: fixed;
   }
 
+  select {
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: #0a0f0b;
+    color: #d1fae5;
+  }
+
+  select option:disabled {
+    color: #6b7280;
+  }
+
   ::selection {
     background: #10b981;
     color: #000000;
