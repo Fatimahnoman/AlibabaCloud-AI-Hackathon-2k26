@@ -39,8 +39,12 @@ class ApiClient {
     }
   }
 
-  private getAuthToken(): string | null {
+  getAuthToken(): string | null {
     return getCookie('accessToken');
+  }
+
+  getRefreshToken(): string | null {
+    return getCookie('refreshToken');
   }
 
   private getCSRFToken(): string {
@@ -56,32 +60,51 @@ class ApiClient {
     return token;
   }
 
-  private async request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
-    const { method = 'GET', body, headers = {} } = options;
-
+  private buildHeaders(csrfToken: string, existingHeaders?: Record<string, string>): Record<string, string> {
     const token = this.getAuthToken();
-    const csrfToken = this.getCSRFToken();
     const requestHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
       'X-CSRF-Token': csrfToken,
-      ...headers,
+      ...existingHeaders,
     };
-
     if (token) {
       requestHeaders['Authorization'] = `Bearer ${token}`;
     }
+    return requestHeaders;
+  }
 
+  private async doFetch(url: string, method: string, headers: Record<string, string>, body?: unknown): Promise<Response> {
+    return fetch(url, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: 'include',
+    });
+  }
+
+  private async request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
+    const { method = 'GET', body, headers = {} } = options;
+    const csrfToken = this.getCSRFToken();
     const url = `${this.baseUrl}${endpoint}`;
+
+    let requestHeaders = this.buildHeaders(csrfToken, headers);
     let response: Response;
     try {
-      response = await fetch(url, {
-        method,
-        headers: requestHeaders,
-        body: body ? JSON.stringify(body) : undefined,
-        credentials: 'include',
-      });
+      response = await this.doFetch(url, method, requestHeaders, body);
     } catch (fetchErr) {
       throw new Error(`Network error – is the server running? (${fetchErr instanceof Error ? fetchErr.message : 'fetch failed'})`);
+    }
+
+    if (response.status === 401 && this.getAuthToken()) {
+      const refreshed = await this.refreshTokens();
+      if (refreshed) {
+        requestHeaders = this.buildHeaders(csrfToken, headers);
+        try {
+          response = await this.doFetch(url, method, requestHeaders, body);
+        } catch (fetchErr) {
+          throw new Error(`Network error – is the server running? (${fetchErr instanceof Error ? fetchErr.message : 'fetch failed'})`);
+        }
+      }
     }
 
     const text = await response.text();
@@ -116,8 +139,8 @@ class ApiClient {
   }
 
   setTokens(accessToken: string, refreshToken: string) {
-    const accessTokenMaxAge = 15 * 60; // 15 minutes
-    const refreshTokenMaxAge = 7 * 24 * 60 * 60; // 7 days
+    const accessTokenMaxAge = 15 * 60;
+    const refreshTokenMaxAge = 7 * 24 * 60 * 60;
     setCookie('accessToken', accessToken, accessTokenMaxAge);
     setCookie('refreshToken', refreshToken, refreshTokenMaxAge);
   }
