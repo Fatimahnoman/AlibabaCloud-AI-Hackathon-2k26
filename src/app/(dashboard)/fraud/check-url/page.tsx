@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { getClientAuthToken } from '@/lib/api-client';
+import { apiClient } from '@/lib/api-client';
 
 interface DomainInfo {
   domain: string;
@@ -92,33 +92,15 @@ export default function CheckUrlPage() {
     setResult(null);
 
     try {
-      const token = getClientAuthToken();
-      if (!token) {
-        setError('Not authenticated. Please log in.');
-        return;
-      }
-
       let inputUrl = url.trim();
       if (!/^https?:\/\//i.test(inputUrl)) {
         inputUrl = 'https://' + inputUrl;
       }
 
-      const res = await fetch('/api/fraud/scan/url', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ url: inputUrl }),
+      const data = await apiClient.post<{ data: unknown; message?: string }>('/api/fraud/scan/url', {
+        url: inputUrl,
       });
-
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || 'Scan failed');
-      }
-
-      const data = await res.json();
-      const payload = data.data ?? data;
+      const payload = (data.data ?? data) as any;
       const explanationObj = payload.explanation && typeof payload.explanation === 'object' ? payload.explanation : null;
       setResult({
         riskLevel: payload.riskLevel,

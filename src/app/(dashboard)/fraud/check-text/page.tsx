@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import { getClientAuthToken } from '@/lib/api-client';
+import { apiClient } from '@/lib/api-client';
 
 interface Indicator {
   severity: string;
@@ -88,28 +88,12 @@ function CheckTextContent() {
     setResult(null);
 
     try {
-      const token = getClientAuthToken();
-      if (!token) {
-        setError('Not authenticated. Please log in.');
-        return;
-      }
-
-      const res = await fetch('/api/fraud/scan', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ inputType, content: content.trim() }),
+      const data = await apiClient.post<{ data: unknown; message?: string }>('/api/fraud/scan', {
+        inputType,
+        content: content.trim(),
       });
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || 'Scan failed');
-      }
-
-      const data = await res.json();
-      const payload = data.data ?? data;
+      const payload = (data.data ?? data) as any;
       const aiExplanation =
         typeof payload.explanation === 'string' ? { explanation: payload.explanation } : payload.explanation || {};
       setResult({

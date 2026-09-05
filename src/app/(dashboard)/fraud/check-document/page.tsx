@@ -2,8 +2,9 @@
 
 import { useState, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
+
 import { Suspense } from 'react';
-import { getClientAuthToken } from '@/lib/api-client';
+import { apiClient } from '@/lib/api-client';
 import { createWorker } from 'tesseract.js';
 
 interface Indicator {
@@ -127,12 +128,6 @@ function CheckDocumentContent() {
     setResult(null);
 
     try {
-      const token = getClientAuthToken();
-      if (!token) {
-        setError('Not authenticated. Please log in.');
-        return;
-      }
-
       if (isImageMode) {
         const worker = await createWorker('eng');
         const { data } = await worker.recognize(file);
@@ -145,22 +140,11 @@ function CheckDocumentContent() {
           return;
         }
 
-        const res = await fetch('/api/fraud/scan', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ inputType: 'text', content: extractedText }),
+        const scanData = await apiClient.post<{ data: unknown; message?: string }>('/api/fraud/scan', {
+          inputType: 'text',
+          content: extractedText,
         });
-
-        if (!res.ok) {
-          const errData = await res.json();
-          throw new Error(errData.message || 'Scan failed');
-        }
-
-        const scanData = await res.json();
-        const payload = scanData.data ?? scanData;
+        const payload = (scanData.data ?? scanData) as any;
         const analysisObj = typeof payload.analysis === 'string' ? (() => { try { return JSON.parse(payload.analysis); } catch { return {}; } })() : (payload.analysis || {});
         const textAnalysis = analysisObj.textAnalysis || {};
 
@@ -199,7 +183,10 @@ function CheckDocumentContent() {
 
         const res = await fetch('/api/fraud/scan/document', {
           method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${apiClient.getAuthToken()}`,
+            'X-CSRF-Token': apiClient.getCSRFToken(),
+          },
           body: formData,
         });
 

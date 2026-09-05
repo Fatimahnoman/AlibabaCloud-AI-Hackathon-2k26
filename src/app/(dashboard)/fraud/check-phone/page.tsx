@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { getClientAuthToken } from '@/lib/api-client';
+import { apiClient } from '@/lib/api-client';
 
 interface PhoneAnalysis {
   number: string;
@@ -123,26 +123,13 @@ export default function CheckPhonePage() {
     setResult(null);
 
     try {
-      const token = getClientAuthToken();
-      const res = await fetch('/api/fraud/scan/phone', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ phone: phone.trim() }),
+      const data = await apiClient.post<{ data: unknown; message?: string }>('/api/fraud/scan/phone', {
+        phone: phone.trim(),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || 'Scan failed');
-        return;
-      }
-
-      setResult(data.data);
-    } catch {
-      setError('Failed to scan phone number. Please try again.');
+      setResult(data.data as PhoneAnalysis);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to scan phone number. Please try again.');
     } finally {
       setLoading(false);
     }

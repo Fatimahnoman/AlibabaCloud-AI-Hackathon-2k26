@@ -55,7 +55,11 @@ class ApiClient {
     return getCookie('refreshToken');
   }
 
-  private getCSRFToken(): string {
+  getCSRFToken(): string {
+    return this.getCSRFTokenInternal();
+  }
+
+  private getCSRFTokenInternal(): string {
     if (this.csrfToken) return this.csrfToken;
     const existing = getCookie('csrf-token');
     if (existing) {
@@ -92,7 +96,7 @@ class ApiClient {
 
   private async request<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
     const { method = 'GET', body, headers = {} } = options;
-    const csrfToken = this.getCSRFToken();
+    const csrfToken = this.getCSRFTokenInternal();
     const url = `${this.baseUrl}${endpoint}`;
 
     let requestHeaders = this.buildHeaders(csrfToken, headers);
