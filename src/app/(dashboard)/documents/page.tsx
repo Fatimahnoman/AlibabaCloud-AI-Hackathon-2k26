@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { apiClient } from '@/lib/api-client';
 
 type AnalysisDocumentType = 'sop' | 'personal_statement' | 'recommendation_letter' | 'cv_resume' | 'cover_letter' | 'essay' | 'other';
 
@@ -133,17 +134,15 @@ export default function DocumentsPage() {
 
   const fetchHistory = useCallback(async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      const res = await fetch('/api/documents/history', { headers: { Authorization: `Bearer ${token}` } });
-      if (res.ok) { const data = await res.json(); setHistory(data.data?.analyses || []); }
+      const data = await apiClient.get<{ data: { analyses: HistoryItem[] } }>('/api/documents/history');
+      setHistory(data.data?.analyses || []);
     } catch { /* empty */ }
   }, []);
 
   const fetchGuidelines = useCallback(async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      const res = await fetch('/api/documents/guidelines', { headers: { Authorization: `Bearer ${token}` } });
-      if (res.ok) { const data = await res.json(); setGuidelines(data.data?.guidelines || {}); }
+      const data = await apiClient.get<{ data: { guidelines: Record<string, Guidelines> } }>('/api/documents/guidelines');
+      setGuidelines(data.data?.guidelines || {});
     } catch { /* empty */ }
   }, []);
 
@@ -176,7 +175,6 @@ export default function DocumentsPage() {
     if (!content.trim() && !uploadedFile) { setError('Please paste your document content or upload a file'); return; }
     setAnalyzing(true); setError(''); setResult(null);
     try {
-      const token = localStorage.getItem('accessToken');
       let res: Response;
       if (uploadedFile && !content.trim()) {
         const formData = new FormData();
@@ -185,9 +183,9 @@ export default function DocumentsPage() {
         if (targetInstitution) formData.append('targetInstitution', targetInstitution);
         if (targetProgram) formData.append('targetProgram', targetProgram);
         if (additionalContext) formData.append('additionalContext', additionalContext);
-        res = await fetch('/api/documents/analyze', { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: formData });
+        res = await fetch('/api/documents/analyze', { method: 'POST', headers: { Authorization: `Bearer ${apiClient.getAuthToken()}`, 'X-CSRF-Token': apiClient.getCSRFToken() }, body: formData });
       } else {
-        res = await fetch('/api/documents/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ content: content.trim(), documentType, targetInstitution, targetProgram, additionalContext }) });
+        res = await fetch('/api/documents/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiClient.getAuthToken()}`, 'X-CSRF-Token': apiClient.getCSRFToken() }, body: JSON.stringify({ content: content.trim(), documentType, targetInstitution, targetProgram, additionalContext }) });
       }
       if (!res.ok) { const data = await res.json(); throw new Error(data.message || 'Analysis failed'); }
       const data = await res.json();
@@ -199,8 +197,7 @@ export default function DocumentsPage() {
 
   const handleDelete = async (id: string) => {
     try {
-      const token = localStorage.getItem('accessToken');
-      await fetch(`/api/documents/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+      await apiClient.delete(`/api/documents/${id}`);
       setHistory(prev => prev.filter(h => h.id !== id));
       if (result?.id === id) setResult(null);
     } catch { /* empty */ }

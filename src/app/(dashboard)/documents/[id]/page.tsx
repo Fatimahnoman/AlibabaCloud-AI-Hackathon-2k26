@@ -47,6 +47,8 @@ function ScoreCard({ label, score }: { label: string; score: number }) {
   );
 }
 
+import { apiClient } from '@/lib/api-client';
+
 export default function AnalysisDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -58,12 +60,7 @@ export default function AnalysisDetailPage() {
 
   const fetchAnalysis = useCallback(async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      const res = await fetch(`/api/documents/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error('Analysis not found');
-      const data = await res.json();
+      const data = await apiClient.get<{ data: AnalysisResult }>(`/api/documents/${id}`);
       setAnalysis(data.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load');
@@ -77,11 +74,7 @@ export default function AnalysisDetailPage() {
   const handleDelete = async () => {
     if (!confirm('Delete this analysis?')) return;
     try {
-      const token = localStorage.getItem('accessToken');
-      await fetch(`/api/documents/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/api/documents/${id}`);
       router.push('/documents');
     } catch { /* empty */ }
   };
